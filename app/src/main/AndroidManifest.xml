@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Login_student"></activity>
+        <activity android:name=".Login_lector"></activity>
+        <activity android:name=".Question"></activity>
+
     </application>
 
 </manifest>

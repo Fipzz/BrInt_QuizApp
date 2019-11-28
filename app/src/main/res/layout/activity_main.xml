@@ -5,81 +5,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#3449CC"
-    tools:context=".MainActivity"
-    android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen">
+    android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
+    tools:context=".MainActivity">
 
 
     <TextView
         android:id="@+id/questionView"
         android:layout_width="309dp"
         android:layout_height="174dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="58dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="55dp"
-        android:text="SpørgsmålSpørgsmålSpørgsmålSpørgsmålSpørgsmålSpørgsmålSpørgsmålSpørgsmålSpørgsmålSpørgsmålSpørgsmålSpørgsmålSpørgsmålSpørgsmålSpørgsmålSpørgsmålSpørgsmålSpørgsmålSpørgsmålSpørgsmålSpørgsmålSpørgsmål"
-        android:textColor="#FFFFFF"
+        android:layout_marginTop="56dp"
+        android:gravity="center"
+        android:text="Quiz: Selvtest"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/answer1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/answer1"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="31dp"
-        android:layout_marginEnd="31dp"
-        android:layout_marginBottom="12dp"
-        android:background="#4EC4C9"
-        android:text="Svar1"
-        app:layout_constraintBottom_toTopOf="@+id/answer2"
+        android:id="@+id/student"
+        android:layout_width="350dp"
+        android:layout_height="95dp"
+        android:background="#FFEB3B"
+        android:text="Student"
+        app:layout_constraintBottom_toTopOf="@+id/lector"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionView" />
+        app:layout_constraintTop_toBottomOf="@+id/questionView"
+        app:layout_constraintVertical_bias="0.536" />
 
     <Button
-        android:id="@+id/answer2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="31dp"
-        android:layout_marginEnd="31dp"
-        android:layout_marginBottom="10dp"
-        android:background="#EE5DF8"
-        android:text="Svar2"
-        app:layout_constraintBottom_toTopOf="@+id/answer3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/answer1" />
-
-    <Button
-        android:id="@+id/answer3"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="31dp"
-        android:layout_marginEnd="31dp"
-        android:layout_marginBottom="13dp"
-        android:background="#DBCA58"
-        android:text="Svar3"
-        app:layout_constraintBottom_toTopOf="@+id/answer4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/answer2" />
-
-    <Button
-        android:id="@+id/answer4"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="31dp"
-        android:layout_marginEnd="31dp"
-        android:layout_marginBottom="29dp"
-        android:background="#4CAF50"
-        android:text="Svar4"
+        android:id="@+id/lector"
+        android:layout_width="350dp"
+        android:layout_height="99dp"
+        android:layout_marginBottom="168dp"
+        android:background="#FF9800"
+        android:text="Lector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/answer3" />
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
