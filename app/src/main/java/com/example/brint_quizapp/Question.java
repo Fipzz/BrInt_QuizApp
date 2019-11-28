@@ -12,7 +12,7 @@ import android.widget.TextView;
 public class Question extends AppCompatActivity implements View.OnClickListener {
 
     Button a,b,c,d;
-
+    TextView questionView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,7 +20,7 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        setContentView(R.layout.login_layout);
+        setContentView(R.layout.quizz_layout);
 
 
         a = (Button) findViewById(R.id.answer1);
@@ -35,7 +35,7 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
         d = (Button) findViewById(R.id.answer4);
         d.setOnClickListener(this);
 
-        TextView questionView = (TextView) findViewById(R.id.questionView);
+        questionView = (TextView) findViewById(R.id.questionView);
 
         String[][] question = new String[2][7];
         question[0][0] = "0";
@@ -57,15 +57,7 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        Button answer1 = (Button) findViewById(R.id.student);
-        answer1.setOnClickListener(this);
-        Button answer2 = (Button) findViewById(R.id.lector);
-        answer2.setOnClickListener(this);
-        Button answer3 = (Button) findViewById(R.id.answer3);
-        answer3.setOnClickListener(this);
-        Button answer4 = (Button) findViewById(R.id.answer4);
-        answer4.setOnClickListener(this);
-        TextView questionView = (TextView) findViewById(R.id.questionView);
+
         String[][] question = new String[2][7];
         question[0][0] = "0";
         question[0][1] = "Hvilken farve har faxe kondi flasken?";
@@ -79,7 +71,7 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
         question[1][3] = "Tirsdag";
         question[1][4] = "Torsdag";
         question[1][5] = "Mandag";
-        showNewQuestion(1, question, questionView, answer1, answer2, answer3, answer4);
+        showNewQuestion(1, question, questionView, a, b, c, d);
     }
 
     public void showNewQuestion(int question_id, String[][] questions, TextView questionText, Button answer1Button, Button answer2Button, Button answer3Button, Button answer4Button){

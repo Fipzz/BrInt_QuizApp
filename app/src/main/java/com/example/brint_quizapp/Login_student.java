@@ -39,7 +39,7 @@ public class Login_student extends AppCompatActivity implements View.OnClickList
 
         if(R.id.Login == v.getId()){
 
-            //startActivity(new Intent(Login_student.this, Login_student.class));
+            startActivity(new Intent(Login_student.this, Login_screen.class));
 
         }
 

@@ -15,9 +15,9 @@
         android:layout_height="174dp"
         android:layout_marginTop="56dp"
         android:gravity="center"
-        android:text="Quiz: Selvtest"
+        android:text="QuizApp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="24sp"
+        android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
