@@ -33,7 +33,7 @@ public class Login_lector extends AppCompatActivity implements View.OnClickListe
 
         if(R.id.log_in == v.getId()){
 
-            startActivity(new Intent(Login_lector.this, Login_screen.class));
+            startActivity(new Intent(Login_lector.this, Homepage_activity.class));
 
         } else if (R.id.anon == v.getId()){
 

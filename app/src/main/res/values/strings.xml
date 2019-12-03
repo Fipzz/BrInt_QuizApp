@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">BrInt_QuizApp</string>
+    <string name="app_name">B5_QuizApp</string>
     <string name="name">Quiz: selvtest</string>
     <string name="username">username</string>
+    <string name="quiz_navn">Quiz navn</string>
+    <string name="question">Whats the fastest animal in the world?</string>
 </resources>

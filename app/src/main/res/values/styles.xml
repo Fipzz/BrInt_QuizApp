@@ -6,8 +6,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorHint">@color/secondary_text</item>
 
     </style>
+
+    <!-- Titel -->
 
     <style name="name">
 
@@ -17,6 +20,34 @@
 
         <item name="android:textColor">
             #000000
+        </item>
+
+    </style>
+
+    <style name="question">
+
+        <item name="android:textSize">
+            24sp
+        </item>
+
+        <item name="android:textColor">
+            #8DB8DB
+        </item>
+
+        <item name="android:shadowColor">
+            #40000000
+        </item>
+
+        <item name="android:shadowDx">
+            0
+        </item>
+
+        <item name="android:shadowDy">
+            4
+        </item>
+
+        <item name="android:shadowRadius">
+            4
         </item>
 
     </style>

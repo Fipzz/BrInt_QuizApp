@@ -20,7 +20,7 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        setContentView(R.layout.quizz_layout);
+        setContentView(R.layout.quiz_activity_layout);
 
 
         a = (Button) findViewById(R.id.answer1);
@@ -29,13 +29,13 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
         b = (Button) findViewById(R.id.answer2);
         b.setOnClickListener(this);
 
-        c = (Button) findViewById(R.id.log_in);
+        c = (Button) findViewById(R.id.answer3);
         c.setOnClickListener(this);
 
         d = (Button) findViewById(R.id.answer4);
         d.setOnClickListener(this);
 
-        questionView = (TextView) findViewById(R.id.questionView);
+        questionView = (TextView) findViewById(R.id.question);
 
         String[][] question = new String[2][7];
         question[0][0] = "0";
