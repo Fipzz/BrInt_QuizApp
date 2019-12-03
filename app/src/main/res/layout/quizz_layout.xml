@@ -53,13 +53,13 @@
         android:text="Svar2"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/answer3"
+        app:layout_constraintBottom_toTopOf="@+id/log_in"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/answer1" />
 
     <Button
-        android:id="@+id/answer3"
+        android:id="@+id/log_in"
         android:layout_width="350dp"
         android:layout_height="100dp"
         android:background="@drawable/my_button"
@@ -90,6 +90,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/answer3" />
+        app:layout_constraintTop_toBottomOf="@+id/log_in" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

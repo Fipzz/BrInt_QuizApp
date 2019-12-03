@@ -29,7 +29,7 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
         b = (Button) findViewById(R.id.answer2);
         b.setOnClickListener(this);
 
-        c = (Button) findViewById(R.id.answer3);
+        c = (Button) findViewById(R.id.log_in);
         c.setOnClickListener(this);
 
         d = (Button) findViewById(R.id.answer4);

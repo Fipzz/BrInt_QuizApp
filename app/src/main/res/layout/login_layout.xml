@@ -36,7 +36,6 @@
         android:id="@+id/password_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#00E21212"
         android:ems="10"
         android:gravity="center"
         android:hint="**********"

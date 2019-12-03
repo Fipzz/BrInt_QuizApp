@@ -1,5 +1,6 @@
 package com.example.brint_quizapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,20 +9,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Login_lector extends AppCompatActivity implements View.OnClickListener {
 
-    Button a,b,c,d;
+    Button login,anon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.login_layout);
+        setContentView(R.layout.login_activity_layout);
 
 
-        a = (Button) findViewById(R.id.answer1);
-        a.setOnClickListener(this);
+        login = (Button) findViewById(R.id.log_in);
+        login.setOnClickListener(this);
 
-        b = (Button) findViewById(R.id.answer2);
-        b.setOnClickListener(this);
+        anon = (Button) findViewById(R.id.anon);
+        anon.setOnClickListener(this);
 
     }
 
@@ -29,6 +30,14 @@ public class Login_lector extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+
+        if(R.id.log_in == v.getId()){
+
+            startActivity(new Intent(Login_lector.this, Login_screen.class));
+
+        } else if (R.id.anon == v.getId()){
+
+        }
 
 
 
