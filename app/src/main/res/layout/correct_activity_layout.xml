@@ -7,7 +7,6 @@
     android:layout_height="fill_parent"
     android:background="#243665">
 
-    <!-- Quiz navn -->
     <TextView
         android:id="@+id/quiz_navn"
         android:layout_width="267dp"
