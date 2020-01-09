@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1012423172461",
+    "firebase_url": "https://b5-quizapp.firebaseio.com",
+    "project_id": "b5-quizapp",
+    "storage_bucket": "b5-quizapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012423172461:android:4c83b182a2f67b38737a64",
+        "android_client_info": {
+          "package_name": "com.example.brint_quizapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1012423172461-qu8460f8382jtn0p3j212dph7f5d2hoq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAi9pvNlAxnkveZnMbh0jnemNZMUPXxpvo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1012423172461-qu8460f8382jtn0p3j212dph7f5d2hoq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
