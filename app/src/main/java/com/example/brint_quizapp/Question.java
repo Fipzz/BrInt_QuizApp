@@ -8,11 +8,20 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class Question extends AppCompatActivity implements View.OnClickListener {
 
     Button a,b,c,d;
     TextView questionView;
+
+    ArrayList<Question_layout> questions = new ArrayList<Question_layout>();
+
+    int correctAnswers = 0, wrongAnswers = 0, currentQuestion = 0, isCorrect;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +35,8 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
         a = (Button) findViewById(R.id.answer1);
         a.setOnClickListener(this);
 
+
+
         b = (Button) findViewById(R.id.answer2);
         b.setOnClickListener(this);
 
@@ -37,50 +48,85 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
 
         questionView = (TextView) findViewById(R.id.question);
 
-        String[][] question = new String[2][7];
-        question[0][0] = "0";
-        question[0][1] = "Hvilken farve har faxe kondi flasken?";
-        question[0][2] = "Grøn";
-        question[0][3] = "Blå";
-        question[0][4] = "Rød";
-        question[0][5] = "Orange";
-        question[1][0] = "1";
-        question[1][1] = "Hvilken dag er den sidste dag på ugen?";
-        question[1][2] = "Søndag";
-        question[1][3] = "Tirsdag";
-        question[1][4] = "Torsdag";
-        question[1][5] = "Mandag";
+        initializeQuiz();
 
-        showNewQuestion(0, question, questionView, a, b, c, d);
+        showNextQuestion(questions.get(currentQuestion),currentQuestion);
+
+
 
     }
 
     @Override
     public void onClick(View v) {
 
-        String[][] question = new String[2][7];
-        question[0][0] = "0";
-        question[0][1] = "Hvilken farve har faxe kondi flasken?";
-        question[0][2] = "Grøn";
-        question[0][3] = "Blå";
-        question[0][4] = "Rød";
-        question[0][5] = "Orange";
-        question[1][0] = "1";
-        question[1][1] = "Hvilken dag er den sidste dag på ugen?";
-        question[1][2] = "Søndag";
-        question[1][3] = "Tirsdag";
-        question[1][4] = "Torsdag";
-        question[1][5] = "Mandag";
-        showNewQuestion(1, question, questionView, a, b, c, d);
+        if(R.id.answer1 == v.getId()){
+
+            if(isCorrect == 1){
+
+            } else{
+
+            }
+
+        } else if (v.getId()== b.getId()){
+
+            if(isCorrect == 2){
+
+            } else{
+
+            }
+
+        } else if (v.getId()== c.getId()){
+
+            if(isCorrect == 3){
+
+            } else{
+
+            }
+
+        } else if (v.getId()== d.getId()){
+
+
+            if(isCorrect == 4){
+
+            } else{
+
+            }
+
+        }
+
+        if(questions.size()-1 == currentQuestion){
+
+            //TODO add intent to go to result activity
+
+
+        } else {
+
+            currentQuestion++;
+            showNextQuestion(questions.get(currentQuestion),currentQuestion);
+
+        }
+
     }
 
-    public void showNewQuestion(int question_id, String[][] questions, TextView questionText, Button answer1Button, Button answer2Button, Button answer3Button, Button answer4Button){
+    public void showNextQuestion(Question_layout question, int currentQuestion){
 
-        questionText.setText(questions[question_id][1]);
-        answer1Button.setText(questions[question_id][2]);
-        answer2Button.setText(questions[question_id][3]);
-        answer3Button.setText(questions[question_id][4]);
-        answer4Button.setText(questions[question_id][5]);
+        questionView.setText(question.getQuestion());
+
+        a.setText(question.getAnswer1());
+        b.setText(question.getAnswer2());
+        c.setText(question.getAnswer3());
+        d.setText(question.getAnswer4());
+        isCorrect = question.getIsCorrect();
+
+    }
+
+    private void initializeQuiz() {
+
+        //TODO init the whole quizz in the beginning
+
+        questions.add(new Question_layout("Hvad er 1+1?", "1", "2", "3", "4", 2));
+        questions.add(new Question_layout("Hvor mange stop er der på C-linjen?", "31", "5", "67000", "40", 1));
+        questions.add(new Question_layout("Hvad kaldes en der er født mellem 1946-1964", "Millenial", "Gen Z", "Roomba", "Boomer", 4));
 
     }
 }

@@ -72,8 +72,7 @@
         app:layout_constraintHorizontal_bias="0.351"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/answer1"
-        app:layout_constraintVertical_bias="0.1"
-        app:layout_constrintBottom_toBottomOf="parent" />
+        app:layout_constraintVertical_bias="0.1" />
 
     <Button
         android:id="@+id/answer3"
@@ -89,8 +88,7 @@
         app:layout_constraintHorizontal_bias="0.351"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/answer2"
-        app:layout_constraintVertical_bias="0.13"
-        app:layout_constrintBottom_toBottomOf="parent" />
+        app:layout_constraintVertical_bias="0.13" />
 
     <Button
         android:id="@+id/answer4"
