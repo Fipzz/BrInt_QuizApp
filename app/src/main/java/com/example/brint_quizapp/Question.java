@@ -155,7 +155,7 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
 
     }
 
-    public void showNextQuestion(Question_layout question, int currentQuestion){
+    public void showNextQuestion(Question_item question, int currentQuestion){
 
         questionView.setText(question.getQuestion());
 
