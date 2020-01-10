@@ -1,9 +1,17 @@
 package com.example.brint_quizapp;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.drawable.DrawableCompat;
 
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -99,14 +107,55 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
 
         } else {
 
-            currentQuestion++;
-            showNextQuestion(questions.get(currentQuestion),currentQuestion);
+            if (isCorrect == 1) {
+                Drawable buttonDrawable = a.getBackground();
+                buttonDrawable = DrawableCompat.wrap(buttonDrawable);
+                //the color is a direct color int and not a color resource
+                DrawableCompat.setTint(buttonDrawable, Color.GREEN);
+                a.setBackground(buttonDrawable);
+                //a.setBackgroundTintList(getBaseContext().getColorStateList(R.color.correctgreen));
+                //a.setBackgroundColor(getColor(R.color.correctgreen));
+                //b.setBackgroundColor(getColor(R.color.redwrong));
+                //c.setBackgroundColor(getColor(R.color.redwrong));
+                //d.setBackgroundColor(getColor(R.color.redwrong));
+            } else if (isCorrect == 2) {
+                a.setBackgroundColor(getColor(R.color.redwrong));
+                b.setBackgroundColor(getColor(R.color.correctgreen));
+                c.setBackgroundColor(getColor(R.color.redwrong));
+                d.setBackgroundColor(getColor(R.color.redwrong));
+            } else if (isCorrect == 3) {
+                a.setBackgroundColor(getColor(R.color.redwrong));
+                b.setBackgroundColor(getColor(R.color.redwrong));
+                c.setBackgroundColor(getColor(R.color.correctgreen));
+                d.setBackgroundColor(getColor(R.color.redwrong));
+            } else {
+                a.setBackgroundColor(getColor(R.color.redwrong));
+                b.setBackgroundColor(getColor(R.color.redwrong));
+                c.setBackgroundColor(getColor(R.color.redwrong));
+                d.setBackgroundColor(getColor(R.color.correctgreen));
+            }
+
+
+            CountDownTimer showAnswers = new CountDownTimer(3000, 5000) {
+
+                @Override
+                public void onTick(long l) {
+
+                }
+
+                @Override
+                public void onFinish() {
+                    currentQuestion++;
+                    showNextQuestion(questions.get(currentQuestion),currentQuestion);
+                }
+            }.start();
+
 
         }
 
     }
 
-    public void showNextQuestion(Question_item question, int currentQuestion){
+    public void showNextQuestion(Question_layout question, int currentQuestion){
 
         questionView.setText(question.getQuestion());
 
