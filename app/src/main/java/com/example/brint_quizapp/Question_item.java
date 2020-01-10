@@ -1,11 +1,11 @@
 package com.example.brint_quizapp;
 
-public class Question_layout {
+public class Question_item {
 
     private String question,answer1,answer2,answer3,answer4;
     private int isCorrect;
 
-    Question_layout(String question, String answer1, String answer2, String answer3, String answer4,int isCorrect){
+    Question_item(String question, String answer1, String answer2, String answer3, String answer4, int isCorrect){
 
         this.question = question;
         this.answer1 = answer1;
