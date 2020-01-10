@@ -2,13 +2,13 @@ package com.example.brint_quizapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
     Button a,b,c,d;
     TextView questionView;
 
-    ArrayList<Question_layout> questions = new ArrayList<Question_layout>();
+    ArrayList<Question_item> questions = new ArrayList<Question_item>();
 
     int correctAnswers = 0, wrongAnswers = 0, currentQuestion = 0, isCorrect;
 
@@ -36,7 +36,6 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
         a.setOnClickListener(this);
 
 
-
         b = (Button) findViewById(R.id.answer2);
         b.setOnClickListener(this);
 
@@ -52,8 +51,6 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
 
         showNextQuestion(questions.get(currentQuestion),currentQuestion);
 
-
-
     }
 
     @Override
@@ -62,34 +59,34 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
         if(R.id.answer1 == v.getId()){
 
             if(isCorrect == 1){
-
-            } else{
-
+                correctAnswers++;
+            } else {
+                wrongAnswers++;
             }
 
-        } else if (v.getId()== b.getId()){
+        } else if (v.getId() == b.getId()){
 
             if(isCorrect == 2){
-
-            } else{
-
+                correctAnswers++;
+            } else {
+                wrongAnswers++;
             }
 
-        } else if (v.getId()== c.getId()){
+        } else if (v.getId() == c.getId()){
 
             if(isCorrect == 3){
-
-            } else{
-
+                correctAnswers++;
+            } else {
+                wrongAnswers++;
             }
 
-        } else if (v.getId()== d.getId()){
+        } else if (v.getId() == d.getId()){
 
 
             if(isCorrect == 4){
-
-            } else{
-
+                correctAnswers++;
+            } else {
+                wrongAnswers++;
             }
 
         }
@@ -98,6 +95,7 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
 
             //TODO add intent to go to result activity
 
+            //Intent mIntent = new Intent(this, .class);
 
         } else {
 
@@ -108,7 +106,7 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
 
     }
 
-    public void showNextQuestion(Question_layout question, int currentQuestion){
+    public void showNextQuestion(Question_item question, int currentQuestion){
 
         questionView.setText(question.getQuestion());
 
@@ -124,9 +122,9 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
 
         //TODO init the whole quizz in the beginning
 
-        questions.add(new Question_layout("Hvad er 1+1?", "1", "2", "3", "4", 2));
-        questions.add(new Question_layout("Hvor mange stop er der på C-linjen?", "31", "5", "67000", "40", 1));
-        questions.add(new Question_layout("Hvad kaldes en der er født mellem 1946-1964", "Millenial", "Gen Z", "Roomba", "Boomer", 4));
+        questions.add(new Question_item("Hvad er 1+1?", "1", "2", "3", "4", 2));
+        questions.add(new Question_item("Hvor mange stop er der på C-linjen?", "31", "5", "67000", "40", 1));
+        questions.add(new Question_item("Hvad kaldes en der er født mellem 1946-1964", "Millenial", "Gen Z", "Roomba", "Boomer", 4));
 
     }
 }
