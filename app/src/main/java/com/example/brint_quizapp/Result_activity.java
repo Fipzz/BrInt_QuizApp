@@ -17,6 +17,8 @@ public class Result_activity extends AppCompatActivity implements View.OnClickLi
     TextView right, wrong;
     Button back;
 
+    int rightAnswers, wrongAnswers;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,13 +31,18 @@ public class Result_activity extends AppCompatActivity implements View.OnClickLi
         right = findViewById(R.id.numberCorrectVar);
         wrong = findViewById(R.id.numberWrongVar);
 
+        back = findViewById(R.id.goBack);
+        back.setOnClickListener(this);
 
+        right.setText(Integer.toString(getIntent().getExtras().getInt("right")));
+        wrong.setText(Integer.toString(getIntent().getExtras().getInt("wrong")));
     }
 
     @Override
     public void onClick(View v) {
 
-
+        Intent home = new Intent(this, Homepage_activity.class);
+        startActivity(home);
 
     }
 
