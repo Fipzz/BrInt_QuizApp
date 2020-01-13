@@ -1,18 +1,35 @@
 package com.example.brint_quizapp;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.drawable.DrawableCompat;
 
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class Question extends AppCompatActivity implements View.OnClickListener {
 
     Button a,b,c,d;
     TextView questionView;
+
+    ArrayList<Question_item> questions = new ArrayList<Question_item>();
+
+    int correctAnswers = 0, wrongAnswers = 0, currentQuestion = 0, isCorrect;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +43,7 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
         a = (Button) findViewById(R.id.answer1);
         a.setOnClickListener(this);
 
+
         b = (Button) findViewById(R.id.answer2);
         b.setOnClickListener(this);
 
@@ -37,50 +55,125 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
 
         questionView = (TextView) findViewById(R.id.question);
 
-        String[][] question = new String[2][7];
-        question[0][0] = "0";
-        question[0][1] = "Hvilken farve har faxe kondi flasken?";
-        question[0][2] = "Grøn";
-        question[0][3] = "Blå";
-        question[0][4] = "Rød";
-        question[0][5] = "Orange";
-        question[1][0] = "1";
-        question[1][1] = "Hvilken dag er den sidste dag på ugen?";
-        question[1][2] = "Søndag";
-        question[1][3] = "Tirsdag";
-        question[1][4] = "Torsdag";
-        question[1][5] = "Mandag";
+        initializeQuiz();
 
-        showNewQuestion(0, question, questionView, a, b, c, d);
+        showNextQuestion(questions.get(currentQuestion),currentQuestion);
 
     }
 
     @Override
     public void onClick(View v) {
 
-        String[][] question = new String[2][7];
-        question[0][0] = "0";
-        question[0][1] = "Hvilken farve har faxe kondi flasken?";
-        question[0][2] = "Grøn";
-        question[0][3] = "Blå";
-        question[0][4] = "Rød";
-        question[0][5] = "Orange";
-        question[1][0] = "1";
-        question[1][1] = "Hvilken dag er den sidste dag på ugen?";
-        question[1][2] = "Søndag";
-        question[1][3] = "Tirsdag";
-        question[1][4] = "Torsdag";
-        question[1][5] = "Mandag";
-        showNewQuestion(1, question, questionView, a, b, c, d);
+        if(R.id.answer1 == v.getId()){
+
+            if(isCorrect == 1){
+                correctAnswers++;
+            } else {
+                wrongAnswers++;
+            }
+
+        } else if (v.getId() == b.getId()){
+
+            if(isCorrect == 2){
+                correctAnswers++;
+            } else {
+                wrongAnswers++;
+            }
+
+        } else if (v.getId() == c.getId()){
+
+            if(isCorrect == 3){
+                correctAnswers++;
+            } else {
+                wrongAnswers++;
+            }
+
+        } else if (v.getId() == d.getId()){
+
+
+            if(isCorrect == 4){
+                correctAnswers++;
+            } else {
+                wrongAnswers++;
+            }
+
+        }
+
+        if(questions.size()-1 == currentQuestion){
+
+            //TODO add intent to go to result activity
+
+            //Intent mIntent = new Intent(this, .class);
+
+        } else {
+
+            if (isCorrect == 1) {
+                Drawable buttonDrawable = a.getBackground();
+                buttonDrawable = DrawableCompat.wrap(buttonDrawable);
+                //the color is a direct color int and not a color resource
+                DrawableCompat.setTint(buttonDrawable, Color.GREEN);
+                a.setBackground(buttonDrawable);
+                //a.setBackgroundTintList(getBaseContext().getColorStateList(R.color.correctgreen));
+                //a.setBackgroundColor(getColor(R.color.correctgreen));
+                //b.setBackgroundColor(getColor(R.color.redwrong));
+                //c.setBackgroundColor(getColor(R.color.redwrong));
+                //d.setBackgroundColor(getColor(R.color.redwrong));
+            } else if (isCorrect == 2) {
+                a.setBackgroundColor(getColor(R.color.redwrong));
+                b.setBackgroundColor(getColor(R.color.correctgreen));
+                c.setBackgroundColor(getColor(R.color.redwrong));
+                d.setBackgroundColor(getColor(R.color.redwrong));
+            } else if (isCorrect == 3) {
+                a.setBackgroundColor(getColor(R.color.redwrong));
+                b.setBackgroundColor(getColor(R.color.redwrong));
+                c.setBackgroundColor(getColor(R.color.correctgreen));
+                d.setBackgroundColor(getColor(R.color.redwrong));
+            } else {
+                a.setBackgroundColor(getColor(R.color.redwrong));
+                b.setBackgroundColor(getColor(R.color.redwrong));
+                c.setBackgroundColor(getColor(R.color.redwrong));
+                d.setBackgroundColor(getColor(R.color.correctgreen));
+            }
+
+
+            CountDownTimer showAnswers = new CountDownTimer(3000, 5000) {
+
+                @Override
+                public void onTick(long l) {
+
+                }
+
+                @Override
+                public void onFinish() {
+                    currentQuestion++;
+                    showNextQuestion(questions.get(currentQuestion),currentQuestion);
+                }
+            }.start();
+
+
+        }
+
     }
 
-    public void showNewQuestion(int question_id, String[][] questions, TextView questionText, Button answer1Button, Button answer2Button, Button answer3Button, Button answer4Button){
+    public void showNextQuestion(Question_item question, int currentQuestion){
 
-        questionText.setText(questions[question_id][1]);
-        answer1Button.setText(questions[question_id][2]);
-        answer2Button.setText(questions[question_id][3]);
-        answer3Button.setText(questions[question_id][4]);
-        answer4Button.setText(questions[question_id][5]);
+        questionView.setText(question.getQuestion());
+
+        a.setText(question.getAnswer1());
+        b.setText(question.getAnswer2());
+        c.setText(question.getAnswer3());
+        d.setText(question.getAnswer4());
+        isCorrect = question.getIsCorrect();
+
+    }
+
+    private void initializeQuiz() {
+
+        //TODO init the whole quizz in the beginning
+
+        questions.add(new Question_item("Hvad er 1+1?", "1", "2", "3", "4", 2));
+        questions.add(new Question_item("Hvor mange stop er der på C-linjen?", "31", "5", "67000", "40", 1));
+        questions.add(new Question_item("Hvad kaldes en der er født mellem 1946-1964", "Millenial", "Gen Z", "Roomba", "Boomer", 4));
 
     }
 }
