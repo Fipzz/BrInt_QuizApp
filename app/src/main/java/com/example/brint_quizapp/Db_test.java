@@ -17,6 +17,7 @@ import java.sql.SQLException;
 public class Db_test extends AppCompatActivity implements View.OnClickListener {
 
     Button createTables, deleteTables;
+    public static DBconnector connctionClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +30,13 @@ public class Db_test extends AppCompatActivity implements View.OnClickListener {
         deleteTables = (Button) findViewById(R.id.deleteTables);
         deleteTables.setOnClickListener(this);
 
+        connctionClass = new DBconnector();
+
     }
 
     private static class CreateTablesClass extends AsyncTask<String, Void, Void> {
         Connection connection;
-        private final static String server = "jdbc:sqlserver://127.0.0.1/test:3306";
+        private final static String server = "jdbc:sqlserver://10.0.2.2/test:3306";
         private final static String username = "root";
         private final static String password = "";
 
@@ -45,8 +48,7 @@ public class Db_test extends AppCompatActivity implements View.OnClickListener {
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
-                connection = DriverManager.getConnection(server, username, password);
-                connection.setAutoCommit(false);
+                connection = connctionClass.CONN();
 
                 DDL ddl = new DDL();
                 ddl.createTables(connection);

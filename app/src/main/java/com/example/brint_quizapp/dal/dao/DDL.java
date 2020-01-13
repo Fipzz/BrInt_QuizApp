@@ -21,7 +21,7 @@ public class DDL{
     }
 
     public void createTables(Connection c) throws DALException {
-/*
+
         try {
             String query = "CREATE TABLE IF NOT EXISTS " + "user" + " ("
                     + "id int(10) auto_increment,"
@@ -75,7 +75,7 @@ public class DDL{
         } catch (SQLException e) {
             throw new DALException(e.getMessage());
         }
- */
+
     }
 
     public void deleteTables(Connection c) throws DALException{

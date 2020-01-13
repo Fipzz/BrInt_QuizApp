@@ -3,8 +3,10 @@ package com.example.brint_quizapp;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -17,6 +19,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -24,6 +27,8 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
 
     Button a,b,c,d;
     TextView questionView;
+
+    Intent resultIntent;
 
     ArrayList<Question_item> questions = new ArrayList<Question_item>();
 
@@ -57,12 +62,44 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
 
         initializeQuiz();
 
+        resultIntent = new Intent(this, Result_activity.class);
+
         showNextQuestion(questions.get(currentQuestion),currentQuestion);
 
     }
 
     @Override
     public void onClick(View v) {
+
+        if (isCorrect == 1) {
+
+            right(a);
+            wrong(b);
+            wrong(c);
+            wrong(d);
+
+        } else if (isCorrect == 2) {
+
+            wrong(a);
+            right(b);
+            wrong(c);
+            wrong(d);
+
+        } else if (isCorrect == 3) {
+
+            wrong(a);
+            wrong(b);
+            right(c);
+            wrong(d);
+
+        } else {
+
+            wrong(a);
+            wrong(b);
+            wrong(c);
+            right(d);
+
+        }
 
         if(R.id.answer1 == v.getId()){
 
@@ -99,59 +136,43 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
 
         }
 
-        if(questions.size()-1 == currentQuestion){
 
-            //TODO add intent to go to result activity
 
-            //Intent mIntent = new Intent(this, .class);
+        CountDownTimer showAnswers = new CountDownTimer(3000, 3000) {
 
-        } else {
+            @Override
+            public void onTick(long l) {
 
-            if (isCorrect == 1) {
-                Drawable buttonDrawable = a.getBackground();
-                buttonDrawable = DrawableCompat.wrap(buttonDrawable);
-                //the color is a direct color int and not a color resource
-                DrawableCompat.setTint(buttonDrawable, Color.GREEN);
-                a.setBackground(buttonDrawable);
-                //a.setBackgroundTintList(getBaseContext().getColorStateList(R.color.correctgreen));
-                //a.setBackgroundColor(getColor(R.color.correctgreen));
-                //b.setBackgroundColor(getColor(R.color.redwrong));
-                //c.setBackgroundColor(getColor(R.color.redwrong));
-                //d.setBackgroundColor(getColor(R.color.redwrong));
-            } else if (isCorrect == 2) {
-                a.setBackgroundColor(getColor(R.color.redwrong));
-                b.setBackgroundColor(getColor(R.color.correctgreen));
-                c.setBackgroundColor(getColor(R.color.redwrong));
-                d.setBackgroundColor(getColor(R.color.redwrong));
-            } else if (isCorrect == 3) {
-                a.setBackgroundColor(getColor(R.color.redwrong));
-                b.setBackgroundColor(getColor(R.color.redwrong));
-                c.setBackgroundColor(getColor(R.color.correctgreen));
-                d.setBackgroundColor(getColor(R.color.redwrong));
-            } else {
-                a.setBackgroundColor(getColor(R.color.redwrong));
-                b.setBackgroundColor(getColor(R.color.redwrong));
-                c.setBackgroundColor(getColor(R.color.redwrong));
-                d.setBackgroundColor(getColor(R.color.correctgreen));
             }
 
+            @Override
+            public void onFinish() {
 
-            CountDownTimer showAnswers = new CountDownTimer(3000, 5000) {
+                if(questions.size()-1 == currentQuestion) {
 
-                @Override
-                public void onTick(long l) {
+                    Bundle data = new Bundle();
+                    data.putInt("wrong", wrongAnswers);
+                    data.putInt("right", correctAnswers);
+                    resultIntent.putExtras(data);
 
-                }
+                    startActivity(resultIntent);
 
-                @Override
-                public void onFinish() {
+                } else {
+
+                    resetButton(a);
+                    resetButton(b);
+                    resetButton(c);
+                    resetButton(d);
+
                     currentQuestion++;
                     showNextQuestion(questions.get(currentQuestion),currentQuestion);
+
                 }
-            }.start();
 
 
-        }
+            }
+
+        }.start();
 
     }
 
@@ -174,6 +195,29 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
         questions.add(new Question_item("Hvad er 1+1?", "1", "2", "3", "4", 2));
         questions.add(new Question_item("Hvor mange stop er der på C-linjen?", "31", "5", "67000", "40", 1));
         questions.add(new Question_item("Hvad kaldes en der er født mellem 1946-1964", "Millenial", "Gen Z", "Roomba", "Boomer", 4));
+
+    }
+
+    private void wrong(Button a){
+
+        a.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.redwrong));
+        a.setBackground(getDrawable(R.drawable.log_in));
+        a.setEnabled(false);
+
+    }
+
+    private void right(Button a){
+
+        a.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.correctgreen));
+        a.setBackground(getDrawable(R.drawable.log_in));
+        a.setEnabled(false);
+    }
+
+    private void resetButton(Button a){
+
+        a.setEnabled(true);
+        a.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.buttonblue));
+        a.setBackground(getDrawable(R.drawable.log_in));
 
     }
 }
