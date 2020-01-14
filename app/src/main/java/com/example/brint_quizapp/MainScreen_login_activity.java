@@ -6,13 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
 public class MainScreen_login_activity extends AppCompatActivity implements View.OnClickListener {
 
-    Button login, anon;
+    Button login, anon, dbtest;
     EditText username, password;
 
     @Override
@@ -27,6 +26,9 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
 
         anon = (Button) findViewById(R.id.anon);
         anon.setOnClickListener(this);
+
+        dbtest = (Button) findViewById(R.id.dbtest);
+        dbtest.setOnClickListener(this);
 
         username = findViewById(R.id.brugernavn);
 
@@ -45,6 +47,8 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
 
             startActivity(new Intent(MainScreen_login_activity.this, Homepage_activity.class));
 
+        } else if(v.getId() == dbtest.getId()){
+            startActivity(new Intent(MainScreen_login_activity.this, Db_test.class));
         }
 
     }

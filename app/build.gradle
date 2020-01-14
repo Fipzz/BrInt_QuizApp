@@ -27,6 +27,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    implementation files('libs\\mysql-connector.jar')
+    implementation files('libs\\sqljdbc41.jar')
+    implementation files('libs\\sqljdbc41.jar')
 }
 
 apply plugin: 'com.google.gms.google-services'
