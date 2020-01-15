@@ -2,6 +2,6 @@
 <resources>
     <attr name="primaryTextColor" format="reference"/>
     <attr name="buttonNormalColor" format="reference"/>
-    <attr name="secondaryTextColor" format="reference"/>
+    <attr name="buttonTextColor" format="reference"/>
     <attr name="primaryTheme" format="reference"/>
     </resources>
