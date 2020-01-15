@@ -5,14 +5,32 @@
 
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="blueBackgroundColor">@color/blueBackground</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="primaryTextColor">@color/primary_text</item>
-        <item name="android:textColorHint">@color/buttonText</item>
-        <item name="colorButtonNormal">@color/buttonNormal</item>
+        <item name="blueTextColor">@color/bluePrimary_text</item>
+        <item name="blueButtonTextColor">@color/blueButtonText</item>
+        <item name="colorButtonNormal">@color/blueButtonNormal</item>
+        <item name="blueQuestionTextColor">@color/blueQuestionColor</item>
+
 
 
     </style>
+
+   <style name="PurpleTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+       <!-- Customize your theme here. -->
+       <item name="colorPrimary">@color/colorPrimary</item>
+       <item name="purpleBackgroundColor">@color/purpleBackground</item>
+       <item name="colorAccent">@color/colorAccent</item>
+       <item name="purpleTextColor">@color/purplePrimaryText</item>
+       <item name="purpleButtonTextColor">@color/purpleButtonText</item>
+       <item name="colorButtonNormal">@color/purpleButtonNormal</item>
+       <item name="purpleQuestionTextColor">@color/purpleQuestionColor</item>
+
+
+   </style>
+
+
 
     <!-- Titel -->
 
@@ -23,7 +41,7 @@
         </item>
 
         <item name="android:textColor">
-            #000000
+            @color/bluePrimary_text
         </item>
 
     </style>
@@ -35,7 +53,7 @@
         </item>
 
         <item name="android:textColor">
-            #8DB8DB
+            @color/blueButtonText
         </item>
 
         <item name="android:shadowColor">

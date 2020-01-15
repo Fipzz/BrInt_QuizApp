@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="primaryTextColor" format="reference"/>
-    <attr name="buttonNormalColor" format="reference"/>
-    <attr name="buttonTextColor" format="reference"/>
-    <attr name="primaryTheme" format="reference"/>
-    </resources>
+
+    <attr name="blueTextColor" format="reference"/>
+    <attr name="blueButtonColor" format="reference"/>
+    <attr name="blueButtonTextColor" format="reference"/>
+    <attr name="blueBackgroundColor" format="reference"/>
+    <attr name="blueQuestionTextColor" format="reference"/>
+    <attr name="blueTheme" format="reference"/>
+
+    <attr name="purpleTextColor" format="reference"/>
+    <attr name="purpleButtonColor" format="reference"/>
+    <attr name="purpleButtonTextColor" format="reference"/>
+    <attr name="purpleBackgroundColor" format="reference"/>
+    <attr name="purpleQuestionTextColor" format="reference"/>
+    <attr name="purpleTheme" format="reference"/>
+
+</resources>
