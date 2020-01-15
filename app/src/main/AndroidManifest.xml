@@ -24,6 +24,7 @@
         <activity android:name=".Question"></activity>
         <activity android:name=".Homepage_activity"></activity>
         <activity android:name=".Result_activity"></activity>
+        <activity android:name=".editQuiz"></activity>
 
 
         <meta-data
