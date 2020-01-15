@@ -20,9 +20,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Question" />
-        <activity android:name=".Homepage_activity" />
-        <activity android:name=".Result_activity"/>
+
+        <activity android:name=".Question"></activity>
+        <activity android:name=".Homepage_activity"></activity>
+        <activity android:name=".Result_activity"></activity>
+
 
         <meta-data
             android:name="preloaded_fonts"

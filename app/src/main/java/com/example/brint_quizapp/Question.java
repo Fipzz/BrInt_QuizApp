@@ -11,6 +11,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -70,6 +71,36 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
     @Override
     public void onClick(View v) {
 
+        if (isCorrect == 1) {
+
+            right(a);
+            wrong(b);
+            wrong(c);
+            wrong(d);
+
+        } else if (isCorrect == 2) {
+
+            wrong(a);
+            right(b);
+            wrong(c);
+            wrong(d);
+
+        } else if (isCorrect == 3) {
+
+            wrong(a);
+            wrong(b);
+            right(c);
+            wrong(d);
+
+        } else {
+
+            wrong(a);
+            wrong(b);
+            wrong(c);
+            right(d);
+
+        }
+
         if(R.id.answer1 == v.getId()){
 
             if(isCorrect == 1){
@@ -107,71 +138,40 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
 
 
 
-            if (isCorrect == 1) {
+        CountDownTimer showAnswers = new CountDownTimer(3000, 3000) {
 
-                right(a);
-                wrong(b);
-                wrong(c);
-                wrong(d);
-
-            } else if (isCorrect == 2) {
-
-                wrong(a);
-                right(b);
-                wrong(c);
-                wrong(d);
-
-            } else if (isCorrect == 3) {
-
-                wrong(a);
-                wrong(b);
-                right(c);
-                wrong(d);
-
-            } else {
-
-                wrong(a);
-                wrong(b);
-                wrong(c);
-                right(d);
+            @Override
+            public void onTick(long l) {
 
             }
 
+            @Override
+            public void onFinish() {
 
-            CountDownTimer showAnswers = new CountDownTimer(3000, 5000) {
+                if(questions.size()-1 == currentQuestion) {
 
-                @Override
-                public void onTick(long l) {
+                    Bundle data = new Bundle();
+                    data.putInt("wrong", wrongAnswers);
+                    data.putInt("right", correctAnswers);
+                    resultIntent.putExtras(data);
 
-                }
+                    startActivity(resultIntent);
 
-                @Override
-                public void onFinish() {
+                } else {
 
                     resetButton(a);
                     resetButton(b);
                     resetButton(c);
                     resetButton(d);
 
-                    if(questions.size()-1 == currentQuestion) {
-
-                        //TODO add intent to go to result activity
-
-                        Bundle data = new Bundle();
-                        data.putInt("wrong", wrongAnswers);
-                        data.putInt("right", correctAnswers);
-                        resultIntent.putExtras(data);
-
-                        startActivity(resultIntent);
-                    }
-
                     currentQuestion++;
                     showNextQuestion(questions.get(currentQuestion),currentQuestion);
                 }
-            }.start();
 
 
+            }
 
+        }.start();
 
     }
 
@@ -201,6 +201,7 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
 
         a.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.redwrong));
         a.setBackground(getDrawable(R.drawable.log_in));
+        a.setEnabled(false);
 
     }
 
@@ -208,11 +209,12 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
 
         a.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.correctgreen));
         a.setBackground(getDrawable(R.drawable.log_in));
-
+        a.setEnabled(false);
     }
 
     private void resetButton(Button a){
 
+        a.setEnabled(true);
         a.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.buttonblue));
         a.setBackground(getDrawable(R.drawable.log_in));
 
