@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Homepage_activity extends AppCompatActivity implements View.OnClickListener {
 
+    //TODO rediger quiz skal ændres til "Mine Quizzer" og skal føre til quiz oversigt
+
     Button quiz, profile, edit;
     EditText quiz_code;
     Toast toast;

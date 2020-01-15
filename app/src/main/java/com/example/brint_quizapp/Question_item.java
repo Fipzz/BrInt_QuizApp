@@ -2,6 +2,9 @@ package com.example.brint_quizapp;
 
 public class Question_item {
 
+    //TODO Updateres til at inkludere quiz navn
+    //TODO Evt, added rigtige og forkerte svar hertil eller oprette nye klasse til at håndtere dette
+
     private String question,answer1,answer2,answer3,answer4;
     private int isCorrect;
 
