@@ -114,7 +114,7 @@
         android:layout_width="330dp"
         android:layout_height="70dp"
         android:background="@drawable/log_in"
-        android:backgroundTint="@color/buttonblue"
+        android:backgroundTint="@color/buttonNormal"
         android:text="Tilbage til Start"
         android:textColor="#243665"
         android:textSize="20sp"

@@ -99,7 +99,7 @@
         android:layout_width="95dp"
         android:layout_height="43dp"
         android:background="@drawable/log_in"
-        android:backgroundTint="@color/buttonblue"
+        android:backgroundTint="@color/buttonNormal"
         android:text="Log ind"
         android:textColor="#243665"
         android:textSize="14sp"

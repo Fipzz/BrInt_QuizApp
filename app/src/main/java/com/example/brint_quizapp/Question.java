@@ -1,16 +1,8 @@
 package com.example.brint_quizapp;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 
-import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -19,7 +11,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -215,7 +206,7 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
     private void resetButton(Button a){
 
         a.setEnabled(true);
-        a.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.buttonblue));
+        a.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.buttonNormal));
         a.setBackground(getDrawable(R.drawable.log_in));
 
     }
