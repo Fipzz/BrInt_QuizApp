@@ -204,10 +204,22 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Toast.makeText(getApplicationContext(), "Spørgsmål Slettet", Toast.LENGTH_SHORT).show();
-                    currentQuestion++;
-                    showNextQuestion(questions.get(currentQuestion), currentQuestion);
-                    currentQuestion--;
-                    questions.remove(currentQuestion);
+                    if (currentQuestion == questions.size()-1) {
+                        currentQuestion--;
+                        showNextQuestion(questions.get(currentQuestion), currentQuestion);
+                        currentQuestion++;
+                        questions.remove(currentQuestion);
+                        currentQuestion--;
+                    } else {
+                        currentQuestion++;
+                        showNextQuestion(questions.get(currentQuestion), currentQuestion);
+                        currentQuestion--;
+                        questions.remove(currentQuestion);
+                    }
+                    questionCounter.setText(currentQuestion + 1 + " / " + questions.size());
+                    if (currentQuestion == questions.size()-1) {
+                        next.setText("Tilføj");
+                    }
                 }
             });
             builder.setNegativeButton("Nej", new DialogInterface.OnClickListener() {
