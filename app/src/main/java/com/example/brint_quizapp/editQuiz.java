@@ -38,7 +38,7 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
 
     int currentQuestion = 0, isCorrect;
 
-    ImageButton edit1, edit2, edit3, edit4, save;
+    ImageButton edit1, edit2, edit3, edit4, save, delete;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -107,10 +107,15 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
 
         save = (ImageButton) findViewById(R.id.save);
         save.setOnClickListener(this);
+
+        delete = (ImageButton) findViewById(R.id.delete);
+        delete.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
+
+        //Handles when the user presses the next and previous buttons
         if (R.id.next == v.getId()) {
             if (next.getText().toString() == "Tilføj") {
                 questions.add(new Question_item("Indtast Spørgsmål", "Svar 1", "Svar 2", "Svar 3", "Svar 4", 1));
@@ -159,14 +164,15 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
             questionCounter.setText(currentQuestion + 1 + " / " + questions.size());
         }
 
+        //Handles when the user presses the save icon
         if (R.id.save == v.getId()) { //http://www.apnatutorials.com/android/android-alert-confirm-prompt-dialog.php?categoryId=2&subCategoryId=34&myPath=android/android-alert-confirm-prompt-dialog.php
 
-            //TODO In this if statement, if the user presses to save, the current arraylist is supposed to be uploaded to the database.
+            //TODO In this if statement, if the user presses to save in the prompt menu, the current arraylist is to be uploaded to the database.
 
             final Intent goBack = new Intent(this, Homepage_activity.class);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Afslutning af redigering");
-            builder.setMessage("Du er ved afslutte.\nØnsker du at gemme dine ændringer?   ");
+            builder.setMessage("Du er ved afslutte redigeringen.\nØnsker du at gemme dine ændringer?   ");
             builder.setCancelable(true);
             builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                 @Override
@@ -179,12 +185,37 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Toast.makeText(getApplicationContext(), "Ændringer ikke gemt", Toast.LENGTH_SHORT).show();
-                    startActivity(goBack);
                 }
             });
             builder.show();
+        }
 
+        //Handles when the user presses the delete icon
+        if (R.id.delete == v.getId()) {
 
+            //TODO In this if statement, if the user presses to delete in the prompt menu, the currentQuestion is to be dropped from the table in the database. Consider adding an animation.
+
+            final Intent goBack = new Intent(this, Homepage_activity.class);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Slet spørgsmål");
+            builder.setMessage("Er du sikker på at du ønsker at slette spørgsmålet?");
+            builder.setCancelable(true);
+            builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getApplicationContext(), "Spørgsmål Slettet", Toast.LENGTH_SHORT).show();
+                    currentQuestion++;
+                    showNextQuestion(questions.get(currentQuestion), currentQuestion);
+                    currentQuestion--;
+                    questions.remove(currentQuestion);
+                }
+            });
+            builder.setNegativeButton("Nej", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+            builder.show();
         }
     }
 
