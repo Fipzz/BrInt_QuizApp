@@ -17,11 +17,13 @@ import java.util.ArrayList;
 
 public class editQuiz extends AppCompatActivity implements View.OnClickListener{
 
+    //TODO add a button to remove a question
+
     Button next, prev;
 
     EditText a1, a2, a3, a4;
 
-    TextView quizName, questionOnScreen;
+    TextView quizName, questionOnScreen, questionCounter;
 
     CheckBox c1, c2, c3, c4;
 
@@ -30,8 +32,6 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
     ArrayList<Question_item> questions = new ArrayList<Question_item>();
 
     Question_item questionEdit;
-
-    String answer1, answer2, answer3, answer4;
 
     int currentQuestion = 0, isCorrect;
 
@@ -66,6 +66,8 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
 
         quizName = (TextView) findViewById(R.id.name);
 
+        questionCounter = (TextView) findViewById(R.id.questionCounter);
+
         questionOnScreen = (EditText) findViewById(R.id.question);
 
         c1 = (CheckBox) findViewById(R.id.checkBox);
@@ -80,6 +82,7 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
         questionEdit = questions.get(currentQuestion);
         showNextQuestion(questionEdit, currentQuestion);
         updateCheckBox();
+        questionCounter.setText(currentQuestion + 1 + " / " + questions.size());
 
         edit1 = (ImageButton) findViewById(R.id.edit1);
         edit1.setOnClickListener(this);
@@ -97,6 +100,8 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
         edit2.setEnabled(false);
         edit3.setEnabled(false);
         edit4.setEnabled(false);
+
+        prev.setEnabled(false);
     }
 
     @Override
@@ -124,11 +129,17 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
             if (next.getText().toString() == "Tilføj") {
                 next.setText("Næste");
             }
+
             if (R.id.previous == v.getId()) {
+                if (currentQuestion == 1) {
+                    prev.setEnabled(false);
+                }
+
                 currentQuestion--;
                 showNextQuestion(questions.get(currentQuestion), currentQuestion);
                 updateCheckBox();
             } else if (R.id.next == v.getId()) {
+                prev.setEnabled(true);
 
                 if (currentQuestion == questions.size()-2) {
                     next.setText("Tilføj");
@@ -141,6 +152,7 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
                     updateCheckBox();
                 }
             }
+            questionCounter.setText(currentQuestion + 1 + " / " + questions.size());
         }
     }
 
