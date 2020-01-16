@@ -44,9 +44,9 @@
                 android:layout_marginTop="80dp"
                 android:background="@drawable/log_in"
                 android:backgroundTint="@color/buttonblue"
-                android:textColor="#243665"
                 android:text="Button One"
-                android:textSize="20sp"/>
+                android:textColor="#243665"
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/quiz2"
@@ -56,9 +56,9 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/log_in"
                 android:backgroundTint="@color/buttonblue"
-                android:textColor="#243665"
                 android:text="Button Two"
-                android:textSize="20sp"/>
+                android:textColor="#243665"
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/quiz3"
@@ -68,9 +68,9 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/log_in"
                 android:backgroundTint="@color/buttonblue"
-                android:textColor="#243665"
                 android:text="Button Three"
-                android:textSize="20sp"/>
+                android:textColor="#243665"
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/quiz4"
@@ -80,9 +80,9 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/log_in"
                 android:backgroundTint="@color/buttonblue"
-                android:textColor="#243665"
                 android:text="Button Four"
-                android:textSize="20dp"/>
+                android:textColor="#243665"
+                android:textSize="20dp" />
 
             <Button
                 android:id="@+id/quiz5"
@@ -92,9 +92,9 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/log_in"
                 android:backgroundTint="@color/buttonblue"
-                android:textColor="#243665"
                 android:text="Button Five"
-                android:textSize="20sp"/>
+                android:textColor="#243665"
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/quiz6"
@@ -104,9 +104,9 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/log_in"
                 android:backgroundTint="@color/buttonblue"
-                android:textColor="#243665"
                 android:text="Button Six"
-                android:textSize="20sp"/>
+                android:textColor="#243665"
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/quiz7"
@@ -116,9 +116,9 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/log_in"
                 android:backgroundTint="@color/buttonblue"
-                android:textColor="#243665"
                 android:text="Button Seven"
-                android:textSize="20sp"/>
+                android:textColor="#243665"
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/quiz8"
@@ -128,9 +128,9 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/log_in"
                 android:backgroundTint="@color/buttonblue"
-                android:textColor="#243665"
                 android:text="Button Eight"
-                android:textSize="20sp"/>
+                android:textColor="#243665"
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/quiz9"
@@ -140,9 +140,9 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/log_in"
                 android:backgroundTint="@color/buttonblue"
-                android:textColor="#243665"
                 android:text="Button Nine"
-                android:textSize="20sp"/>
+                android:textColor="#243665"
+                android:textSize="20sp" />
         </LinearLayout>
     </ScrollView>
 

@@ -1,5 +1,7 @@
 package com.example.brint_quizapp;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -11,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -35,7 +38,7 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
 
     int currentQuestion = 0, isCorrect;
 
-    ImageButton edit1, edit2, edit3, edit4;
+    ImageButton edit1, edit2, edit3, edit4, save;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,7 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
 
         prev = (Button) findViewById(R.id.previous);
         prev.setOnClickListener(this);
+        prev.setEnabled(false);
 
         quizName = (TextView) findViewById(R.id.name);
 
@@ -101,12 +105,12 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
         edit3.setEnabled(false);
         edit4.setEnabled(false);
 
-        prev.setEnabled(false);
+        save = (ImageButton) findViewById(R.id.save);
+        save.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-
         if (R.id.next == v.getId()) {
             if (next.getText().toString() == "Tilføj") {
                 questions.add(new Question_item("Indtast Spørgsmål", "Svar 1", "Svar 2", "Svar 3", "Svar 4", 1));
@@ -153,6 +157,34 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
                 }
             }
             questionCounter.setText(currentQuestion + 1 + " / " + questions.size());
+        }
+
+        if (R.id.save == v.getId()) { //http://www.apnatutorials.com/android/android-alert-confirm-prompt-dialog.php?categoryId=2&subCategoryId=34&myPath=android/android-alert-confirm-prompt-dialog.php
+
+            //TODO In this if statement, if the user presses to save, the current arraylist is supposed to be uploaded to the database.
+
+            final Intent goBack = new Intent(this, Homepage_activity.class);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Afslutning af redigering");
+            builder.setMessage("Du er ved afslutte.\nØnsker du at gemme dine ændringer?   ");
+            builder.setCancelable(true);
+            builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getApplicationContext(), "Ændringer gemt", Toast.LENGTH_SHORT).show();
+                    startActivity(goBack);
+                }
+            });
+            builder.setNegativeButton("Nej", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getApplicationContext(), "Ændringer ikke gemt", Toast.LENGTH_SHORT).show();
+                    startActivity(goBack);
+                }
+            });
+            builder.show();
+
+
         }
     }
 
