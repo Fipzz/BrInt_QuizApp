@@ -63,7 +63,7 @@
         android:layout_width="140dp"
         android:layout_height="55dp"
         android:background="@drawable/log_in"
-        android:backgroundTint="@color/buttonNormal"
+        android:backgroundTint="@color/blueButtonNormal"
         android:shadowColor="#000000"
         android:shadowDx="0"
         android:shadowDy="0"

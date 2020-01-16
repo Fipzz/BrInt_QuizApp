@@ -1,31 +1,39 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="BlueTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+    <style name="baseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="primaryButtonTheme">
+            @style/Widget.AppCompat.Button
+        </item>
+
+    </style>
+
+    <style name="Theme.App.Blue" parent="baseTheme">
 
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="blueBackgroundColor">@color/blueBackground</item>
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="background">@color/blueBackground</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="blueTextColor">@color/bluePrimary_text</item>
-        <item name="blueButtonTextColor">@color/blueButtonText</item>
-        <item name="colorButtonNormal">@color/blueButtonNormal</item>
-        <item name="blueQuestionTextColor">@color/blueQuestionColor</item>
+        <item name="primaryTextColor">@color/bluePrimary_text</item>
+        <item name="buttonTextColor">@color/blueButtonText</item>
+        <item name="buttonNormalColor">@color/blueButtonNormal</item>
+        <item name="questionTextColor">@color/blueQuestionColor</item>
 
 
 
     </style>
 
-   <style name="PurpleTheme" parent="Theme.AppCompat.Light.NoActionBar">
+   <style name="Theme.App.Purple" parent="baseTheme">
 
        <!-- Customize your theme here. -->
-       <item name="colorPrimary">@color/colorPrimary</item>
-       <item name="purpleBackgroundColor">@color/purpleBackground</item>
+       <item name="colorPrimary">@color/colorPrimaryDark</item>
+       <item name="background">@color/purpleBackground</item>
        <item name="colorAccent">@color/colorAccent</item>
-       <item name="purpleTextColor">@color/purplePrimaryText</item>
-       <item name="purpleButtonTextColor">@color/purpleButtonText</item>
-       <item name="colorButtonNormal">@color/purpleButtonNormal</item>
-       <item name="purpleQuestionTextColor">@color/purpleQuestionColor</item>
+       <item name="primaryTextColor">@color/primaryText</item>
+       <item name="buttonTextColor">@color/purpleButtonText</item>
+       <item name="buttonNormalColor">@color/purpleButtonNormal</item>
+       <item name="questionTextColor">@color/purpleQuestionColor</item>
 
 
    </style>

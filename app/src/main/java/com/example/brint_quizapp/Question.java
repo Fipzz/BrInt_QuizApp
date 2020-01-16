@@ -206,7 +206,7 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
     private void resetButton(Button a){
 
         a.setEnabled(true);
-        a.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.buttonNormal));
+        a.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.blueButtonNormal));
         a.setBackground(getDrawable(R.drawable.log_in));
 
     }

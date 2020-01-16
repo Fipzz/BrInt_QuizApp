@@ -64,7 +64,7 @@
 
         android:textAppearance="@style/name"
         android:textColor="@color/white"
-        android:textColorHint="@color/secondary_text"
+        android:textColorHint="@color/white"
         android:textColorLink="@color/white"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/rectangle"
@@ -99,7 +99,7 @@
         android:layout_width="95dp"
         android:layout_height="43dp"
         android:background="@drawable/log_in"
-        android:backgroundTint="@color/buttonNormal"
+        android:backgroundTint="@color/blueButtonNormal"
         android:text="Log ind"
         android:textColor="#243665"
         android:textSize="14sp"

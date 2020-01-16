@@ -96,7 +96,7 @@
         android:text="Tilføj Spørgsmål"
         android:textColor="#243665"
         android:textSize="20sp"
-        android:theme="@style/BlueTheme"
+        android:theme="@style/Theme.App.Blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
