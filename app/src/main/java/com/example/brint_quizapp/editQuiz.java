@@ -195,7 +195,6 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
 
             //TODO In this if statement, if the user presses to delete in the prompt menu, the currentQuestion is to be dropped from the table in the database. Consider adding an animation.
 
-            final Intent goBack = new Intent(this, Homepage_activity.class);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Slet spørgsmål");
             builder.setMessage("Er du sikker på at du ønsker at slette spørgsmålet?");
