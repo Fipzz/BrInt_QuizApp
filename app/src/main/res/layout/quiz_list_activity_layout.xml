@@ -5,7 +5,7 @@
     android:id="@+id/student_log"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#243665">
+    android:background="?attr/background">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -30,6 +30,7 @@
                 android:text="Quizzer"
                 android:textAppearance="@style/name"
                 android:textSize="40sp"
+                android:textColor="?attr/questionTextColor"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

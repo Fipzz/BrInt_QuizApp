@@ -5,7 +5,7 @@
     android:id="@+id/student_log"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/blueBackground">
+    android:background="?attr/background">
 
     <!-- Quiz navn -->
 
@@ -20,6 +20,7 @@
         android:text="@string/quiz_navn"
         android:textAppearance="@style/name"
         android:textSize="55sp"
+        android:textColor="?attr/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,6 +38,7 @@
         android:text="Quiz kode: "
         android:textAppearance="@style/name"
         android:textSize="35sp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"

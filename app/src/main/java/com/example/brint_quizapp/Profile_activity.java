@@ -1,6 +1,5 @@
 package com.example.brint_quizapp;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
@@ -16,7 +15,7 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
     TextView title, username;
     Icon profilePicture;
     Button backButton;
-    Switch theme;
+    Switch themeToggle;
     String themeSwitch,sharedPreference, currentTheme, theme;
     SharedPreferences sharedPref;
 
@@ -31,7 +30,7 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
 
 
         if (sharedPref.getBoolean(themeSwitch, false) == true){
-            theme.setChecked(true);
+            themeToggle.setChecked(true);
         }
 
         currentTheme = sharedPref.getString("current_theme", "blue_theme");
@@ -51,8 +50,8 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
         backButton = findViewById(R.id.profil_knap);
         backButton.setOnClickListener(this);
 
-        theme = findViewById(R.id.theme_switch);
-        theme.setOnClickListener(this);
+        themeToggle = findViewById(R.id.theme_switch);
+        themeToggle.setOnClickListener(this);
 
         sharedPreference = getString(R.string.preferenceFile);
         themeSwitch = getString(R.string.themeSwitch);
