@@ -166,7 +166,6 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
 
                     currentQuestion++;
                     showNextQuestion(questions.get(currentQuestion),currentQuestion);
-
                 }
 
 

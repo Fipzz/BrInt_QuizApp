@@ -61,7 +61,8 @@
         android:backgroundTint="@color/white"
         android:gravity="left"
         android:hint="Brugernavn:"
-
+        android:maxLength="30"
+        android:singleLine="true"
         android:textAppearance="@style/name"
         android:textColor="@color/white"
         android:textColorHint="@color/secondary_text"
@@ -89,6 +90,8 @@
         android:textColorHint="@color/secondary_text"
         android:textColorLink="@color/white"
         android:textSize="16sp"
+        android:maxLength="30"
+        android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="@+id/rectangle_2"
         app:layout_constraintEnd_toEndOf="@+id/rectangle_2"
         app:layout_constraintStart_toStartOf="@+id/rectangle_2"
@@ -114,7 +117,7 @@
         android:id="@+id/anon"
         android:layout_width="108dp"
         android:layout_height="44dp"
-        android:text="Annonym"
+        android:text="Anonym"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -126,8 +129,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="DB TEST"
-        tools:layout_editor_absoluteX="162dp"
-        tools:layout_editor_absoluteY="655dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/anon" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

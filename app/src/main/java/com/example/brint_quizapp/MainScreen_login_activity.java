@@ -11,6 +11,8 @@ import android.widget.EditText;
 
 public class MainScreen_login_activity extends AppCompatActivity implements View.OnClickListener {
 
+    //TODO login and password should be(NO /n & limit input)
+
     Button login, anon, dbtest;
     EditText username, password;
 
