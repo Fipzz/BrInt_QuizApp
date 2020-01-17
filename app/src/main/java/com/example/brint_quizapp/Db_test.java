@@ -36,7 +36,7 @@ public class Db_test extends AppCompatActivity implements View.OnClickListener {
 
     private static class CreateTablesClass extends AsyncTask<String, Void, Void> {
         Connection connection;
-        private final static String server = "jdbc:sqlserver://10.0.2.2/test:3306";
+        private final static String server = "jdbc:sqlserver://10.0.2.2/test";
         private final static String username = "root";
         private final static String password = "";
 
@@ -49,9 +49,10 @@ public class Db_test extends AppCompatActivity implements View.OnClickListener {
                     e.printStackTrace();
                 }
                 connection = connctionClass.CONN();
-
+                connection.setAutoCommit(false);
                 DDL ddl = new DDL();
                 ddl.createTables(connection);
+                connection.close();
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -63,9 +64,9 @@ public class Db_test extends AppCompatActivity implements View.OnClickListener {
 
     private static class DeletetablesClass extends AsyncTask<String, Void, Void> {
         Connection connection;
-        private final static String server = "jdbc:mysql://";
-        private final static String username = "4QRbwapGHC";
-        private final static String password = "DTOQ5QarNE";
+        private final static String server = "jdbc:sqlserver://10.0.2.2/test";
+        private final static String username = "root";
+        private final static String password = "";
 
         @Override
         protected Void doInBackground(String... strings) {
@@ -77,9 +78,9 @@ public class Db_test extends AppCompatActivity implements View.OnClickListener {
                 }
                 connection = DriverManager.getConnection(server, username, password);
                 connection.setAutoCommit(false);
-
                 DDL ddl = new DDL();
                 ddl.deleteTables(connection);
+                connection.close();
 
             } catch (Exception e) {
                 e.printStackTrace();
