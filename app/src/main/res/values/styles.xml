@@ -30,7 +30,7 @@
        <item name="colorPrimary">@color/colorPrimaryDark</item>
        <item name="background">@color/purpleBackground</item>
        <item name="colorAccent">@color/colorAccent</item>
-       <item name="primaryTextColor">@color/primaryText</item>
+       <item name="primaryTextColor">@color/purplePrimaryText</item>
        <item name="buttonTextColor">@color/purpleButtonText</item>
        <item name="buttonNormalColor">@color/purpleButtonNormal</item>
        <item name="questionTextColor">@color/purpleQuestionColor</item>
@@ -49,7 +49,7 @@
         </item>
 
         <item name="android:textColor">
-            @color/bluePrimary_text
+            @color/blueButtonText
         </item>
 
     </style>

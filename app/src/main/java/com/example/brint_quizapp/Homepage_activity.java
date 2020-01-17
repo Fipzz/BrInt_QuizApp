@@ -13,7 +13,7 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
 
     //TODO rediger quiz skal ændres til "Mine Quizzer" og skal føre til quiz oversigt
 
-    Button quiz, profile, edit, theme;
+    Button quiz, profile, edit;
     EditText quiz_code;
     Toast toast;
 
@@ -33,8 +33,6 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
 
         quiz_code = (EditText) findViewById(R.id.unikkode);
 
-        theme = findViewById(R.id.tema);
-        theme.setOnClickListener(this);
 
 
         toast = Toast.makeText(getApplicationContext(),
@@ -62,14 +60,13 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
 
         } else if(profile.getId() == v.getId()){
 
+            startActivity(new Intent(Homepage_activity.this, Profile_activity.class));
+
 
         } else if(edit.getId() == v.getId()){
 
             startActivity(new Intent(Homepage_activity.this, editQuiz.class));
 
-
-        } else if(theme.getId() == v.getId()){
-            setTheme(R.style.Theme_App_Purple);
 
         }
 
