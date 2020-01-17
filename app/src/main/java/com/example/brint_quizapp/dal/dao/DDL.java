@@ -32,6 +32,7 @@ public class DDL{
                     + "user_id int(10),"
                     + "name varchar(50),"
                     + "type int(1),"
+                    + "code varchar(6) UNIQUE"
                     + "PRIMARY KEY (id),"
                     + "FOREIGN KEY (user_id) references user (id))";
             statement = c.prepareStatement(query);

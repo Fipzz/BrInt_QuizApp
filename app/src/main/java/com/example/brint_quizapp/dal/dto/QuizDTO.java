@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class QuizDTO {
 
-    int id, type, code;
+    int id, type, code, user_id;
     String name;
     ArrayList<QuestionDTO> questions;
 
@@ -24,6 +24,22 @@ public class QuizDTO {
         this.type = type;
     }
 
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
     public String getName() {
         return name;
     }
@@ -38,13 +54,5 @@ public class QuizDTO {
 
     public void setQuestions(ArrayList<QuestionDTO> questions) {
         this.questions = questions;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
     }
 }

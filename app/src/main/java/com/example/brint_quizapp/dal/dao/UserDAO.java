@@ -12,6 +12,26 @@ import java.util.ArrayList;
 
 public class UserDAO {
 
+    public boolean createUser(UserDTO user, Connection c){
+        try {
+
+            String query = "INSERT INTO user (name, email, password) VALUES (?, ?, ?)";
+            PreparedStatement statement = c.prepareStatement(query);
+
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, user.getPassword());
+
+            statement.execute();
+            c.commit();
+
+
+        } catch (SQLException p) {
+            return false;
+        }
+        return true;
+    }
+
     public UserDTO getUserById(int id, Connection c) throws DALException {
         try {
             UserDTO user = new UserDTO();
