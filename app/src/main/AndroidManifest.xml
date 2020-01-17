@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".editQuiz">
+            android:name=".Edit_Quiz">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

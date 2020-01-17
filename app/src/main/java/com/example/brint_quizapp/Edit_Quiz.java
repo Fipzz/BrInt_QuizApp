@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-public class editQuiz extends AppCompatActivity implements View.OnClickListener{
+public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener{
 
     //TODO add a button to remove a question
 
@@ -165,7 +165,7 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
         }
 
         //Handles when the user presses the save icon
-        if (R.id.save == v.getId()) { //http://www.apnatutorials.com/android/android-alert-confirm-prompt-dialog.php?categoryId=2&subCategoryId=34&myPath=android/android-alert-confirm-prompt-dialog.php
+            if (R.id.save == v.getId()) { //http://www.apnatutorials.com/android/android-alert-confirm-prompt-dialog.php?categoryId=2&subCategoryId=34&myPath=android/android-alert-confirm-prompt-dialog.php
 
             //TODO In this if statement, if the user presses to save in the prompt menu, the current arraylist is to be uploaded to the database.
 

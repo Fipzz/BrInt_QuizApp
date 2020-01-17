@@ -2,5 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/BrInt_QuizApp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Iteration 4/Kildekode" vcs="Git" />
   </component>
 </project>
