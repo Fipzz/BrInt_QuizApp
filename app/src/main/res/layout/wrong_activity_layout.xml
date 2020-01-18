@@ -9,7 +9,7 @@
 
     <!-- Quiz navn -->
     <TextView
-        android:id="@+id/quiz_navn"
+        android:id="@+id/quizNavn"
         android:layout_width="267dp"
         android:layout_height="71dp"
         android:layout_alignParentLeft="true"
@@ -39,7 +39,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/quiz_navn"
+        app:layout_constraintTop_toBottomOf="@+id/quizNavn"
         app:layout_constraintVertical_bias="0.0" />
 
 

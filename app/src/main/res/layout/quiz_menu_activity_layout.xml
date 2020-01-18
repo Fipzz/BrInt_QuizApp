@@ -10,7 +10,7 @@
     <!-- Quiz navn -->
 
     <TextView
-        android:id="@+id/quiz_navn"
+        android:id="@+id/quizNavn"
         android:layout_width="267dp"
         android:layout_height="71dp"
         android:layout_alignParentLeft="true"
@@ -41,7 +41,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/quiz_navn"
+        app:layout_constraintTop_toBottomOf="@+id/quizNavn"
         app:layout_constraintVertical_bias="0.036" />
 
     <EditText
@@ -58,63 +58,36 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/changeName"
+        android:id="@+id/editQuiz"
         android:layout_width="330dp"
         android:layout_height="70dp"
         android:background="@drawable/log_in"
         android:backgroundTint="@color/buttonblue"
-        android:text="Skift Navn"
+        android:text="Rediger Quiz"
         android:textColor="#243665"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/quizCode"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintVertical_bias="0.357" />
 
     <Button
-        android:id="@+id/editQuestion"
+        android:id="@+id/statistics"
         android:layout_width="330dp"
         android:layout_height="70dp"
+        android:layout_marginTop="56dp"
         android:background="@drawable/log_in"
         android:backgroundTint="@color/buttonblue"
-        android:text="Rediger Spørgsmål"
+        android:text="Statistik over quiz"
         android:textColor="#243665"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/changeName"
-        app:layout_constraintVertical_bias="0.13" />
-
-    <Button
-        android:id="@+id/add_question"
-        android:layout_width="330dp"
-        android:layout_height="70dp"
-        android:background="@drawable/log_in"
-        android:backgroundTint="@color/buttonblue"
-        android:text="Tilføj Spørgsmål"
-        android:textColor="#243665"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editQuestion"
-        app:layout_constraintVertical_bias="0.2" />
-
-    <Button
-        android:id="@+id/add_question2"
-        android:layout_width="330dp"
-        android:layout_height="70dp"
-        android:background="@drawable/log_in"
-        android:backgroundTint="@color/buttonblue"
-        android:text="Tilføj Spørgsmål"
-        android:textColor="#243665"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editQuestion"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintTop_toBottomOf="@+id/editQuiz"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

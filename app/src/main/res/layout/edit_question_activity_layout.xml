@@ -9,7 +9,7 @@
 
     <!-- Quiz navn -->
     <TextView
-        android:id="@+id/quiz_navn"
+        android:id="@+id/quizNavn"
         android:layout_width="267dp"
         android:layout_height="0dp"
         android:layout_alignParentLeft="true"
@@ -42,7 +42,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/quiz_navn"
+        app:layout_constraintTop_toBottomOf="@+id/quizNavn"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
@@ -209,7 +209,7 @@
         app:layout_constraintBottom_toTopOf="@+id/checkBox2"
         app:layout_constraintEnd_toStartOf="@+id/edit2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/quiz_navn" />
+        app:layout_constraintTop_toBottomOf="@+id/quizNavn" />
 
     <CheckBox
         android:id="@+id/checkBox2"
@@ -273,7 +273,7 @@
         android:backgroundTint="#00853131"
         android:outlineSpotShadowColor="#002B2B2B"
         app:layout_constraintBottom_toTopOf="@+id/question"
-        app:layout_constraintEnd_toStartOf="@+id/quiz_navn"
+        app:layout_constraintEnd_toStartOf="@+id/quizNavn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -288,7 +288,7 @@
         android:outlineSpotShadowColor="#002B2B2B"
         app:layout_constraintBottom_toTopOf="@+id/question"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/quiz_navn"
+        app:layout_constraintStart_toEndOf="@+id/quizNavn"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.55"
         app:srcCompat="@android:drawable/ic_menu_delete" />
