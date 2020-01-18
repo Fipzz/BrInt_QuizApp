@@ -24,6 +24,8 @@
             android:name=".Edit_Quiz">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
 
         <activity android:name=".Question"></activity>
         <activity android:name=".Homepage_activity"></activity>
@@ -33,6 +35,6 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-    </application>
 
+    </application>
 </manifest>
