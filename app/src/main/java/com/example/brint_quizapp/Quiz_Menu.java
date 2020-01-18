@@ -1,5 +1,6 @@
 package com.example.brint_quizapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -30,14 +31,20 @@ public class Quiz_Menu extends AppCompatActivity implements View.OnClickListener
 
         codeNumber = (TextView) findViewById(R.id.codeNumber);
 
-        editQuiz = (Button) findViewById(R.id.editQuiz);
+        editQuiz = (Button) findViewById(R.id.editQuiz); editQuiz.setOnClickListener(this);
 
-        statistics = (Button) findViewById(R.id.statistics);
+        statistics = (Button) findViewById(R.id.statistics); statistics.setOnClickListener(this);
     }
 
 
     @Override
     public void onClick(View v) {
+
+        if (R.id.editQuiz == v.getId()) {
+            startActivity(new Intent(Quiz_Menu.this, Edit_Quiz.class));
+        } else if (R.id.statistics == v.getId()) {
+            startActivity(new Intent(Quiz_Menu.this, Statistics.class));
+        }
 
     }
 }
