@@ -62,7 +62,9 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
 
         } else if(edit.getId() == v.getId()){
 
-            startActivity(new Intent(Homepage_activity.this, Edit_Quiz.class));
+            //startActivity(new Intent(Homepage_activity.this, Edit_Quiz.class));
+            //startActivity(new Intent(Homepage_activity.this, Statistics.class));
+            startActivity(new Intent(Homepage_activity.this, Quiz_Menu.class));
 
 
         }

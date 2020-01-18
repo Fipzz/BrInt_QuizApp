@@ -30,6 +30,8 @@
         <activity android:name=".Question"></activity>
         <activity android:name=".Homepage_activity"></activity>
         <activity android:name=".Result_activity"></activity>
+        <activity android:name=".Statistics"></activity>
+        <activity android:name=".Quiz_Menu"></activity>
 
         <meta-data
             android:name="preloaded_fonts"
