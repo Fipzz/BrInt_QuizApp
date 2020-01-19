@@ -5,7 +5,7 @@
   <color name="colorAccent">#000000</color>
 
   <color name="bluePrimary_text">#000000</color>
-  <color name="blueSecondary_text">#FFFFFF</color>
+  <color name="blueSecondary_text">#673AB7</color>
   <color name="black_overlay">#000000</color>
   <color name="blueButtonText">#243665</color>
   <color name="blueBackground">#243665</color>
