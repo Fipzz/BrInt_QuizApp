@@ -24,7 +24,10 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        theme = sharedPref.getString("current_theme", "blue_theme");
+        if (currentTheme != theme){
+            recreate();
+        }
 
         sharedPref = getSharedPreferences(sharedPreference, MODE_PRIVATE);
 

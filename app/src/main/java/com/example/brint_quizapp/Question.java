@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -20,6 +21,8 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
     TextView questionView;
 
     Intent resultIntent;
+    SharedPreferences sharedPref;
+    String currentTheme, theme;
 
     ArrayList<Question_item> questions = new ArrayList<Question_item>();
 
@@ -32,6 +35,11 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        theme = sharedPref.getString("current_theme", "blue_theme");
+        if (currentTheme != theme){
+            recreate();
+        }
 
         setContentView(R.layout.quiz_activity_layout);
 

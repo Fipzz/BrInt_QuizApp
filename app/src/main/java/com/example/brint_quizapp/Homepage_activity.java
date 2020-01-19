@@ -1,6 +1,7 @@
 package com.example.brint_quizapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,10 +17,26 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
     Button quiz, profile, edit;
     EditText quiz_code;
     Toast toast;
+    SharedPreferences sharedPref;
+    String currentTheme, theme, sharedPreference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        sharedPref = getSharedPreferences(sharedPreference, MODE_PRIVATE);
+
+        currentTheme = sharedPref.getString("current_theme", "blue_theme");
+        setTheme(R.style.Theme_App_Blue);
+
+        theme = sharedPref.getString("current_theme", "blue_theme");
+        if (currentTheme != theme){
+            recreate();
+        }
+
+
+
         setContentView(R.layout.homepage_activity_layout);
 
         quiz = (Button) findViewById(R.id.start_quiz_knap);

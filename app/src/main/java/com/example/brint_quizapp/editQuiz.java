@@ -1,5 +1,6 @@
 package com.example.brint_quizapp;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -33,11 +34,14 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
 
     Question_item questionEdit;
 
-    String answer1, answer2, answer3, answer4;
+    String answer1, answer2, answer3, answer4, currentTheme, theme;
 
     int currentQuestion = 0, isCorrect;
 
     ImageButton edit1, edit2, edit3, edit4;
+
+    SharedPreferences sharedPref;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,11 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        theme = sharedPref.getString("current_theme", "blue_theme");
+        if (currentTheme != theme){
+            recreate();
+        }
 
         setContentView(R.layout.edit_question_activity_layout);
 
