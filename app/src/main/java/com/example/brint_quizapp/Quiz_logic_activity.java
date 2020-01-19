@@ -34,18 +34,21 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 
-public class Question extends AppCompatActivity implements View.OnClickListener {
+public class Quiz_logic_activity extends AppCompatActivity implements View.OnClickListener {
 
     Button a, b, c, d;
     TextView questionView, loading, quiznavn;
 
     Intent resultIntent;
 
-    ArrayList<Question_item> questions = new ArrayList<Question_item>();
+    ArrayList<AnswerDTO> answers;
+    ArrayList<QuestionDTO> quizQuestions;
 
     int correctAnswers = 0, wrongAnswers = 0, currentQuestion = 0, isCorrect;
 
     String quizId;
+
+    CountDownTimer wait;
 
     QuizDTO quizDTO;
     int load = 0;
@@ -75,6 +78,7 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
 
         questionView = (TextView) findViewById(R.id.question);
         loading = (TextView) findViewById(R.id.textView2);
+        loading.setOnClickListener(this);
         quiznavn = (TextView) findViewById(R.id.quiz_navn);
 
 
@@ -85,18 +89,16 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
         questionView.setVisibility(View.INVISIBLE);
         quiznavn.setVisibility(View.INVISIBLE);
 
-
-
-
-
         quizId = getIntent().getExtras().getString("quizcode");
+
+        quizDTO = null;
 
 
         getData getdat = new getData();
 
         getdat.execute("");
 
-        CountDownTimer wait = new CountDownTimer(10000, 500) {
+        wait = new CountDownTimer(10000, 500) {
             @Override
             public void onTick(long l) {
 
@@ -114,10 +116,9 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
                     load = 0;
                 }
 
-
                 if (quizDTO != null) {
-                    //this.cancel();
-                    //this.onFinish();
+                    this.cancel();
+                    this.onFinish();
                 }
 
             }
@@ -125,153 +126,158 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
             @Override
             public void onFinish() {
 
-                initializeQuiz();
+                if(quizDTO == null){
 
-                loading.setVisibility(View.INVISIBLE);
-                a.setVisibility(View.VISIBLE);
-                b.setVisibility(View.VISIBLE);
-                c.setVisibility(View.VISIBLE);
-                d.setVisibility(View.VISIBLE);
-                questionView.setVisibility(View.VISIBLE);
+                    loading.setText("No quiz found\n click here to go back");
 
-                showNextQuestion(questions.get(currentQuestion), currentQuestion);
+                } else {
 
+                    initializeQuiz();
 
+                    loading.setVisibility(View.INVISIBLE);
+                    a.setVisibility(View.VISIBLE);
+                    b.setVisibility(View.VISIBLE);
+                    c.setVisibility(View.VISIBLE);
+                    d.setVisibility(View.VISIBLE);
+                    questionView.setVisibility(View.VISIBLE);
+
+                    showNextQuestion(currentQuestion);
+
+                }
             }
         }.start();
 
-
-        resultIntent = new Intent(this, Result_activity.class);
     }
 
     @Override
     public void onClick(View v) {
 
-        if (isCorrect == 1) {
+        if(v.getId() == R.id.textView2){
 
-            right(a);
-            wrong(b);
-            wrong(c);
-            wrong(d);
+            resultIntent = new Intent(this, Homepage_activity.class);
 
-        } else if (isCorrect == 2) {
-
-            wrong(a);
-            right(b);
-            wrong(c);
-            wrong(d);
-
-        } else if (isCorrect == 3) {
-
-            wrong(a);
-            wrong(b);
-            right(c);
-            wrong(d);
+            startActivity(resultIntent);
 
         } else {
 
-            wrong(a);
-            wrong(b);
-            wrong(c);
-            right(d);
+            resultIntent = new Intent(this, Result_activity.class);
 
-        }
-
-        if (R.id.answer1 == v.getId()) {
-
-            if (isCorrect == 1) {
-                correctAnswers++;
-            } else {
-                wrongAnswers++;
+            if(answers.get(0).getCorrect()){
+                right(a);
+            } else{
+                wrong(a);
             }
 
-        } else if (v.getId() == b.getId()) {
-
-            if (isCorrect == 2) {
-                correctAnswers++;
-            } else {
-                wrongAnswers++;
+            if(answers.get(1).getCorrect()){
+                right(b);
+            } else{
+                wrong(b);
             }
 
-        } else if (v.getId() == c.getId()) {
-
-            if (isCorrect == 3) {
-                correctAnswers++;
-            } else {
-                wrongAnswers++;
+            if(answers.get(2).getCorrect()){
+                right(c);
+            } else{
+                wrong(c);
             }
 
-        } else if (v.getId() == d.getId()) {
-
-
-            if (isCorrect == 4) {
-                correctAnswers++;
-            } else {
-                wrongAnswers++;
+            if(answers.get(3).getCorrect()){
+                right(d);
+            } else{
+                wrong(d);
             }
 
-        }
+            if (R.id.answer1 == v.getId()) {
 
-        CountDownTimer showAnswers = new CountDownTimer(3000, 3000) {
-
-            @Override
-            public void onTick(long l) {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-                if (questions.size() - 1 == currentQuestion) {
-
-                    Bundle data = new Bundle();
-                    data.putInt("wrong", wrongAnswers);
-                    data.putInt("right", correctAnswers);
-                    resultIntent.putExtras(data);
-
-                    startActivity(resultIntent);
-
+                if (answers.get(0).getCorrect()) {
+                    correctAnswers++;
                 } else {
+                    wrongAnswers++;
+                }
 
-                    resetButton(a);
-                    resetButton(b);
-                    resetButton(c);
-                    resetButton(d);
+            } else if (v.getId() == b.getId()) {
 
-                    currentQuestion++;
-                    showNextQuestion(questions.get(currentQuestion), currentQuestion);
+                if (answers.get(1).getCorrect()) {
+                    correctAnswers++;
+                } else {
+                    wrongAnswers++;
+                }
+
+            } else if (v.getId() == c.getId()) {
+
+                if (answers.get(2).getCorrect()) {
+                    correctAnswers++;
+                } else {
+                    wrongAnswers++;
+                }
+
+            } else if (v.getId() == d.getId()) {
+
+
+                if (answers.get(3).getCorrect()) {
+                    correctAnswers++;
+                } else {
+                    wrongAnswers++;
                 }
 
             }
 
-        }.start();
+            CountDownTimer showAnswers = new CountDownTimer(3000, 3000) {
+
+                @Override
+                public void onTick(long l) {
+
+                }
+
+                @Override
+                public void onFinish() {
+
+                    if (quizQuestions.size() - 1 == currentQuestion) {
+
+                        Bundle data = new Bundle();
+                        data.putInt("wrong", wrongAnswers);
+                        data.putInt("right", correctAnswers);
+                        resultIntent.putExtras(data);
+
+                        startActivity(resultIntent);
+
+                    } else {
+
+                        resetButton(a);
+                        resetButton(b);
+                        resetButton(c);
+                        resetButton(d);
+
+                        currentQuestion++;
+                        showNextQuestion(currentQuestion);
+                    }
+
+                }
+
+            }.start();
+
+        }
 
     }
 
-    public void showNextQuestion(Question_item question, int currentQuestion) {
+    public void showNextQuestion(int currentQuestion) {
 
-        questionView.setText(question.getQuestion());
+        questionView.setText(quizQuestions.get(currentQuestion).getText().toString());
 
-        a.setText(question.getAnswer1());
-        b.setText(question.getAnswer2());
-        c.setText(question.getAnswer3());
-        d.setText(question.getAnswer4());
-        isCorrect = question.getIsCorrect();
+        answers = quizQuestions.get(currentQuestion).getAnswers();
+
+        a.setText(answers.get(0).getText());
+        b.setText(answers.get(1).getText());
+        c.setText(answers.get(2).getText());
+        d.setText(answers.get(3).getText());
+
+        currentQuestion ++;
 
     }
 
     private void initializeQuiz() {
 
-        ArrayList<QuestionDTO> questionss = quizDTO.getQuestions();
+        quizQuestions = quizDTO.getQuestions();
 
-
-        for (int i = 0; i < questionss.size(); i++) {
-
-            ArrayList<AnswerDTO> answers = questionss.get(i).getAnswers();
-
-            questions.add(new Question_item(questionss.get(i).getText(), answers.get(0).getText(), answers.get(1).getText(), answers.get(2).getText(), answers.get(3).getText(), 1));
-
-        }
     }
 
     private void wrong(Button a) {
@@ -307,6 +313,7 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
 
 
             try {
+
                 try {
                     Class.forName("com.mysql.jdbc.Driver");
                 } catch (ClassNotFoundException e) {
@@ -328,7 +335,12 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
             }
             return null;
 
+        }
 
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            wait.cancel();
+            wait.onFinish();
         }
     }
 }

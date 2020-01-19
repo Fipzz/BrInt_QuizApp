@@ -17,6 +17,8 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
     EditText quiz_code;
     Toast toast;
 
+    String unikKode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,25 +35,26 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
 
         quiz_code = (EditText) findViewById(R.id.unikkode);
 
-
-        toast = Toast.makeText(getApplicationContext(),
-                "Indsæt unik kode",
-                Toast.LENGTH_SHORT);
-
     }
 
     @Override
     public void onClick(View v) {
 
+        unikKode = quiz_code.getText().toString();
+
         if(quiz.getId() == v.getId()){
 
-            if (quiz_code.getText().toString() == ""){
+            if (unikKode.matches("")){
+
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Indsæt unik kode",
+                        Toast.LENGTH_SHORT);
 
                 toast.show();
 
             } else {
 
-                Intent quiz = new Intent(this,Question.class);
+                Intent quiz = new Intent(this, Quiz_logic_activity.class);
 
                 Bundle data = new Bundle();
                 data.putString("quizcode", quiz_code.getText().toString());
@@ -60,8 +63,6 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
                 startActivity(quiz);
 
             }
-
-
 
         } else if(profile.getId() == v.getId()){
 

@@ -1,11 +1,9 @@
 package com.example.brint_quizapp.dal.dao;
 
-import com.example.brint_quizapp.Question;
 import com.example.brint_quizapp.dal.dto.AnswerDTO;
 import com.example.brint_quizapp.dal.dto.QuestionDTO;
 import com.example.brint_quizapp.dal.dto.QuizDTO;
 
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
