@@ -12,8 +12,10 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Looper;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,12 +23,21 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.brint_quizapp.dal.dao.DDL;
+import com.example.brint_quizapp.dal.dao.QuizDAO;
+import com.example.brint_quizapp.dal.dao.UserDAO;
+import com.example.brint_quizapp.dal.dto.AnswerDTO;
+import com.example.brint_quizapp.dal.dto.QuestionDTO;
+import com.example.brint_quizapp.dal.dto.QuizDTO;
+
+import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 public class Question extends AppCompatActivity implements View.OnClickListener {
 
-    Button a,b,c,d;
-    TextView questionView;
+    Button a, b, c, d;
+    TextView questionView, loading, quiznavn;
 
     Intent resultIntent;
 
@@ -34,6 +45,10 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
 
     int correctAnswers = 0, wrongAnswers = 0, currentQuestion = 0, isCorrect;
 
+    String quizId;
+
+    QuizDTO quizDTO;
+    int load = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +74,74 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
         d.setOnClickListener(this);
 
         questionView = (TextView) findViewById(R.id.question);
+        loading = (TextView) findViewById(R.id.textView2);
+        quiznavn = (TextView) findViewById(R.id.quiz_navn);
 
-        initializeQuiz();
+
+        a.setVisibility(View.INVISIBLE);
+        b.setVisibility(View.INVISIBLE);
+        c.setVisibility(View.INVISIBLE);
+        d.setVisibility(View.INVISIBLE);
+        questionView.setVisibility(View.INVISIBLE);
+        quiznavn.setVisibility(View.INVISIBLE);
+
+
+
+
+
+        quizId = getIntent().getExtras().getString("quizcode");
+
+
+        getData getdat = new getData();
+
+        getdat.execute("");
+
+        CountDownTimer wait = new CountDownTimer(10000, 500) {
+            @Override
+            public void onTick(long l) {
+
+                if(load == 0){
+                    loading.setText("Loading\n");
+                    load++;
+                } else if (load == 1){
+                    loading.setText("Loading\n.");
+                    load++;
+                } else if (load == 2){
+                    loading.setText("Loading\n..");
+                    load++;
+                } else if (load == 3) {
+                    loading.setText("Loading\n...");
+                    load = 0;
+                }
+
+
+                if (quizDTO != null) {
+                    //this.cancel();
+                    //this.onFinish();
+                }
+
+            }
+
+            @Override
+            public void onFinish() {
+
+                initializeQuiz();
+
+                loading.setVisibility(View.INVISIBLE);
+                a.setVisibility(View.VISIBLE);
+                b.setVisibility(View.VISIBLE);
+                c.setVisibility(View.VISIBLE);
+                d.setVisibility(View.VISIBLE);
+                questionView.setVisibility(View.VISIBLE);
+
+                showNextQuestion(questions.get(currentQuestion), currentQuestion);
+
+
+            }
+        }.start();
+
 
         resultIntent = new Intent(this, Result_activity.class);
-
-        showNextQuestion(questions.get(currentQuestion),currentQuestion);
-
     }
 
     @Override
@@ -101,42 +177,40 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
 
         }
 
-        if(R.id.answer1 == v.getId()){
+        if (R.id.answer1 == v.getId()) {
 
-            if(isCorrect == 1){
+            if (isCorrect == 1) {
                 correctAnswers++;
             } else {
                 wrongAnswers++;
             }
 
-        } else if (v.getId() == b.getId()){
+        } else if (v.getId() == b.getId()) {
 
-            if(isCorrect == 2){
+            if (isCorrect == 2) {
                 correctAnswers++;
             } else {
                 wrongAnswers++;
             }
 
-        } else if (v.getId() == c.getId()){
+        } else if (v.getId() == c.getId()) {
 
-            if(isCorrect == 3){
+            if (isCorrect == 3) {
                 correctAnswers++;
             } else {
                 wrongAnswers++;
             }
 
-        } else if (v.getId() == d.getId()){
+        } else if (v.getId() == d.getId()) {
 
 
-            if(isCorrect == 4){
+            if (isCorrect == 4) {
                 correctAnswers++;
             } else {
                 wrongAnswers++;
             }
 
         }
-
-
 
         CountDownTimer showAnswers = new CountDownTimer(3000, 3000) {
 
@@ -148,7 +222,7 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
             @Override
             public void onFinish() {
 
-                if(questions.size()-1 == currentQuestion) {
+                if (questions.size() - 1 == currentQuestion) {
 
                     Bundle data = new Bundle();
                     data.putInt("wrong", wrongAnswers);
@@ -165,9 +239,8 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
                     resetButton(d);
 
                     currentQuestion++;
-                    showNextQuestion(questions.get(currentQuestion),currentQuestion);
+                    showNextQuestion(questions.get(currentQuestion), currentQuestion);
                 }
-
 
             }
 
@@ -175,7 +248,7 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
 
     }
 
-    public void showNextQuestion(Question_item question, int currentQuestion){
+    public void showNextQuestion(Question_item question, int currentQuestion) {
 
         questionView.setText(question.getQuestion());
 
@@ -189,15 +262,19 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
 
     private void initializeQuiz() {
 
-        //TODO init the whole quizz in the beginning
+        ArrayList<QuestionDTO> questionss = quizDTO.getQuestions();
 
-        questions.add(new Question_item("Hvad er 1+1?", "1", "2", "3", "4", 2));
-        questions.add(new Question_item("Hvor mange stop er der på C-linjen?", "31", "5", "67000", "40", 1));
-        questions.add(new Question_item("Hvad kaldes en der er født mellem 1946-1964", "Millenial", "Gen Z", "Roomba", "Boomer", 4));
 
+        for (int i = 0; i < questionss.size(); i++) {
+
+            ArrayList<AnswerDTO> answers = questionss.get(i).getAnswers();
+
+            questions.add(new Question_item(questionss.get(i).getText(), answers.get(0).getText(), answers.get(1).getText(), answers.get(2).getText(), answers.get(3).getText(), 1));
+
+        }
     }
 
-    private void wrong(Button a){
+    private void wrong(Button a) {
 
         a.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.redwrong));
         a.setBackground(getDrawable(R.drawable.log_in));
@@ -205,19 +282,54 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
 
     }
 
-    private void right(Button a){
+    private void right(Button a) {
 
         a.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.correctgreen));
         a.setBackground(getDrawable(R.drawable.log_in));
         a.setEnabled(false);
     }
 
-    private void resetButton(Button a){
+    private void resetButton(Button a) {
 
         a.setEnabled(true);
         a.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.buttonblue));
         a.setBackground(getDrawable(R.drawable.log_in));
 
+    }
+
+    private class getData extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... strings) {
+
+            Connection connection;
+            DBconnector databaseconn = new DBconnector();
+
+
+            try {
+                try {
+                    Class.forName("com.mysql.jdbc.Driver");
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                connection = databaseconn.CONN();
+                connection.setAutoCommit(false);
+
+                QuizDAO quizDAO = new QuizDAO();
+
+                quizDTO = new QuizDTO();
+
+                quizDTO = quizDAO.getQuizByQuizId(Integer.parseInt(quizId), connection);
+
+                connection.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+
+
+        }
     }
 }
 

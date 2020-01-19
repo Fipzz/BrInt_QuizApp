@@ -51,7 +51,13 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
 
             } else {
 
-                startActivity(new Intent(Homepage_activity.this, Question.class));
+                Intent quiz = new Intent(this,Question.class);
+
+                Bundle data = new Bundle();
+                data.putString("quizcode", quiz_code.getText().toString());
+                quiz.putExtras(data);
+
+                startActivity(quiz);
 
             }
 

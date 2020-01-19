@@ -35,7 +35,7 @@ public class QuizDAO {
         return quizzes;
     }
 
-    private QuizDTO getQuizByQuizId(int id, Connection c){
+    public QuizDTO getQuizByQuizId(int id, Connection c){
         QuizDTO quiz = new QuizDTO();
         ArrayList<QuestionDTO> questions = new ArrayList<QuestionDTO>();
 
@@ -47,6 +47,7 @@ public class QuizDAO {
             c.commit();
 
             if (!result.next()){
+                System.out.println("HAHAHHAHAHAHAHAHAH");
                 return null;
             }
 
@@ -65,7 +66,7 @@ public class QuizDAO {
                 QuestionDTO question = new QuestionDTO();
                 question.setId(result.getInt("id"));
                 question.setNumber(result.getInt("number"));
-                question.setText(result.getString("text"));
+                question.setText(result.getString("question_text"));
                 questions.add(question);
             }
 
@@ -89,7 +90,7 @@ public class QuizDAO {
                 AnswerDTO answer = new AnswerDTO();
                 answer.setCorrect(result.getBoolean("correct"));
                 answer.setId(result.getInt("id"));
-                answer.setText(result.getString("text"));
+                answer.setText(result.getString("answer_text"));
                 answer.setQuestion_id(result.getInt("question_id"));
 
                 allAnswers.add(answer);
@@ -110,6 +111,7 @@ public class QuizDAO {
             quiz.setQuestions(questions);
 
         }catch (SQLException e){
+            e.printStackTrace();
             return null;
         }
 
