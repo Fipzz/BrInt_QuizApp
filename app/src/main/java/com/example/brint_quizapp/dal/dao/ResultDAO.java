@@ -10,6 +10,33 @@ import java.util.ArrayList;
 
 public class ResultDAO {
 
+    public boolean createResult(ResultDTO result, Connection c){
+        try {
+
+            String query = "INSERT INTO result (question_id, user_id, answer_id, correct) VALUES (?, ?, ?, ?)";
+            PreparedStatement statement = c.prepareStatement(query);
+
+            int correct;
+            if (result.isCorrect()) {
+                correct = 1;
+            } else {
+                correct = 0;
+            }
+
+            statement.setInt(1, result.getQuestion_id());
+            statement.setInt(2, result.getUser_id());
+            statement.setInt(3, result.getAnswer_id());
+            statement.setInt(4, correct);
+
+            statement.execute();
+            c.commit();
+
+        } catch (SQLException p) {
+            return false;
+        }
+        return true;
+    }
+
     public ArrayList<ResultDTO> getResultsFromUserId(int id, Connection c){
         ArrayList<ResultDTO> results = new ArrayList<>();
 

@@ -2,8 +2,9 @@ package com.example.brint_quizapp.dal.dto;
 
 public class ResultDTO {
 
-    int question_id;
-    int answer_id;
+    int question_id, answer_id;
+    int user_id;
+    boolean correct;
 
     public int getUser_id() {
         return user_id;
@@ -13,8 +14,7 @@ public class ResultDTO {
         this.user_id = user_id;
     }
 
-    int user_id;
-    boolean correct;
+
 
     public boolean isCorrect() {
         return correct;

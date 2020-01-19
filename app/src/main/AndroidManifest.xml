@@ -20,17 +20,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Edit_Quiz">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
 
         <activity android:name=".Quiz_logic_activity"></activity>
         <activity android:name=".Homepage_activity"></activity>
         <activity android:name=".Result_activity"></activity>
-        <activity android:name=".editQuiz"></activity>
-
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-    </application>
 
+    </application>
 </manifest>

@@ -5,9 +5,17 @@ import java.util.ArrayList;
 
 public class QuestionDTO {
 
-    int id, number;
+    int id, number, quiz_id;
     String text;
     ArrayList<AnswerDTO> answers;
+
+    public int getQuiz_id() {
+        return quiz_id;
+    }
+
+    public void setQuiz_id(int quiz_id) {
+        this.quiz_id = quiz_id;
+    }
 
     public int getId() {
         return id;
