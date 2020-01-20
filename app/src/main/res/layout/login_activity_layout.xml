@@ -17,7 +17,6 @@
         android:gravity="top"
         android:text="@string/name"
         android:textAppearance="@style/name"
-        android:textColor="?attr/colorPrimary"
         android:textSize="47sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,10 +61,11 @@
         android:backgroundTint="@color/white"
         android:gravity="left"
         android:hint="Brugernavn:"
-
+        android:maxLength="30"
+        android:singleLine="true"
         android:textAppearance="@style/name"
         android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColorHint="@color/secondary_text"
         android:textColorLink="@color/white"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/rectangle"
@@ -85,6 +85,9 @@
         android:background="@null"
         android:gravity="left"
         android:hint="Password:"
+        android:maxLength="30"
+        android:password="true"
+        android:singleLine="true"
         android:textAppearance="@style/name"
         android:textColor="@color/white"
         android:textColorHint="@color/secondary_text"
@@ -100,9 +103,9 @@
         android:layout_width="95dp"
         android:layout_height="43dp"
         android:background="@drawable/log_in"
-        android:backgroundTint="?attr/buttonNormalColor"
+        android:backgroundTint="@color/buttonblue"
         android:text="Log ind"
-        android:textColor="?attr/buttonTextColor"
+        android:textColor="#243665"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -115,7 +118,7 @@
         android:id="@+id/anon"
         android:layout_width="108dp"
         android:layout_height="44dp"
-        android:text="Annonym"
+        android:text="Anonym"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -130,8 +133,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.96" />
+        app:layout_constraintTop_toBottomOf="@+id/anon" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

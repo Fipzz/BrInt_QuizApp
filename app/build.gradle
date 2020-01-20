@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.example.brint_quizapp"
-        minSdkVersion 28
+        minSdkVersion 24
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -30,6 +30,7 @@ dependencies {
     implementation files('libs\\mysql-connector.jar')
     implementation files('libs\\sqljdbc41.jar')
     implementation files('libs\\sqljdbc41.jar')
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -1,7 +1,6 @@
 package com.example.brint_quizapp;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,32 +16,12 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
     Button quiz, profile, edit;
     EditText quiz_code;
     Toast toast;
-    SharedPreferences sharedPref;
-    String currentTheme, theme, sharedPreference;
 
+    String unikKode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        sharedPref = getSharedPreferences(sharedPreference, MODE_PRIVATE);
-
-        /*
-        currentTheme = sharedPref.getString("current_theme", "blue_theme");
-        setTheme(R.style.Theme_App_Blue);
-
-        theme = sharedPref.getString("current_theme", "blue_theme");
-        if (currentTheme != theme){
-            recreate();
-        }
-
-         */
-
-
-
-
-
         setContentView(R.layout.homepage_activity_layout);
 
         quiz = (Button) findViewById(R.id.start_quiz_knap);
@@ -56,39 +35,41 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
 
         quiz_code = (EditText) findViewById(R.id.unikkode);
 
-
-
-        toast = Toast.makeText(getApplicationContext(),
-                "Indsæt unik kode",
-                Toast.LENGTH_SHORT);
-
     }
 
     @Override
     public void onClick(View v) {
 
+        unikKode = quiz_code.getText().toString();
+
         if(quiz.getId() == v.getId()){
 
-            if (quiz_code.getText().toString() == ""){
+            if (unikKode.matches("")){
+
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Indsæt unik kode",
+                        Toast.LENGTH_SHORT);
 
                 toast.show();
 
             } else {
 
-                startActivity(new Intent(Homepage_activity.this, Question.class));
+                Intent quiz = new Intent(this, Quiz_logic_activity.class);
+
+                Bundle data = new Bundle();
+                data.putString("quizcode", quiz_code.getText().toString());
+                quiz.putExtras(data);
+
+                startActivity(quiz);
 
             }
 
-
-
         } else if(profile.getId() == v.getId()){
-
-            startActivity(new Intent(Homepage_activity.this, Profile_activity.class));
 
 
         } else if(edit.getId() == v.getId()){
 
-            startActivity(new Intent(Homepage_activity.this, editQuiz.class));
+            startActivity(new Intent(Homepage_activity.this, Quiz_list_activity.class));
 
 
         }
