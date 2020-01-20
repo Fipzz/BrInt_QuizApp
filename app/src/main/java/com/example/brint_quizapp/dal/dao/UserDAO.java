@@ -32,6 +32,44 @@ public class UserDAO {
         return true;
     }
 
+    public UserDTO getUserByUsername(String username, Connection c){
+
+        UserDTO user = new UserDTO();
+
+        try {
+
+            ArrayList<QuizDTO> quizzes = new ArrayList<QuizDTO>();
+            String query = "SELECT * FROM user WHERE name = ?;";
+            PreparedStatement statement = c.prepareStatement(query);
+            statement.setString(1, username);
+            ResultSet result = statement.executeQuery();
+
+            c.commit();
+
+            if (!result.next()) {
+                return null;
+            }
+
+            int id = result.getInt("id");
+
+            user.setId(id);
+            user.setName(username);
+            user.setEmail(result.getString("email"));
+            user.setPassword(result.getString("password"));
+            QuizDAO quizDAO = new QuizDAO();
+            user.setQuizzes(quizDAO.getQuizzesByUserId(id, c));
+            ResultDAO resultDAO = new ResultDAO();
+            user.setResults(resultDAO.getResultsFromUserId(id, c));
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+
+        return user;
+
+    }
+
     public UserDTO getUserById(int id, Connection c) throws DALException {
         try {
             UserDTO user = new UserDTO();

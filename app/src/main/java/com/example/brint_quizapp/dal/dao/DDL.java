@@ -32,7 +32,7 @@ public class DDL{
                     + "user_id int(10),"
                     + "name varchar(50),"
                     + "type int(1),"
-                    + "code varchar(6) UNIQUE"
+                    + "code varchar(6) UNIQUE,"
                     + "PRIMARY KEY (id),"
                     + "FOREIGN KEY (user_id) references user (id))";
             statement = c.prepareStatement(query);
@@ -61,7 +61,7 @@ public class DDL{
             query = "CREATE TABLE IF NOT EXISTS " + "result" + " ("
                     + "question_id int(10),"
                     + "user_id int(10),"
-                    + "answer_id int(10)"
+                    + "answer_id int(10),"
                     + "correct int(1),"
                     + "PRIMARY KEY (question_id, user_id),"
                     + "FOREIGN KEY (user_id) references user (id) ON DELETE CASCADE,"
