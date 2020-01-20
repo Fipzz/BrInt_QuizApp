@@ -25,9 +25,10 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*
+
         sharedPref = getSharedPreferences(sharedPreference, MODE_PRIVATE);
 
+        /*
         currentTheme = sharedPref.getString("current_theme", "blue_theme");
         setTheme(R.style.Theme_App_Blue);
 
@@ -37,6 +38,8 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
         }
 
          */
+
+
 
 
 

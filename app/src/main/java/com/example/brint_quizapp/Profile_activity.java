@@ -1,5 +1,6 @@
 package com.example.brint_quizapp;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
@@ -24,13 +25,7 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*
-        theme = sharedPref.getString("current_theme", "blue_theme");
-        if (currentTheme != theme){
-            recreate();
-        }
 
-         */
 
         sharedPref = getSharedPreferences(sharedPreference, MODE_PRIVATE);
 
@@ -45,6 +40,11 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
 
         } else {
             setTheme(R.style.Theme_App_Purple);
+        }
+
+        theme = sharedPref.getString("current_theme", "blue_theme");
+        if (currentTheme != theme){
+            recreate();
         }
 
         setContentView(R.layout.profile_activity_layout);
@@ -67,6 +67,8 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
 
     }
 
+
+
     @Override
     public void onClick(View v) {
 
@@ -77,6 +79,11 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
                 .putString("current_theme","purple_theme")
                 .apply();
         recreate();
+
+        if (backButton.getId() == v.getId()) {
+            startActivity(new Intent(this, Homepage_activity.class));
+
+        }
 
     }
 }
