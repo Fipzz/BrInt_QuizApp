@@ -18,8 +18,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.brint_quizapp.dal.dto.QuizDTO;
 import com.google.firebase.internal.InternalTokenProvider;
