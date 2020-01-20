@@ -36,10 +36,13 @@ public class Question extends AppCompatActivity implements View.OnClickListener 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        /*
         theme = sharedPref.getString("current_theme", "blue_theme");
         if (currentTheme != theme){
             recreate();
         }
+
+         */
 
         setContentView(R.layout.quiz_activity_layout);
 

@@ -30,10 +30,13 @@ public class Result_activity extends AppCompatActivity implements View.OnClickLi
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        /*
         theme = sharedPref.getString("current_theme", "blue_theme");
         if (currentTheme != theme){
             recreate();
         }
+
+         */
 
         setContentView(R.layout.result_activity_layout);
 

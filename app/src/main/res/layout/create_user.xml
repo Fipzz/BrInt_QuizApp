@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DCDCDC"
+    >
+
+
+    <TextView
+        android:id="@+id/name_create"
+        android:layout_width="281dp"
+        android:layout_height="65dp"
+        android:fontFamily="@font/quicksand_light"
+        android:gravity="top"
+        android:text="@string/name"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="47sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.13" />
+
+    <TextView
+        android:id="@+id/user_name_text"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:background="@drawable/log_in"
+        android:backgroundTint="#40000000"
+        android:text="Navn:"
+        android:textAppearance="@style/question"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.34" />
+
+    <TextView
+        android:id="@+id/user_email"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:background="@drawable/log_in"
+        android:backgroundTint="#40000000"
+        android:text="Email:"
+        android:textAppearance="@style/question"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.46" />
+
+    <TextView
+        android:id="@+id/user_password"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:background="@drawable/log_in"
+        android:backgroundTint="#40000000"
+        android:text="Password:"
+        android:textAppearance="@style/question"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.58000004" />
+
+    <TextView
+        android:id="@+id/user_repeat_password"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:background="@drawable/log_in"
+        android:backgroundTint="#40000000"
+        android:text="Gentag password:"
+        android:textAppearance="@style/question"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7" />
+
+    <Button
+        android:id="@+id/user_done"
+        android:layout_width="95dp"
+        android:layout_height="43dp"
+        android:background="@drawable/log_in"
+        android:backgroundTint="?attr/buttonNormalColor"
+        android:text="Færdig"
+        android:textColor="?attr/buttonTextColor"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.90999997" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
