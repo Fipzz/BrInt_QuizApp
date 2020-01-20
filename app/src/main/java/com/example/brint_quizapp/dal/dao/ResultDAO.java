@@ -37,6 +37,38 @@ public class ResultDAO {
         return true;
     }
 
+    public ArrayList<ResultDTO> getResultsFromQuizId(int id, Connection c){
+        ArrayList<ResultDTO> results = new ArrayList<>();
+
+        try {
+            String query = "SELECT * FROM result WHERE quiz_id = " + id + ";";
+            PreparedStatement statement = c.prepareStatement(query);
+            ResultSet result = statement.executeQuery();
+
+            c.commit();
+
+            while(result.next()){
+                ResultDTO r = new ResultDTO();
+                boolean correct;
+                if(result.getInt("correct") == 0){
+                    correct = false;
+                }else{
+                    correct = true;
+                }
+                r.setCorrect(correct);
+                r.setAnswer_id(result.getInt("answer_id"));
+                r.setQuestion_id(result.getInt("question_id"));
+                r.setUser_id(result.getInt("user_id"));
+
+                results.add(r);
+            }
+
+        }catch (SQLException e){
+            return null;
+        }
+        return results;
+    }
+
     public ArrayList<ResultDTO> getResultsFromUserId(int id, Connection c){
         ArrayList<ResultDTO> results = new ArrayList<>();
 

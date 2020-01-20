@@ -36,9 +36,6 @@ public class Db_test extends AppCompatActivity implements View.OnClickListener {
 
     private static class CreateTablesClass extends AsyncTask<String, Void, Void> {
         Connection connection;
-        private final static String server = "jdbc:sqlserver://10.0.2.2/test";
-        private final static String username = "root";
-        private final static String password = "";
 
         @Override
         protected Void doInBackground(String... strings) {
@@ -64,9 +61,9 @@ public class Db_test extends AppCompatActivity implements View.OnClickListener {
 
     private static class DeletetablesClass extends AsyncTask<String, Void, Void> {
         Connection connection;
-        private final static String server = "jdbc:sqlserver://10.0.2.2/test";
-        private final static String username = "root";
-        private final static String password = "";
+        String url = "remotemysql.com";
+        String un = "PG17gBGeZc";
+        String password = "Yqeou76dpr";
 
         @Override
         protected Void doInBackground(String... strings) {
@@ -76,7 +73,7 @@ public class Db_test extends AppCompatActivity implements View.OnClickListener {
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
-                connection = DriverManager.getConnection(server, username, password);
+                connection = DriverManager.getConnection(url, un, password);
                 connection.setAutoCommit(false);
                 DDL ddl = new DDL();
                 ddl.deleteTables(connection);

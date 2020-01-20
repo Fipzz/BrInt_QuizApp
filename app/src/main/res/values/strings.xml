@@ -6,11 +6,4 @@
     <string name="question">Whats the fastest animal in the world?</string>
     <string name="quiz_code">Unique code</string>
 
-
-
-    <string name="DBURL">jdbc:sqlserver://10.0.2.2/test</string>
-    <string name="DBUSER">root</string>
-    <string name="DBPASS"></string>
-
-
 </resources>
