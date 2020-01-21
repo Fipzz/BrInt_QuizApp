@@ -1,5 +1,7 @@
 package com.example.brint_quizapp;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -12,11 +14,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-public class editQuiz extends AppCompatActivity implements View.OnClickListener{
+public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener{
+
+    //TODO add a button to remove a question
 
     //TODO handle going back on first question
 
@@ -24,7 +29,7 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
 
     EditText a1, a2, a3, a4;
 
-    TextView quizName, questionOnScreen;
+    TextView quizName, questionOnScreen, questionCounter;
 
     CheckBox c1, c2, c3, c4;
 
@@ -34,14 +39,13 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
 
     Question_item questionEdit;
 
-    String answer1, answer2, answer3, answer4, currentTheme, theme;
-
     int currentQuestion = 0, isCorrect;
 
-    ImageButton edit1, edit2, edit3, edit4;
+    ImageButton edit1, edit2, edit3, edit4, save, delete;
 
     SharedPreferences sharedPref;
 
+    String currentTheme, sharedPreference;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,13 +54,19 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        /*
-        theme = sharedPref.getString("current_theme", "blue_theme");
-        if (currentTheme != theme){
-            recreate();
-        }
+        sharedPreference = getString(R.string.preferenceFile);
 
-         */
+        sharedPref = getSharedPreferences(sharedPreference, MODE_PRIVATE);
+        currentTheme = sharedPref.getString("current_theme", "blue_theme");
+
+        if (currentTheme == "blue_theme"){
+
+            setTheme(R.style.Theme_App_Blue);
+
+        } else if (currentTheme == "purple_theme") {
+
+            setTheme(R.style.Theme_App_Purple);
+        }
 
         setContentView(R.layout.edit_question_activity_layout);
 
@@ -77,8 +87,11 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
 
         prev = (Button) findViewById(R.id.previous);
         prev.setOnClickListener(this);
+        prev.setEnabled(false);
 
         quizName = (TextView) findViewById(R.id.name);
+
+        questionCounter = (TextView) findViewById(R.id.questionCounter);
 
         questionOnScreen = (EditText) findViewById(R.id.question);
 
@@ -94,6 +107,7 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
         questionEdit = questions.get(currentQuestion);
         showNextQuestion(questionEdit, currentQuestion);
         updateCheckBox();
+        questionCounter.setText(currentQuestion + 1 + " / " + questions.size());
 
         edit1 = (ImageButton) findViewById(R.id.edit1);
         edit1.setOnClickListener(this);
@@ -111,11 +125,18 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
         edit2.setEnabled(false);
         edit3.setEnabled(false);
         edit4.setEnabled(false);
+
+        save = (ImageButton) findViewById(R.id.save);
+        save.setOnClickListener(this);
+
+        delete = (ImageButton) findViewById(R.id.delete);
+        delete.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
 
+        //Handles when the user presses the next and previous buttons
         if (R.id.next == v.getId()) {
             if (next.getText().toString() == "Tilføj") {
                 questions.add(new Question_item("Indtast Spørgsmål", "Svar 1", "Svar 2", "Svar 3", "Svar 4", 1));
@@ -138,11 +159,17 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
             if (next.getText().toString() == "Tilføj") {
                 next.setText("Næste");
             }
+
             if (R.id.previous == v.getId()) {
+                if (currentQuestion == 1) {
+                    prev.setEnabled(false);
+                }
+
                 currentQuestion--;
                 showNextQuestion(questions.get(currentQuestion), currentQuestion);
                 updateCheckBox();
             } else if (R.id.next == v.getId()) {
+                prev.setEnabled(true);
 
                 if (currentQuestion == questions.size()-2) {
                     next.setText("Tilføj");
@@ -155,6 +182,72 @@ public class editQuiz extends AppCompatActivity implements View.OnClickListener{
                     updateCheckBox();
                 }
             }
+            questionCounter.setText(currentQuestion + 1 + " / " + questions.size());
+        }
+
+        //Handles when the user presses the save icon
+            if (R.id.save == v.getId()) { //http://www.apnatutorials.com/android/android-alert-confirm-prompt-dialog.php?categoryId=2&subCategoryId=34&myPath=android/android-alert-confirm-prompt-dialog.php
+
+            //TODO In this if statement, if the user presses to save in the prompt menu, the current arraylist is to be uploaded to the database.
+
+            final Intent goBack = new Intent(this, Homepage_activity.class);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Afslutning af redigering");
+            builder.setMessage("Du er ved afslutte redigeringen.\nØnsker du at gemme dine ændringer?   ");
+            builder.setCancelable(true);
+            builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getApplicationContext(), "Ændringer gemt", Toast.LENGTH_SHORT).show();
+                    startActivity(goBack);
+                }
+            });
+            builder.setNegativeButton("Nej", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getApplicationContext(), "Ændringer ikke gemt", Toast.LENGTH_SHORT).show();
+                }
+            });
+            builder.show();
+        }
+
+        //Handles when the user presses the delete icon
+        if (R.id.delete == v.getId()) {
+
+            //TODO In this if statement, if the user presses to delete in the prompt menu, the currentQuestion is to be dropped from the table in the database. Consider adding an animation.
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Slet spørgsmål");
+            builder.setMessage("Er du sikker på at du ønsker at slette spørgsmålet?");
+            builder.setCancelable(true);
+            builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getApplicationContext(), "Spørgsmål Slettet", Toast.LENGTH_SHORT).show();
+                    if (currentQuestion == questions.size()-1) {
+                        currentQuestion--;
+                        showNextQuestion(questions.get(currentQuestion), currentQuestion);
+                        currentQuestion++;
+                        questions.remove(currentQuestion);
+                        currentQuestion--;
+                    } else {
+                        currentQuestion++;
+                        showNextQuestion(questions.get(currentQuestion), currentQuestion);
+                        currentQuestion--;
+                        questions.remove(currentQuestion);
+                    }
+                    questionCounter.setText(currentQuestion + 1 + " / " + questions.size());
+                    if (currentQuestion == questions.size()-1) {
+                        next.setText("Tilføj");
+                    }
+                }
+            });
+            builder.setNegativeButton("Nej", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+            builder.show();
         }
     }
 

@@ -11,9 +11,9 @@ import java.sql.SQLException;
 public class DBconnector {
     String classs = "com.mysql.jdbc.Driver";
 
-    String url = "jdbc:mysql://10.0.2.2/test";
-    String un = "root";
-    String password = "";
+    String url = "jdbc:mysql://remotemysql.com:3306/PG17gBGeZc";
+    String un = "PG17gBGeZc";
+    String password = "Yqeou76dpr";
 
 
     @SuppressLint("NewApi")
@@ -29,8 +29,7 @@ public class DBconnector {
 
             conn = DriverManager.getConnection(url, un, password);
 
-
-            conn = DriverManager.getConnection(ConnURL);
+            //conn = DriverManager.getConnection(ConnURL);
         } catch (SQLException se) {
             Log.e("ERRO", se.getMessage());
         } catch (ClassNotFoundException e) {

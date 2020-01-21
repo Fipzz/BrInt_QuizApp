@@ -18,8 +18,9 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
     EditText quiz_code;
     Toast toast;
     SharedPreferences sharedPref;
-    String currentTheme, theme, sharedPreference;
+    String currentTheme, sharedPreference;
 
+    String unikKode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,30 +53,34 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
 
         quiz_code = (EditText) findViewById(R.id.unikkode);
 
-
-
-        toast = Toast.makeText(getApplicationContext(),
-                "Indsæt unik kode",
-                Toast.LENGTH_SHORT);
-
     }
 
     @Override
     public void onClick(View v) {
 
+        unikKode = quiz_code.getText().toString();
+
         if(quiz.getId() == v.getId()){
 
-            if (quiz_code.getText().toString() == ""){
+            if (unikKode.matches("")){
+
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Indsæt unik kode",
+                        Toast.LENGTH_SHORT);
 
                 toast.show();
 
             } else {
 
-                startActivity(new Intent(Homepage_activity.this, Question.class));
+                Intent quiz = new Intent(this, Quiz_logic_activity.class);
+
+                Bundle data = new Bundle();
+                data.putString("quizcode", quiz_code.getText().toString());
+                quiz.putExtras(data);
+
+                startActivity(quiz);
 
             }
-
-
 
         } else if(profile.getId() == v.getId()){
 
@@ -84,7 +89,7 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
 
         } else if(edit.getId() == v.getId()){
 
-            startActivity(new Intent(Homepage_activity.this, editQuiz.class));
+            startActivity(new Intent(Homepage_activity.this, Quiz_list_activity.class));
 
 
         }

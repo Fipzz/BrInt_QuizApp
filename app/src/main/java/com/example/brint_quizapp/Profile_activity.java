@@ -65,33 +65,36 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
 
-        if (themeToggle.isChecked() == true) {
+        if (v.getId() == findViewById(R.id.theme_switch).getId() ) {
+            if (themeToggle.isChecked() == true) {
 
-            SharedPreferences.Editor edit = sharedPref.edit();
+                SharedPreferences.Editor edit = sharedPref.edit();
 
-            sharedPref
-                    .edit()
-                    .putString("current_theme", "purple_theme")
-                    .apply();
-            recreate();
+                sharedPref
+                        .edit()
+                        .putString("current_theme", "purple_theme")
+                        .apply();
+                recreate();
 
-            edit.putString(sharedPreference,"purple_theme");
-            edit.putBoolean(themeSwitch,true);
-            edit.apply();
+                edit.putString(sharedPreference, "purple_theme");
+                edit.putBoolean(themeSwitch, true);
+                edit.apply();
 
-        } else if (themeToggle.isChecked() == false) {
+            } else if (themeToggle.isChecked() == false) {
 
-            SharedPreferences.Editor edit = sharedPref.edit();
+                SharedPreferences.Editor edit = sharedPref.edit();
 
-            sharedPref
-                    .edit()
-                    .putString("current_theme", "blue_theme")
-                    .apply();
-            recreate();
+                sharedPref
+                        .edit()
+                        .putString("current_theme", "blue_theme")
+                        .apply();
+                recreate();
 
-            edit.putString(sharedPreference,"blue_theme");
-            edit.putBoolean(themeSwitch,false);
-            edit.apply();
+                edit.putString(sharedPreference, "blue_theme");
+                edit.putBoolean(themeSwitch, false);
+                edit.apply();
+
+            }
 
         }
 

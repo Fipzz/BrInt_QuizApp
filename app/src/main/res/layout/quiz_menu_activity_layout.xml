@@ -104,4 +104,19 @@
         app:layout_constraintTop_toBottomOf="@+id/editQuestion"
         app:layout_constraintVertical_bias="0.2" />
 
+    <Button
+        android:id="@+id/add_question2"
+        android:layout_width="330dp"
+        android:layout_height="70dp"
+        android:background="@drawable/log_in"
+        android:backgroundTint="?attr/buttonNormalColor"
+        android:text="Tilføj Spørgsmål"
+        android:textColor="?attr/buttonTextColor"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editQuestion"
+        app:layout_constraintVertical_bias="0.2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
