@@ -27,43 +27,36 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
 
 
 
+        sharedPreference = getString(R.string.preferenceFile);
+
         sharedPref = getSharedPreferences(sharedPreference, MODE_PRIVATE);
-
-
-        if (sharedPref.getBoolean(themeSwitch, false) == true){
-            themeToggle.setChecked(true);
-        }
-
         currentTheme = sharedPref.getString("current_theme", "blue_theme");
+
         if (currentTheme == "blue_theme"){
+
             setTheme(R.style.Theme_App_Blue);
 
-        } else {
+        } else if (currentTheme == "purple_theme") {
+
             setTheme(R.style.Theme_App_Purple);
         }
 
-        theme = sharedPref.getString("current_theme", "blue_theme");
-        if (currentTheme != theme){
-            recreate();
-        }
-
         setContentView(R.layout.profile_activity_layout);
-
         title = findViewById(R.id.name);
 
         username = findViewById(R.id.username);
 
         backButton = findViewById(R.id.profil_knap);
-        backButton.setOnClickListener(this);
+
 
         themeToggle = findViewById(R.id.theme_switch);
+
         themeToggle.setOnClickListener(this);
+        backButton.setOnClickListener(this);
 
-        sharedPreference = getString(R.string.preferenceFile);
-        themeSwitch = getString(R.string.themeSwitch);
-
-
-
+        if (sharedPref.getBoolean(themeSwitch, false) == true){
+            themeToggle.setChecked(true);
+        }
 
     }
 
@@ -72,13 +65,35 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
 
-        SharedPreferences.Editor edit = sharedPref.edit();
+        if (themeToggle.isChecked() == true) {
 
-        sharedPref
-                .edit()
-                .putString("current_theme","purple_theme")
-                .apply();
-        recreate();
+            SharedPreferences.Editor edit = sharedPref.edit();
+
+            sharedPref
+                    .edit()
+                    .putString("current_theme", "purple_theme")
+                    .apply();
+            recreate();
+
+            edit.putString(sharedPreference,"purple_theme");
+            edit.putBoolean(themeSwitch,true);
+            edit.apply();
+
+        } else if (themeToggle.isChecked() == false) {
+
+            SharedPreferences.Editor edit = sharedPref.edit();
+
+            sharedPref
+                    .edit()
+                    .putString("current_theme", "blue_theme")
+                    .apply();
+            recreate();
+
+            edit.putString(sharedPreference,"blue_theme");
+            edit.putBoolean(themeSwitch,false);
+            edit.apply();
+
+        }
 
         if (backButton.getId() == v.getId()) {
             startActivity(new Intent(this, Homepage_activity.class));

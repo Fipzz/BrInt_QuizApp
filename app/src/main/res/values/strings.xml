@@ -5,9 +5,9 @@
     <string name="quiz_navn">Quiz navn</string>
     <string name="question">Whats the fastest animal in the world?</string>
     <string name="quiz_code">Unique code</string>
-    <string name="themeSwitch">Theme</string>
+    <bool name="themeSwitch">false</bool>
     <string name="preferenceFile">PreferenceFile</string>
-    <string name="current_theme">currentTheme</string>
+    <string name="current_theme">blue_theme</string>
     <string name="blue_theme">blueTheme</string>
     <string name="purple_theme">purpleTheme</string>
 
