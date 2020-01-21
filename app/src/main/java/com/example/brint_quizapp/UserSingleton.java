@@ -9,6 +9,7 @@ public class UserSingleton {
     private static UserSingleton userSingleton;
 
     public static UserSingleton getUserSingleton(){
+
         if(userSingleton == null){
             return userSingleton = new UserSingleton();
         }

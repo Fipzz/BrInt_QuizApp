@@ -66,6 +66,12 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
 
         } else if(profile.getId() == v.getId()){
 
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    UserSingleton.getUserSingleton().getUser().getName(),
+                    Toast.LENGTH_SHORT);
+
+            toast.show();
+
 
         } else if(edit.getId() == v.getId()){
 

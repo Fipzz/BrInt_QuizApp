@@ -112,7 +112,9 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
 
     private void initMyQuiz(){
 
-        for (QuizDTO quiz: UserSingleton.getUserSingleton().getUser().getQuizzes()) {
+        UserDTO user = UserSingleton.getUserSingleton().getUser();
+        ArrayList<QuizDTO> quizz = user.getQuizzes();
+        for (QuizDTO quiz: quizz) {
             quizNames.add(quiz.getName());
         }
 

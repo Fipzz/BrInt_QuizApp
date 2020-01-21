@@ -44,9 +44,6 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
         anon = (Button) findViewById(R.id.anon);
         anon.setOnClickListener(this);
 
-        dbtest = (Button) findViewById(R.id.dbtest);
-        dbtest.setOnClickListener(this);
-
         email = findViewById(R.id.brugernavn);
 
         password = findViewById(R.id.password);
@@ -84,8 +81,6 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
 
                             if(userSingleton.getUser().getPassword().equals(password.getText().toString())){
 
-                                UserSingleton.getUserSingleton().setUser(userDTO);
-
                                 startActivity(new Intent(MainScreen_login_activity.this, Homepage_activity.class));
 
                             }else{
@@ -105,8 +100,6 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
                         if(userSingleton.getUser() != null){
 
                             if(userSingleton.getUser().getPassword().equals(password.getText().toString())){
-
-                                UserSingleton.getUserSingleton().setUser(userDTO);
 
                                 startActivity(new Intent(MainScreen_login_activity.this, Homepage_activity.class));
 
@@ -166,7 +159,9 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
 
 
                 userSingleton.setUser(userDTO);
+                UserSingleton.getUserSingleton().setUser(userDTO);
                 connection.close();
+
 
             } catch (Exception e) {
                 e.printStackTrace();

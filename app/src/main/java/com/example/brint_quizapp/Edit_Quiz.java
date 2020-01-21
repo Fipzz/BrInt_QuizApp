@@ -305,6 +305,7 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
 
     public void updateCheckBox (){
 
+            int isCorrect = 1;
         if (isCorrect == 1) {
             c1.setChecked(true);
             c2.setChecked(false);
@@ -336,7 +337,7 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
         a2.setText(questionEdit.getAnswer2());
         a3.setText(questionEdit.getAnswer3());
         a4.setText(questionEdit.getAnswer4());
-
+        int isCorrect = 1;
         isCorrect = questionEdit.getIsCorrect();
     }
 
