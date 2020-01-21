@@ -62,7 +62,6 @@ public class DDL{
                     + "question_id int(10),"
                     + "user_id int(10),"
                     + "answer_id int(10),"
-                    + "correct int(1),"
                     + "PRIMARY KEY (question_id, user_id),"
                     + "FOREIGN KEY (user_id) references user (id) ON DELETE CASCADE,"
                     + "FOREIGN KEY (question_id) references question (id) ON DELETE CASCADE)";

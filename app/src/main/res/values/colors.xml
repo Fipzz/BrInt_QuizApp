@@ -10,7 +10,7 @@
   <color name="blueButtonText">#243665</color>
   <color name="blueBackground">#243665</color>
   //blueBackground and blueButtonText #243665
-  <color name="blueQuestionColor">#8DB8DB</color>
+  <color name="buttonblue">#8DB8DB</color>
   <color name="blueButtonNormal">#8DB8DB</color>
   //blueQuestionColor and blueButtonNormal #8DB8DB
   <color name="black">#000000</color>
