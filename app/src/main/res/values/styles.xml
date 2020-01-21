@@ -1,14 +1,44 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColorHint">@color/secondary_text</item>
+
+    <style name="baseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="primaryButtonTheme">
+            @style/Widget.AppCompat.Button
+        </item>
 
     </style>
+
+    <style name="Theme.App.Blue" parent="baseTheme">
+
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="background">@color/blueBackground</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="primaryTextColor">@color/bluePrimary_text</item>
+        <item name="buttonTextColor">@color/blueButtonText</item>
+        <item name="buttonNormalColor">@color/blueButtonNormal</item>
+        <item name="questionTextColor">@color/buttonblue</item>
+
+
+
+    </style>
+
+   <style name="Theme.App.Purple" parent="baseTheme">
+
+       <!-- Customize your theme here. -->
+       <item name="colorPrimary">@color/colorPrimaryDark</item>
+       <item name="background">@color/purpleBackground</item>
+       <item name="colorAccent">@color/colorAccent</item>
+       <item name="primaryTextColor">@color/purplePrimaryText</item>
+       <item name="buttonTextColor">@color/purpleButtonText</item>
+       <item name="buttonNormalColor">@color/purpleButtonNormal</item>
+       <item name="questionTextColor">@color/purpleQuestionColor</item>
+
+
+   </style>
+
+
 
     <!-- Titel -->
 
@@ -19,7 +49,7 @@
         </item>
 
         <item name="android:textColor">
-            #000000
+            @color/blueButtonText
         </item>
 
     </style>
@@ -31,7 +61,7 @@
         </item>
 
         <item name="android:textColor">
-            #8DB8DB
+            @color/blueButtonText
         </item>
 
         <item name="android:shadowColor">

@@ -5,7 +5,7 @@
     android:id="@+id/student_log"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#243665">
+    android:background="?attr/background">
 
     <!-- Quiz navn -->
     <TextView
@@ -19,6 +19,7 @@
         android:text="@string/quiz_navn"
         android:textAppearance="@style/name"
         android:textSize="30sp"
+        android:textColor="?attr/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,6 +37,7 @@
         android:text="@string/question"
         android:textAppearance="@style/question"
         android:textSize="24sp"
+        android:textColor="?attr/questionTextColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,13 +53,13 @@
         android:layout_height="53dp"
         android:layout_marginTop="380dp"
         android:background="@drawable/log_in"
-        android:backgroundTint="@color/buttonblue"
+        android:backgroundTint="?attr/colorButtonNormal"
         android:shadowColor="#000000"
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
         android:text="Næste"
-        android:textColor="#243665"
+        android:textColor="?attr/buttonTextColor"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/answer2"
         app:layout_constraintEnd_toEndOf="@+id/question"

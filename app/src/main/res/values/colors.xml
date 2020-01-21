@@ -1,16 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorPrimary">#000000</color>
-  <color name="colorPrimaryDark">#243665</color>
+  <color name="colorPrimaryText">#000000</color>
+  <color name="colorPrimaryDark">#000000</color>
   <color name="colorAccent">#000000</color>
 
-  <color name="black_overlay">#66000000</color>
-  <color name="secondary_text">#66FFFFFF</color>
+  <color name="bluePrimary_text">#000000</color>
+  <color name="blueSecondary_text">#673AB7</color>
+  <color name="black_overlay">#000000</color>
+  <color name="blueButtonText">#243665</color>
+  <color name="blueBackground">#243665</color>
+  //blueBackground and blueButtonText #243665
+  <color name="buttonblue">#8DB8DB</color>
+  <color name="blueButtonNormal">#8DB8DB</color>
+  //blueQuestionColor and blueButtonNormal #8DB8DB
   <color name="black">#000000</color>
   <color name="white">#FFFFFF</color>
   <color name="purrr">#8C00BA</color>
-  <color name="buttonblue">#8DB8DB</color>
   <color name="correctgreen">#A5FFB6</color>
   <color name="redwrong">#FD3423</color>
+  
+  <color name="purplePrimaryText">#FFFFFF</color>
+  <color name="purpleButtonText">#3C1A5B</color>
+  <color name="purpleBackground">#3C1A5B</color>
+  //purpleBackground and purpleButtonText #3C1A5B
+  <color name="purpleQuestionColor">#FFF748</color>
+  <color name="purpleButtonNormal">#FFF748</color>
+  <color name="secondary_text">#FFFFFF</color>
+  //purpleQuestionColor and purpleButtonNormal #FFF748
 
 </resources>

@@ -10,27 +10,23 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.brint_quizapp.dal.dao.DDL;
 import com.example.brint_quizapp.dal.dao.UserDAO;
 import com.example.brint_quizapp.dal.dto.UserDTO;
 
 import java.sql.Connection;
-import java.sql.SQLException;
-
-import static com.example.brint_quizapp.Db_test.connctionClass;
 
 public class MainScreen_login_activity extends AppCompatActivity implements View.OnClickListener {
 
-    //TODO login and password should be(NO /n & limit input)
-
     Button login, anon, dbtest;
-    EditText username, password;
+    EditText email, password;
     CountDownTimer timer;
     UserSingleton userSingleton;
+    TextView opretBruger;
 
-    String usernameString;
+    String emailString;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,12 +43,15 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
         dbtest = (Button) findViewById(R.id.dbtest);
         dbtest.setOnClickListener(this);
 
-        username = findViewById(R.id.brugernavn);
+        email = findViewById(R.id.brugernavn);
 
         password = findViewById(R.id.password);
 
         userSingleton = new UserSingleton();
 
+        opretBruger = (TextView) findViewById(R.id.opret_bruger);
+
+        opretBruger.setOnClickListener(this);
 
     }
 
@@ -61,10 +60,10 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
 
         if(login.getId() == v.getId()){
 
-            usernameString = username.getText().toString();
+            emailString = email.getText().toString();
 
 
-            if(username.getText().toString().equals("")){
+            if(email.getText().toString().equals("")){
                 userSingleton.setUser(null);
                 startActivity(new Intent(MainScreen_login_activity.this, Homepage_activity.class));
             }else {
@@ -80,7 +79,6 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
                         if(userSingleton.getUser() != null){
 
                             if(userSingleton.getUser().getPassword().equals(password.getText().toString())){
-                                startActivity(new Intent(MainScreen_login_activity.this, Homepage_activity.class));
 
                             }else{
                                 Toast toast = Toast.makeText(getApplicationContext(),
@@ -127,6 +125,8 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
 
         } else if(v.getId() == dbtest.getId()){
             startActivity(new Intent(MainScreen_login_activity.this, Db_test.class));
+        }else if(opretBruger.getId() == v.getId()){
+            startActivity(new Intent(MainScreen_login_activity.this, Create_user_activity.class));
         }
 
     }
@@ -150,7 +150,7 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
                 connection.setAutoCommit(false);
 
                 UserDAO userDAO = new UserDAO();
-                UserDTO userDTO = userDAO.getUserByUsername(usernameString, connection);
+                UserDTO userDTO = userDAO.getUserByEmail(emailString, connection);
 
 
                 userSingleton.setUser(userDTO);

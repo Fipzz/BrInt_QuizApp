@@ -16,7 +16,7 @@
 
         <path
             android:pathData="M0 0V90H90V0"
-            android:fillColor="#8DB8DB"
+            android:fillColor="?attr/questionTextColor"
             />
 
     </group>

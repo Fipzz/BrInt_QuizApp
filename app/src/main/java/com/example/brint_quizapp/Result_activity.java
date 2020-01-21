@@ -1,6 +1,7 @@
 package com.example.brint_quizapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -17,6 +18,9 @@ public class Result_activity extends AppCompatActivity implements View.OnClickLi
     TextView right, wrong;
     Button back;
 
+    SharedPreferences sharedPref;
+    String currentTheme, theme;
+
     int rightAnswers, wrongAnswers;
 
     @Override
@@ -25,6 +29,14 @@ public class Result_activity extends AppCompatActivity implements View.OnClickLi
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        /*
+        theme = sharedPref.getString("current_theme", "blue_theme");
+        if (currentTheme != theme){
+            recreate();
+        }
+
+         */
 
         setContentView(R.layout.result_activity_layout);
 

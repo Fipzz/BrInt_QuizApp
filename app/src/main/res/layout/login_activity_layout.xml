@@ -60,7 +60,7 @@
         android:background="@null"
         android:backgroundTint="@color/white"
         android:gravity="left"
-        android:hint="Brugernavn:"
+        android:hint="Email:"
         android:maxLength="30"
         android:singleLine="true"
         android:textAppearance="@style/name"
@@ -100,13 +100,13 @@
 
     <Button
         android:id="@+id/log_in"
-        android:layout_width="95dp"
-        android:layout_height="43dp"
+        android:layout_width="123dp"
+        android:layout_height="46dp"
         android:background="@drawable/log_in"
         android:backgroundTint="@color/buttonblue"
         android:text="Log ind"
         android:textColor="#243665"
-        android:textSize="14sp"
+        android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -114,26 +114,30 @@
         app:layout_constraintVertical_bias="0.74" />
 
     <!-- Annonym knap -->
+
     <Button
         android:id="@+id/anon"
         android:layout_width="108dp"
         android:layout_height="44dp"
+        android:background="@drawable/log_in"
+        android:backgroundTint="@color/buttonblue"
         android:text="Anonym"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/log_in"
-        app:layout_constraintVertical_bias="0.32" />
+        app:layout_constraintVertical_bias="0.659" />
 
-    <Button
-        android:id="@+id/dbtest"
+    <TextView
+        android:id="@+id/opret_bruger"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DB TEST"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/anon" />
+        android:layout_marginTop="15dp"
+        android:text="Opret bruger"
+        app:layout_constraintEnd_toEndOf="@+id/log_in"
+        app:layout_constraintStart_toStartOf="@+id/log_in"
+        app:layout_constraintTop_toBottomOf="@+id/log_in" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
