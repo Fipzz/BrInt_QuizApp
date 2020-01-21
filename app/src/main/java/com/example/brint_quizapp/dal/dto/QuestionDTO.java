@@ -9,6 +9,14 @@ public class QuestionDTO {
     String text;
     ArrayList<AnswerDTO> answers;
 
+    public QuestionDTO(){}
+    public QuestionDTO(String text, ArrayList<AnswerDTO> answers){
+
+        this.text = text;
+        this.answers = answers;
+
+    }
+
     public int getQuiz_id() {
         return quiz_id;
     }

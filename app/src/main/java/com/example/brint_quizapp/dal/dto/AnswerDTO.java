@@ -2,7 +2,19 @@ package com.example.brint_quizapp.dal.dto;
 
 public class AnswerDTO {
 
+    public AnswerDTO(){}
+
+    public AnswerDTO(String text, boolean correct){
+
+        this.text = text;
+        this.correct = correct;
+
+    }
+
     int id;
+    int question_id;
+    String text;
+    Boolean correct;
 
     public int getQuestion_id() {
         return question_id;
@@ -11,11 +23,6 @@ public class AnswerDTO {
     public void setQuestion_id(int question_id) {
         this.question_id = question_id;
     }
-
-    int question_id;
-    String text;
-    Boolean correct;
-
     public int getId() {
         return id;
     }

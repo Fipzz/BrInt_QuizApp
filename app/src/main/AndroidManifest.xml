@@ -32,6 +32,7 @@
         <activity android:name=".Homepage_activity"></activity>
         <activity android:name=".Result_activity"></activity>
         <activity android:name=".Quiz_list_activity"></activity>
+        <activity android:name=".Edit_quiz_home_activity"></activity>
 
         <meta-data
             android:name="preloaded_fonts"

@@ -29,6 +29,7 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
     EditText username, password;
     CountDownTimer timer;
     UserSingleton userSingleton;
+    UserDTO userDTO;
 
     String usernameString;
     @Override
@@ -65,8 +66,8 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
 
 
             if(username.getText().toString().equals("")){
-                userSingleton.setUser(null);
-                startActivity(new Intent(MainScreen_login_activity.this, Homepage_activity.class));
+
+
             }else {
 
                 GetUserClass getUserClass = new GetUserClass();
@@ -80,6 +81,9 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
                         if(userSingleton.getUser() != null){
 
                             if(userSingleton.getUser().getPassword().equals(password.getText().toString())){
+
+                                UserSingleton.getUserSingleton().setUser(userDTO);
+
                                 startActivity(new Intent(MainScreen_login_activity.this, Homepage_activity.class));
 
                             }else{
@@ -97,7 +101,11 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
                     public void onFinish() {
 
                         if(userSingleton.getUser() != null){
+
                             if(userSingleton.getUser().getPassword().equals(password.getText().toString())){
+
+                                UserSingleton.getUserSingleton().setUser(userDTO);
+
                                 startActivity(new Intent(MainScreen_login_activity.this, Homepage_activity.class));
 
                             }else{
@@ -150,7 +158,7 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
                 connection.setAutoCommit(false);
 
                 UserDAO userDAO = new UserDAO();
-                UserDTO userDTO = userDAO.getUserByUsername(usernameString, connection);
+                userDTO = userDAO.getUserByUsername(usernameString, connection);
 
 
                 userSingleton.setUser(userDTO);
