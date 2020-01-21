@@ -16,6 +16,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.brint_quizapp.dal.dto.AnswerDTO;
+import com.example.brint_quizapp.dal.dto.QuestionDTO;
+import com.example.brint_quizapp.dal.dto.QuizDTO;
+
 import java.util.ArrayList;
 
 public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener{
@@ -28,19 +32,24 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
 
     EditText a1, a2, a3, a4;
 
-    TextView quizName, questionOnScreen, questionCounter;
-
     CheckBox c1, c2, c3, c4;
 
+    TextView quizName, questionOnScreen, questionCounter;
+
     Toast toast1, toast2, toast3, toast4;
+
+    ImageButton edit1, edit2, edit3, edit4, save, delete;
 
     ArrayList<Question_item> questions = new ArrayList<Question_item>();
 
     Question_item questionEdit;
 
-    int currentQuestion = 0, isCorrect;
+    int currentQuestion = 0;
 
-    ImageButton edit1, edit2, edit3, edit4, save, delete;
+    QuizDTO ChosenQuiz;
+
+    ArrayList<QuestionDTO> QuizQuestions;
+    ArrayList<AnswerDTO> QuizAnswers;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,27 +77,17 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
 
         prev = (Button) findViewById(R.id.previous);
         prev.setOnClickListener(this);
+
         prev.setEnabled(false);
 
         quizName = (TextView) findViewById(R.id.name);
-
         questionCounter = (TextView) findViewById(R.id.questionCounter);
-
         questionOnScreen = (EditText) findViewById(R.id.question);
 
         c1 = (CheckBox) findViewById(R.id.checkBox);
-
         c2 = (CheckBox) findViewById(R.id.checkBox2);
-
         c3 = (CheckBox) findViewById(R.id.checkBox3);
-
         c4 = (CheckBox) findViewById(R.id.checkBox4);
-
-        initializeQuiz();
-        questionEdit = questions.get(currentQuestion);
-        showNextQuestion(questionEdit, currentQuestion);
-        updateCheckBox();
-        questionCounter.setText(currentQuestion + 1 + " / " + questions.size());
 
         edit1 = (ImageButton) findViewById(R.id.edit1);
         edit1.setOnClickListener(this);
@@ -112,31 +111,68 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
 
         delete = (ImageButton) findViewById(R.id.delete);
         delete.setOnClickListener(this);
+
+        ChosenQuiz = UserSingleton.getUserSingleton().getUser().getQuizzes().get(getIntent().getExtras().getInt("quizId"));
+        QuizQuestions = ChosenQuiz.getQuestions();
+
+
+        questionEdit = questions.get(currentQuestion);
+        showNextQuestion(questionEdit, currentQuestion);
+        updateCheckBox();
+
+        questionCounter.setText(currentQuestion + 1 + " / " + questions.size());
+
     }
 
     @Override
     public void onClick(View v) {
 
+        QuizAnswers = QuizQuestions.get(currentQuestion).getAnswers();
+
         //Handles when the user presses the next and previous buttons
         if (R.id.next == v.getId()) {
             if (next.getText().toString() == "Tilføj") {
-                questions.add(new Question_item("Indtast Spørgsmål", "Svar 1", "Svar 2", "Svar 3", "Svar 4", 1));
+
+                ArrayList<AnswerDTO> tempAnswers = new ArrayList<AnswerDTO>();
+
+                tempAnswers.add(new AnswerDTO("Svar 1", false));
+                tempAnswers.add(new AnswerDTO("Svar 2", false));
+                tempAnswers.add(new AnswerDTO("Svar 3", false));
+                tempAnswers.add(new AnswerDTO("Svar 4", false));
+
+                QuestionDTO blank = new QuestionDTO("Indsæt spørgsmål her", tempAnswers);
+                QuizQuestions.add(blank);
             }
         }
 
         if (R.id.previous == v.getId() || R.id.next == v.getId()) {
 
             if (c1.isChecked() == true) {
-                questions.get(currentQuestion).setIsCorrect(1);
-            } else if (c2.isChecked() == true) {
-                questions.get(currentQuestion).setIsCorrect(2);
-            } else if (c3.isChecked() == true) {
-                questions.get(currentQuestion).setIsCorrect(3);
-            } else if (c4.isChecked() == true) {
-                questions.get(currentQuestion).setIsCorrect(4);
+                QuizAnswers.get(1).setCorrect(true);
+            } else {
+                QuizAnswers.get(1).setCorrect(false);
             }
 
-            saveQuestions(questions.get(currentQuestion), currentQuestion);
+            if (c2.isChecked() == true) {
+                QuizAnswers.get(2).setCorrect(true);
+            } else {
+                QuizAnswers.get(2).setCorrect(false);
+            }
+
+            if (c3.isChecked() == true) {
+                QuizAnswers.get(3).setCorrect(true);
+            } else {
+                QuizAnswers.get(3).setCorrect(false);
+            }
+
+            if (c4.isChecked() == true) {
+                QuizAnswers.get(4).setCorrect(true);
+            } else {
+                QuizAnswers.get(4).setCorrect(false);
+            }
+
+            saveQuestions(QuizQuestions.get(currentQuestion));
+
             if (next.getText().toString() == "Tilføj") {
                 next.setText("Næste");
             }
@@ -150,6 +186,7 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
                 showNextQuestion(questions.get(currentQuestion), currentQuestion);
                 updateCheckBox();
             } else if (R.id.next == v.getId()) {
+
                 prev.setEnabled(true);
 
                 if (currentQuestion == questions.size()-2) {
@@ -291,16 +328,6 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
         }
     }
 
-    private void initializeQuiz() {
-
-        //TODO init the whole quizz in the beginning
-
-        questions.add(new Question_item("Hvad er 1+1?", "1", "2", "3", "4", 2));
-        questions.add(new Question_item("Hvor mange stop er der på C-linjen?", "31", "5", "67000", "40", 1));
-        questions.add(new Question_item("Hvad kaldes en der er født mellem 1946-1964", "Millenial", "Gen Z", "Roomba", "Boomer", 4));
-
-    }
-
     public void showNextQuestion(Question_item questionEdit, int currentQuestion){
 
         questionOnScreen.setText(questionEdit.getQuestion());
@@ -313,7 +340,13 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
         isCorrect = questionEdit.getIsCorrect();
     }
 
-    public void saveQuestions(Question_item questionEdit, int currentQuestion) {
+    public void saveQuestions(QuestionDTO questions) {
+
+        questions.getAnswers().get(0).setText(a1.getText().toString());
+        questions.getAnswers().get(1).setText(a2.getText().toString());
+        questions.getAnswers().get(2).setText(a3.getText().toString());
+        questions.getAnswers().get(3).setText(a4.getText().toString());
+
 
         questionEdit.setQuestion(questionOnScreen.getText().toString());
 

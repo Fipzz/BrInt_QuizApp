@@ -2,7 +2,9 @@ package com.example.brint_quizapp;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +21,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.brint_quizapp.dal.dao.UserDAO;
 import com.example.brint_quizapp.dal.dto.QuizDTO;
+import com.example.brint_quizapp.dal.dto.UserDTO;
 import com.google.firebase.internal.InternalTokenProvider;
 
+import java.sql.Connection;
 import java.util.ArrayList;
-
 
 public class Quiz_list_activity extends AppCompatActivity implements View.OnClickListener{
 
@@ -31,6 +35,9 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
     private ImageView addQuiz;
 
     private ArrayList<String> quizNames;
+    private ArrayList<QuizDTO> myQuizDTO;
+
+    CountDownTimer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +53,10 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
 
         quizNames = new ArrayList<String>();
 
-        quizNames.add("Boomer quiz");
-        quizNames.add("Roomba quiz");
-        quizNames.add("Gen Z quiz");
-        quizNames.add("Boomer quiz");
-        quizNames.add("Roomba quiz");
-        quizNames.add("Gen Z quiz");
-        quizNames.add("Boomer quiz");
-
-
         addQuiz = (ImageView) findViewById(R.id.addQuiz); addQuiz.setOnClickListener(this);
+
+
+        initMyQuiz();
 
         ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(
                 getBaseContext(),
@@ -71,6 +72,8 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
 
                 tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.buttonblue));
                 tv.setGravity(Gravity.CENTER);
+                tv.setPadding(0, 25, 0,25 );
+                tv.setTextSize(30);
 
                 return view;
             }
@@ -82,7 +85,21 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                startActivity(new Intent(Quiz_list_activity.this,Edit_Quiz.class));
+
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        Integer.toString(i),
+                        Toast.LENGTH_SHORT);
+
+                toast.show();
+
+                Intent result = new Intent(Quiz_list_activity.this,Edit_quiz_home_activity.class);
+
+                Bundle quizForEdit = new Bundle();
+                quizForEdit.putInt("chosenQuiz", i);
+
+                result.putExtras(quizForEdit);
+
+                startActivity(result);
             }
         });
 
@@ -90,6 +107,14 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View view) {
+
+    }
+
+    private void initMyQuiz(){
+
+        for (QuizDTO quiz: UserSingleton.getUserSingleton().getUser().getQuizzes()) {
+            quizNames.add(quiz.getName());
+        }
 
     }
 }

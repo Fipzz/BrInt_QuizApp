@@ -17,6 +17,9 @@ import com.example.brint_quizapp.dal.dao.UserDAO;
 import com.example.brint_quizapp.dal.dto.UserDTO;
 
 import java.sql.Connection;
+import java.sql.SQLException;
+
+import static com.example.brint_quizapp.Db_test.connctionClass;
 
 public class MainScreen_login_activity extends AppCompatActivity implements View.OnClickListener {
 
@@ -25,6 +28,7 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
     CountDownTimer timer;
     UserSingleton userSingleton;
     TextView opretBruger;
+    UserDTO userDTO;
 
     String emailString;
     @Override
@@ -80,6 +84,10 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
 
                             if(userSingleton.getUser().getPassword().equals(password.getText().toString())){
 
+                                UserSingleton.getUserSingleton().setUser(userDTO);
+
+                                startActivity(new Intent(MainScreen_login_activity.this, Homepage_activity.class));
+
                             }else{
                                 Toast toast = Toast.makeText(getApplicationContext(),
                                         "Wrong password. Try again.",
@@ -95,7 +103,11 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
                     public void onFinish() {
 
                         if(userSingleton.getUser() != null){
+
                             if(userSingleton.getUser().getPassword().equals(password.getText().toString())){
+
+                                UserSingleton.getUserSingleton().setUser(userDTO);
+
                                 startActivity(new Intent(MainScreen_login_activity.this, Homepage_activity.class));
 
                             }else{
