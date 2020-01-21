@@ -64,7 +64,8 @@ public class DDL{
                     + "answer_id int(10),"
                     + "PRIMARY KEY (question_id, user_id),"
                     + "FOREIGN KEY (user_id) references user (id) ON DELETE CASCADE,"
-                    + "FOREIGN KEY (question_id) references question (id) ON DELETE CASCADE)";
+                    + "FOREIGN KEY (question_id) references question (id) ON DELETE CASCADE,"
+                    + "FOREIGN KEY (answer_id) references answer (id) ON DELETE CASCADE)";
             statement = c.prepareStatement(query);
             statement.execute();
 

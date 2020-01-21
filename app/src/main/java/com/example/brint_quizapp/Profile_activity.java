@@ -5,17 +5,20 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.brint_quizapp.dal.dto.UserDTO;
+
 public class Profile_activity extends AppCompatActivity implements View.OnClickListener {
 
     TextView title, username;
     Icon profilePicture;
-    Button backButton;
+    Button resultsButton;
     Switch themeToggle;
     String themeSwitch,sharedPreference, currentTheme, theme;
     SharedPreferences sharedPref;
@@ -24,9 +27,11 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
+        setContentView(R.layout.profile_activity_layout);
 
-
+        /*
         sharedPref = getSharedPreferences(sharedPreference, MODE_PRIVATE);
 
 
@@ -49,12 +54,7 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
 
         setContentView(R.layout.profile_activity_layout);
 
-        title = findViewById(R.id.name);
 
-        username = findViewById(R.id.username);
-
-        backButton = findViewById(R.id.profil_knap);
-        backButton.setOnClickListener(this);
 
         themeToggle = findViewById(R.id.theme_switch);
         themeToggle.setOnClickListener(this);
@@ -62,11 +62,22 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
         sharedPreference = getString(R.string.preferenceFile);
         themeSwitch = getString(R.string.themeSwitch);
 
+         */
 
+        title = findViewById(R.id.name);
 
+        username = findViewById(R.id.username);
+
+        resultsButton = findViewById(R.id.results_button);
+        resultsButton.setOnClickListener(this);
+
+        UserDTO user = UserSingleton.getUserSingleton().getUser();
+
+        if(UserSingleton.getUserSingleton().getUser() != null) {
+            username.setText(UserSingleton.getUserSingleton().getUser().getName());
+        }
 
     }
-
 
 
     @Override
@@ -80,8 +91,8 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
                 .apply();
         recreate();
 
-        if (backButton.getId() == v.getId()) {
-            startActivity(new Intent(this, Homepage_activity.class));
+        if (resultsButton.getId() == v.getId()) {
+
 
         }
 

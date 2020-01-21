@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -31,6 +32,7 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
     UserDTO userDTO;
 
     String emailString;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +64,6 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
         if(login.getId() == v.getId()){
 
             emailString = email.getText().toString();
-
 
             if(email.getText().toString().equals("")){
                 userSingleton.setUser(null);
@@ -128,8 +129,6 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
 
             startActivity(new Intent(MainScreen_login_activity.this, Homepage_activity.class));
 
-        } else if(v.getId() == dbtest.getId()){
-            startActivity(new Intent(MainScreen_login_activity.this, Db_test.class));
         }else if(opretBruger.getId() == v.getId()){
             startActivity(new Intent(MainScreen_login_activity.this, Create_user_activity.class));
         }
@@ -156,7 +155,6 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
 
                 UserDAO userDAO = new UserDAO();
                 UserDTO userDTO = userDAO.getUserByEmail(emailString, connection);
-
 
                 userSingleton.setUser(userDTO);
                 UserSingleton.getUserSingleton().setUser(userDTO);

@@ -11,6 +11,21 @@
 
     <!-- Titel -->
 
+    <Button
+        android:id="@+id/results_button"
+        android:layout_width="140dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="65dp"
+        android:background="@drawable/log_in"
+        android:backgroundTint="?attr/buttonNormalColor"
+        android:text="My results"
+        android:textColor="?attr/buttonTextColor"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/theme_switch" />
+
     <TextView
         android:id="@+id/name"
         android:layout_width="281dp"
@@ -59,24 +74,6 @@
 
 
     <!-- Back button -->
-    <Button
-        android:id="@+id/profil_knap"
-        android:layout_width="140dp"
-        android:layout_height="55dp"
-        android:background="@drawable/log_in"
-        android:backgroundTint="?attr/buttonNormalColor"
-        android:shadowColor="#000000"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="5"
-        android:text="Back"
-        android:textColor="?attr/buttonTextColor"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9" />
 
     <Switch
         android:id="@+id/theme_switch"
