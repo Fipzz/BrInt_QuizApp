@@ -77,6 +77,5 @@ public class Edit_quiz_home_activity extends AppCompatActivity implements View.O
             toast.show();
 
         }
-
     }
 }
