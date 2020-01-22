@@ -32,7 +32,7 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
     QuizDTO quizDTO;
     int quizID;
     CountDownTimer timer;
-    TextView title, quizCodeText, loading;
+    TextView title, loading;
     boolean complete = false;
 
     String unikKode;
@@ -54,7 +54,7 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
         quiz_code = (EditText) findViewById(R.id.unikkode);
 
         title = (TextView) findViewById(R.id.titel);
-        quizCodeText = (TextView) findViewById(R.id.text_over_unik);
+
 
         loading = (TextView) findViewById(R.id.loading_view);
         loading.setVisibility(View.INVISIBLE);
@@ -73,7 +73,6 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
         edit.setVisibility(View.INVISIBLE);
         quiz_code.setVisibility(View.INVISIBLE);
         title.setVisibility(View.INVISIBLE);
-        quizCodeText.setVisibility(View.INVISIBLE);
         loading.setVisibility(View.VISIBLE);
     }
 
@@ -83,7 +82,6 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
         edit.setVisibility(View.VISIBLE);
         quiz_code.setVisibility(View.VISIBLE);
         title.setVisibility(View.VISIBLE);
-        quizCodeText.setVisibility(View.VISIBLE);
         loading.setVisibility(View.INVISIBLE);
     }
 

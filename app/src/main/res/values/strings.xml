@@ -2,7 +2,7 @@
     <string name="app_name">B5_QuizApp</string>
     <string name="name">Quiz: selvtest</string>
     <string name="username">username</string>
-    <string name="quiz_navn">Quiz navn</string>
+    <string name="quiz_navn">Quiz name</string>
     <string name="question">Whats the fastest animal in the world?</string>
     <string name="quiz_code">Unique code</string>
     <string name="themeSwitch">Theme</string>
