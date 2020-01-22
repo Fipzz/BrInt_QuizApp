@@ -130,6 +130,7 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
                 if(quizDTO == null){
 
                     loading.setText("No quiz found\n click here to go back");
+                    loading.setTextSize(25);
 
                 } else {
 

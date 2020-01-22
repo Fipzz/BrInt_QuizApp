@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -17,6 +18,12 @@ import com.example.brint_quizapp.dal.dao.UserDAO;
 import com.example.brint_quizapp.dal.dto.UserDTO;
 
 import java.sql.Connection;
+import java.sql.SQLException;
+
+import io.sentry.Sentry;
+import io.sentry.android.AndroidSentryClientFactory;
+
+import static com.example.brint_quizapp.Db_test.connctionClass;
 
 public class MainScreen_login_activity extends AppCompatActivity implements View.OnClickListener {
 
@@ -34,8 +41,13 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
         setContentView(R.layout.login_activity_layout);
+
+        // sentry.io her sendes chrashes fra rigtige enheder (nedbrudsrapportering)
+        boolean EMULATOR = Build.PRODUCT.contains("sdk") || Build.MODEL.contains("Emulator");
+        if (!EMULATOR) {
+            Sentry.init("https://2c62be25f63c4776a1633e58f8d84f97@sentry.io/1890236", new AndroidSentryClientFactory(this));
+        }
 
         login = (Button) findViewById(R.id.log_in);
         login.setOnClickListener(this);

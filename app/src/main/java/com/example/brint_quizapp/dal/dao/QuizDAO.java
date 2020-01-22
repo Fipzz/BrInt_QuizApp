@@ -116,6 +116,7 @@ public class QuizDAO {
             quiz.setQuestions(questions);
 
         } catch (SQLException e) {
+            e.printStackTrace();
             return null;
         }
 
@@ -124,13 +125,15 @@ public class QuizDAO {
 
     public boolean deleteQuiz(int id, Connection c) {
         try {
-            String query = "DELETE FROM quiz WHERE id = ?;";
+            String query = "DELETE FROM quiz WHERE id = ?";
             PreparedStatement statement = c.prepareStatement(query);
             statement.setInt(1, id);
 
             statement.execute();
+            c.commit();
 
         } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
         return true;
@@ -156,6 +159,7 @@ public class QuizDAO {
 
 
         } catch (SQLException p) {
+            p.printStackTrace();
             return false;
         }
 
@@ -187,6 +191,7 @@ public class QuizDAO {
                 }
 
             } catch (SQLException p) {
+                p.printStackTrace();
                 return false;
             }
 
@@ -210,6 +215,7 @@ public class QuizDAO {
                     statement.executeUpdate();
                     c.commit();
                 } catch (SQLException p) {
+                    p.printStackTrace();
                     return false;
                 }
 

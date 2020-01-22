@@ -64,6 +64,8 @@ public class Edit_quiz_home_activity extends AppCompatActivity implements View.O
             Bundle edit_quiz_id = new Bundle();
             edit_quiz_id.putInt("quizId",getIntent().getExtras().getInt("chosenQuiz"));
 
+            edit_quiz.putExtras(edit_quiz_id);
+
             startActivity(edit_quiz);
 
         } else if (stats.getId() == v.getId()) {
@@ -75,6 +77,5 @@ public class Edit_quiz_home_activity extends AppCompatActivity implements View.O
             toast.show();
 
         }
-
     }
 }

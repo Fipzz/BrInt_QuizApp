@@ -39,6 +39,8 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
 
     CountDownTimer timer;
 
+    boolean making_quiz = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -106,7 +108,28 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View v) {
+
+        if (v.getId() == addQuiz.getId() && making_quiz == true){
+
+            making_quiz = false;
+
+            listView.setVisibility(View.VISIBLE);
+
+            addQuiz.setImageResource(android.R.drawable.ic_menu_add);
+
+        } else if (v.getId() == addQuiz.getId() && making_quiz == false){
+
+            making_quiz = true;
+
+            listView.setVisibility(View.INVISIBLE);
+
+            addQuiz.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
+
+        }
+
+
+
 
     }
 
