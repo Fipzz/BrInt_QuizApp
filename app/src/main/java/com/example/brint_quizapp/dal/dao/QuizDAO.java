@@ -75,20 +75,23 @@ public class QuizDAO {
                 questions.add(question);
             }
 
-            query = "SELECT * FROM answer WHERE ";
-            for (int i = 0; i < questions.size(); i++) {
-                query = query + "question_id = " + questions.get(i).getId();
-                if (i != questions.size() - 1) {
-                    query = query + " OR ";
+            if(questions.size() < 1) {
+
+                query = "SELECT * FROM answer WHERE ";
+                for (int i = 0; i < questions.size(); i++) {
+                    query = query + "question_id = " + questions.get(i).getId();
+                    if (i != questions.size() - 1) {
+                        query = query + " OR ";
+                    }
                 }
+                query = query + ";";
+
+                statement = c.prepareStatement(query);
+                result = statement.executeQuery();
+
+                c.commit();
+
             }
-            query = query + ";";
-
-            statement = c.prepareStatement(query);
-            result = statement.executeQuery();
-
-            c.commit();
-
             ArrayList<AnswerDTO> allAnswers = new ArrayList<>();
 
             while (result.next()) {
