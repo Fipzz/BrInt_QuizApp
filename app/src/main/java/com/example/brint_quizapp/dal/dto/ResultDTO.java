@@ -4,7 +4,6 @@ public class ResultDTO {
 
     int question_id;
     int user_id;
-
     AnswerDTO answer;
 
     public AnswerDTO getAnswer() {

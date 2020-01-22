@@ -1,5 +1,6 @@
 package com.example.brint_quizapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.brint_quizapp.dal.dao.UserDAO;
@@ -23,6 +25,11 @@ public class Create_user_activity extends AppCompatActivity implements View.OnCl
     TextView name, email, password, password2;
     Button create;
     CountDownTimer timer;
+
+    @Override
+    public void onBackPressed(){
+        startActivity(new Intent(Create_user_activity.this, MainScreen_login_activity.class));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

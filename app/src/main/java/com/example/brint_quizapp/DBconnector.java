@@ -15,7 +15,6 @@ public class DBconnector {
     String un = "PG17gBGeZc";
     String password = "Yqeou76dpr";
 
-
     @SuppressLint("NewApi")
     public Connection CONN() {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
