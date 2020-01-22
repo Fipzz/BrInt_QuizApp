@@ -194,7 +194,7 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
                 QuizAnswers.get(3).setCorrect(false);
             }
 
-            saveQuestions(QuizQuestions.get(currentQuestion));
+            saveQuestions();
 
             QuizQuestions.get(currentQuestion).setText(questionOnScreen.getText().toString());
 
