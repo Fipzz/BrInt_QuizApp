@@ -113,6 +113,7 @@ public class QuizDAO {
             quiz.setQuestions(questions);
 
         } catch (SQLException e) {
+            e.printStackTrace();
             return null;
         }
 
@@ -121,13 +122,15 @@ public class QuizDAO {
 
     public boolean deleteQuiz(int id, Connection c) {
         try {
-            String query = "DELETE FROM quiz WHERE id = ?;";
+            String query = "DELETE FROM quiz WHERE id = ?";
             PreparedStatement statement = c.prepareStatement(query);
             statement.setInt(1, id);
 
             statement.execute();
+            c.commit();
 
         } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
         return true;
@@ -141,17 +144,18 @@ public class QuizDAO {
 
         try {
 
-            String query = "INSERT INTO quiz (user_id, name, type) VALUES (?, ?, ?, ?)";
+            String query = "INSERT INTO quiz (user_id, name, type) VALUES (?, ?, ?)";
             PreparedStatement statement = c.prepareStatement(query);
 
             statement.setInt(1, quiz.getUser_id());
             statement.setString(2, quiz.getName());
             statement.setInt(3, quiz.getType());
-            statement.setInt(4, quiz.getCode());
 
             statement.execute();
 
+
         } catch (SQLException p) {
+            p.printStackTrace();
             return false;
         }
 
@@ -159,7 +163,7 @@ public class QuizDAO {
             ArrayList<AnswerDTO> answers = new ArrayList<>();
 
             try {
-                String query = "INSERT INTO question (quiz_id, question_text, number) VALUES (?, ?, ?);";
+                String query = "INSERT INTO question (quiz_id, question_text, number) VALUES (?, ?, ?)";
                 PreparedStatement statement = c.prepareStatement(query);
 
                 statement.setInt(1, question.getQuiz_id());
@@ -169,13 +173,14 @@ public class QuizDAO {
                 statement.executeUpdate();
 
             } catch (SQLException p) {
+                p.printStackTrace();
                 return false;
             }
 
             for (AnswerDTO answer : answers) {
 
                 try {
-                    String query = "INSERT INTO answer (question_id, answer_text, correct) VALUES (?, ?, ?);";
+                    String query = "INSERT INTO answer (question_id, answer_text, correct) VALUES (?, ?, ?)";
                     PreparedStatement statement = c.prepareStatement(query);
 
                     int correct;
@@ -192,6 +197,7 @@ public class QuizDAO {
                     statement.executeUpdate();
                     c.commit();
                 } catch (SQLException p) {
+                    p.printStackTrace();
                     return false;
                 }
 

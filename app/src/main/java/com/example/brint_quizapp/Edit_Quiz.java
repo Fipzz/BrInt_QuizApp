@@ -2,6 +2,7 @@ package com.example.brint_quizapp;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -16,11 +17,16 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.brint_quizapp.dal.dao.QuizDAO;
 import com.example.brint_quizapp.dal.dto.AnswerDTO;
 import com.example.brint_quizapp.dal.dto.QuestionDTO;
 import com.example.brint_quizapp.dal.dto.QuizDTO;
 
+import java.sql.Connection;
 import java.util.ArrayList;
+
+import io.sentry.Sentry;
+import io.sentry.android.AndroidSentryClientFactory;
 
 public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener{
 
@@ -39,10 +45,6 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
     Toast toast1, toast2, toast3, toast4;
 
     ImageButton edit1, edit2, edit3, edit4, save, delete;
-
-    ArrayList<Question_item> questions = new ArrayList<Question_item>();
-
-    Question_item questionEdit;
 
     int currentQuestion = 0;
 
@@ -114,24 +116,22 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
 
         ChosenQuiz = UserSingleton.getUserSingleton().getUser().getQuizzes().get(getIntent().getExtras().getInt("quizId"));
         QuizQuestions = ChosenQuiz.getQuestions();
+        QuizAnswers = QuizQuestions.get(currentQuestion).getAnswers();
 
-
-        questionEdit = questions.get(currentQuestion);
-        showNextQuestion(questionEdit, currentQuestion);
+        showNextQuestion();
         updateCheckBox();
 
-        questionCounter.setText(currentQuestion + 1 + " / " + questions.size());
+        questionCounter.setText(currentQuestion + 1 + " / " + QuizQuestions.size());
 
     }
 
     @Override
     public void onClick(View v) {
 
-        QuizAnswers = QuizQuestions.get(currentQuestion).getAnswers();
-
         //Handles when the user presses the next and previous buttons
         if (R.id.next == v.getId()) {
-            if (next.getText().toString() == "Tilføj") {
+
+            if (currentQuestion == QuizQuestions.size()-1) {
 
                 ArrayList<AnswerDTO> tempAnswers = new ArrayList<AnswerDTO>();
 
@@ -147,35 +147,35 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
 
         if (R.id.previous == v.getId() || R.id.next == v.getId()) {
 
+            questionCounter.setText(currentQuestion + 1 + " / " + QuizQuestions.size());
+
             if (c1.isChecked() == true) {
+                QuizAnswers.get(0).setCorrect(true);
+            } else {
+                QuizAnswers.get(0).setCorrect(false);
+            }
+
+            if (c2.isChecked() == true) {
                 QuizAnswers.get(1).setCorrect(true);
             } else {
                 QuizAnswers.get(1).setCorrect(false);
             }
 
-            if (c2.isChecked() == true) {
+            if (c3.isChecked() == true) {
                 QuizAnswers.get(2).setCorrect(true);
             } else {
                 QuizAnswers.get(2).setCorrect(false);
             }
 
-            if (c3.isChecked() == true) {
+            if (c4.isChecked() == true) {
                 QuizAnswers.get(3).setCorrect(true);
             } else {
                 QuizAnswers.get(3).setCorrect(false);
             }
 
-            if (c4.isChecked() == true) {
-                QuizAnswers.get(4).setCorrect(true);
-            } else {
-                QuizAnswers.get(4).setCorrect(false);
-            }
-
             saveQuestions(QuizQuestions.get(currentQuestion));
 
-            if (next.getText().toString() == "Tilføj") {
-                next.setText("Næste");
-            }
+            QuizQuestions.get(currentQuestion).setText(questionOnScreen.getText().toString());
 
             if (R.id.previous == v.getId()) {
                 if (currentQuestion == 1) {
@@ -183,28 +183,31 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
                 }
 
                 currentQuestion--;
-                showNextQuestion(questions.get(currentQuestion), currentQuestion);
+
+                showNextQuestion();
+
                 updateCheckBox();
+
             } else if (R.id.next == v.getId()) {
 
                 prev.setEnabled(true);
 
-                if (currentQuestion == questions.size()-2) {
+                if (currentQuestion+1 == QuizQuestions.size()) {
                     next.setText("Tilføj");
                     currentQuestion++;
-                    showNextQuestion(questions.get(currentQuestion), currentQuestion);
+                    showNextQuestion();
                     updateCheckBox();
                 } else {
                     currentQuestion++;
-                    showNextQuestion(questions.get(currentQuestion), currentQuestion);
+                    showNextQuestion();
                     updateCheckBox();
                 }
             }
-            questionCounter.setText(currentQuestion + 1 + " / " + questions.size());
+            questionCounter.setText(currentQuestion + 1 + " / " + QuizQuestions.size());
         }
 
         //Handles when the user presses the save icon
-            if (R.id.save == v.getId()) { //http://www.apnatutorials.com/android/android-alert-confirm-prompt-dialog.php?categoryId=2&subCategoryId=34&myPath=android/android-alert-confirm-prompt-dialog.php
+        if (R.id.save == v.getId()) { //http://www.apnatutorials.com/android/android-alert-confirm-prompt-dialog.php?categoryId=2&subCategoryId=34&myPath=android/android-alert-confirm-prompt-dialog.php
 
             //TODO In this if statement, if the user presses to save in the prompt menu, the current arraylist is to be uploaded to the database.
 
@@ -217,6 +220,10 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Toast.makeText(getApplicationContext(), "Ændringer gemt", Toast.LENGTH_SHORT).show();
+
+                    UpdateDatabase update = new UpdateDatabase();
+                    update.execute();
+
                     startActivity(goBack);
                 }
             });
@@ -242,103 +249,99 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Toast.makeText(getApplicationContext(), "Spørgsmål Slettet", Toast.LENGTH_SHORT).show();
-                    if (currentQuestion == questions.size()-1) {
+                    if(QuizQuestions.size() == 1){
+
+
+
+                    } else if (currentQuestion+1 == QuizQuestions.size()) {
                         currentQuestion--;
-                        showNextQuestion(questions.get(currentQuestion), currentQuestion);
+                        showNextQuestion();
                         currentQuestion++;
-                        questions.remove(currentQuestion);
+                        QuizQuestions.remove(currentQuestion);
                         currentQuestion--;
                     } else {
                         currentQuestion++;
-                        showNextQuestion(questions.get(currentQuestion), currentQuestion);
+                        showNextQuestion();
                         currentQuestion--;
-                        questions.remove(currentQuestion);
+                        QuizQuestions.remove(currentQuestion);
                     }
-                    questionCounter.setText(currentQuestion + 1 + " / " + questions.size());
-                    if (currentQuestion == questions.size()-1) {
+                    questionCounter.setText(currentQuestion + 1 + " / " + QuizQuestions.size());
+
+                    if (currentQuestion+1 == QuizQuestions.size()) {
                         next.setText("Tilføj");
                     }
                 }
             });
+
             builder.setNegativeButton("Nej", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                 }
             });
             builder.show();
+
         }
+
     }
 
     public void onCheckBox (View v) { //Consider changing the color of the text box
 
-        if (R.id.checkBox == v.getId()) {
-            c2.setChecked(false);
-            c3.setChecked(false);
-            c4.setChecked(false);
-        } else if (R.id.checkBox2 == v.getId()) {
-            c1.setChecked(false);
-            c3.setChecked(false);
-            c4.setChecked(false);
-        } else if (R.id.checkBox3 == v.getId()) {
-            c1.setChecked(false);
-            c2.setChecked(false);
-            c4.setChecked(false);
-        } else if (R.id.checkBox4 == v.getId()) {
-            c1.setChecked(false);
-            c2.setChecked(false);
-            c3.setChecked(false);
-        }
-
-        if (c1.isChecked()) {
+        if (v.getId() == c1.getId() && c1.isChecked() == true) {
             toast1 = Toast.makeText(getApplicationContext(), "Svar 1 sat til rigtigt", Toast.LENGTH_SHORT); toast1.show();
 
-        } else if (c2.isChecked()){
+        } else if (v.getId() == c2.getId() && c2.isChecked() == true){
             toast2 = Toast.makeText(getApplicationContext(), "Svar 2 sat til rigtigt", Toast.LENGTH_SHORT); toast2.show();
 
-        } else if (c3.isChecked()) {
+        } else if (v.getId() == c3.getId() && c3.isChecked() == true) {
             toast3 = Toast.makeText(getApplicationContext(), "Svar 3 sat til rigtigt", Toast.LENGTH_SHORT); toast3.show();
 
-        } else if (c4.isChecked()) {
+        } else if (v.getId() == c4.getId() && c4.isChecked() == true) {
             toast4 = Toast.makeText(getApplicationContext(), "Svar 4 sat til rigtigt", Toast.LENGTH_SHORT); toast4.show();
         }
     }
 
     public void updateCheckBox (){
 
-            int isCorrect = 1;
-        if (isCorrect == 1) {
+        c1.setChecked(false);
+        c2.setChecked(false);
+        c3.setChecked(false);
+        c4.setChecked(false);
+
+        if (QuizAnswers.get(0).getCorrect()) {
             c1.setChecked(true);
-            c2.setChecked(false);
-            c3.setChecked(false);
-            c4.setChecked(false);
-        } else if (isCorrect == 2) {
+            QuizAnswers.get(0).setCorrect(true);
+        }
+        if (QuizAnswers.get(1).getCorrect()) {
             c2.setChecked(true);
-            c1.setChecked(false);
-            c3.setChecked(false);
-            c4.setChecked(false);
-        } else if (isCorrect == 3) {
+            QuizAnswers.get(1).setCorrect(true);
+        }
+        if (QuizAnswers.get(2).getCorrect()) {
             c3.setChecked(true);
-            c1.setChecked(false);
-            c2.setChecked(false);
-            c4.setChecked(false);
-        } else if (isCorrect == 4) {
+            QuizAnswers.get(2).setCorrect(true);
+        }
+        if (QuizAnswers.get(3).getCorrect()) {
             c4.setChecked(true);
-            c1.setChecked(false);
-            c2.setChecked(false);
-            c3.setChecked(false);
+            QuizAnswers.get(3).setCorrect(true);
         }
     }
 
-    public void showNextQuestion(Question_item questionEdit, int currentQuestion){
+    public void showNextQuestion(){
 
-        questionOnScreen.setText(questionEdit.getQuestion());
+        QuizAnswers = QuizQuestions.get(currentQuestion).getAnswers();
 
-        a1.setText(questionEdit.getAnswer1());
-        a2.setText(questionEdit.getAnswer2());
-        a3.setText(questionEdit.getAnswer3());
-        a4.setText(questionEdit.getAnswer4());
-        int isCorrect = 1;
-        isCorrect = questionEdit.getIsCorrect();
+        questionOnScreen.setText(QuizQuestions.get(currentQuestion).getText());
+
+        a1.setText(QuizAnswers.get(0).getText());
+        a2.setText(QuizAnswers.get(1).getText());
+        a3.setText(QuizAnswers.get(2).getText());
+        a4.setText(QuizAnswers.get(3).getText());
+
+        if (currentQuestion+1 == QuizQuestions.size()) {
+            next.setText("Tilføj");
+        } else {
+            next.setText("Næste");
+        }
+
     }
 
     public void saveQuestions(QuestionDTO questions) {
@@ -348,12 +351,42 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
         questions.getAnswers().get(2).setText(a3.getText().toString());
         questions.getAnswers().get(3).setText(a4.getText().toString());
 
+    }
 
-        questionEdit.setQuestion(questionOnScreen.getText().toString());
+    private class UpdateDatabase extends AsyncTask<String, Void, Void> {
 
-        questionEdit.setAnswer1(a1.getText().toString());
-        questionEdit.setAnswer2(a2.getText().toString());
-        questionEdit.setAnswer3(a3.getText().toString());
-        questionEdit.setAnswer4(a4.getText().toString());
+        @Override
+        protected Void doInBackground(String... strings) {
+
+            Connection connection;
+            DBconnector databaseconn = new DBconnector();
+
+
+            try {
+
+                try {
+                    Class.forName("com.mysql.jdbc.Driver");
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                connection = databaseconn.CONN();
+                connection.setAutoCommit(false);
+
+                QuizDAO quizDAO = new QuizDAO();
+
+                quizDAO.deleteQuiz(UserSingleton.getUserSingleton().getUser().getQuizzes().get(getIntent().getExtras().getInt("quizId")).getId(),connection);
+
+                QuizDTO newQuiz = new QuizDTO();
+                newQuiz.setQuestions(QuizQuestions);
+                quizDAO.createQuiz(newQuiz,connection);
+
+                connection.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+
+        }
     }
 }

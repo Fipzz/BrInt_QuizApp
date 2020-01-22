@@ -96,7 +96,7 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
 
         getData getdat = new getData();
 
-        getdat.execute("");
+        getdat.execute();
 
         wait = new CountDownTimer(10000, 500) {
             @Override
@@ -129,6 +129,7 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
                 if(quizDTO == null){
 
                     loading.setText("No quiz found\n click here to go back");
+                    loading.setTextSize(25);
 
                 } else {
 
