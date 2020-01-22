@@ -18,9 +18,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.brint_quizapp.dal.dao.QuizDAO;
+import com.example.brint_quizapp.dal.dao.UserDAO;
 import com.example.brint_quizapp.dal.dto.AnswerDTO;
 import com.example.brint_quizapp.dal.dto.QuestionDTO;
 import com.example.brint_quizapp.dal.dto.QuizDTO;
+import com.example.brint_quizapp.dal.dto.UserDTO;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -116,6 +118,23 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
 
         ChosenQuiz = UserSingleton.getUserSingleton().getUser().getQuizzes().get(getIntent().getExtras().getInt("quizId"));
         QuizQuestions = ChosenQuiz.getQuestions();
+
+        if(QuizQuestions.size() == 0){
+
+            ArrayList<AnswerDTO> tempAnswers = new ArrayList<AnswerDTO>();
+
+            tempAnswers.add(new AnswerDTO("Svar 1", false));
+            tempAnswers.add(new AnswerDTO("Svar 2", false));
+            tempAnswers.add(new AnswerDTO("Svar 3", false));
+            tempAnswers.add(new AnswerDTO("Svar 4", false));
+
+            QuestionDTO blank = new QuestionDTO("Indsæt spørgsmål her", tempAnswers);
+            blank.setQuiz_id(UserSingleton.getUserSingleton().getUser().getQuizzes().get(getIntent().getExtras().getInt("quizId")).getId());
+            blank.setNumber(currentQuestion);
+            QuizQuestions.add(blank);
+
+        }
+
         QuizAnswers = QuizQuestions.get(currentQuestion).getAnswers();
 
         showNextQuestion();
@@ -141,6 +160,8 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
                 tempAnswers.add(new AnswerDTO("Svar 4", false));
 
                 QuestionDTO blank = new QuestionDTO("Indsæt spørgsmål her", tempAnswers);
+                blank.setQuiz_id(UserSingleton.getUserSingleton().getUser().getQuizzes().get(getIntent().getExtras().getInt("quizId")).getId());
+                blank.setNumber(currentQuestion+1);
                 QuizQuestions.add(blank);
             }
         }
@@ -204,6 +225,8 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
                 }
             }
             questionCounter.setText(currentQuestion + 1 + " / " + QuizQuestions.size());
+
+            QuizAnswers = QuizQuestions.get(currentQuestion).getAnswers();
         }
 
         //Handles when the user presses the save icon
@@ -221,6 +244,9 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
                 public void onClick(DialogInterface dialog, int which) {
                     Toast.makeText(getApplicationContext(), "Ændringer gemt", Toast.LENGTH_SHORT).show();
 
+                    QuizQuestions.get(currentQuestion).setText(questionOnScreen.getText().toString());
+                    saveQuestions(QuizQuestions.get(currentQuestion));
+                    updateCheckBox ();
                     UpdateDatabase update = new UpdateDatabase();
                     update.execute();
 
@@ -288,15 +314,16 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
 
         if (v.getId() == c1.getId() && c1.isChecked() == true) {
             toast1 = Toast.makeText(getApplicationContext(), "Svar 1 sat til rigtigt", Toast.LENGTH_SHORT); toast1.show();
-
+            QuizAnswers.get(0).setCorrect(true);
         } else if (v.getId() == c2.getId() && c2.isChecked() == true){
             toast2 = Toast.makeText(getApplicationContext(), "Svar 2 sat til rigtigt", Toast.LENGTH_SHORT); toast2.show();
-
+            QuizAnswers.get(1).setCorrect(true);
         } else if (v.getId() == c3.getId() && c3.isChecked() == true) {
             toast3 = Toast.makeText(getApplicationContext(), "Svar 3 sat til rigtigt", Toast.LENGTH_SHORT); toast3.show();
-
+            QuizAnswers.get(2).setCorrect(true);
         } else if (v.getId() == c4.getId() && c4.isChecked() == true) {
             toast4 = Toast.makeText(getApplicationContext(), "Svar 4 sat til rigtigt", Toast.LENGTH_SHORT); toast4.show();
+            QuizAnswers.get(3).setCorrect(true);
         }
     }
 
@@ -346,10 +373,10 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
 
     public void saveQuestions(QuestionDTO questions) {
 
-        questions.getAnswers().get(0).setText(a1.getText().toString());
-        questions.getAnswers().get(1).setText(a2.getText().toString());
-        questions.getAnswers().get(2).setText(a3.getText().toString());
-        questions.getAnswers().get(3).setText(a4.getText().toString());
+        QuizQuestions.get(currentQuestion).getAnswers().get(0).setText(a1.getText().toString());
+        QuizQuestions.get(currentQuestion).getAnswers().get(1).setText(a2.getText().toString());
+        QuizQuestions.get(currentQuestion).getAnswers().get(2).setText(a3.getText().toString());
+        QuizQuestions.get(currentQuestion).getAnswers().get(3).setText(a4.getText().toString());
 
     }
 
@@ -376,9 +403,25 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
 
                 quizDAO.deleteQuiz(UserSingleton.getUserSingleton().getUser().getQuizzes().get(getIntent().getExtras().getInt("quizId")).getId(),connection);
 
+                connection.commit();
+
                 QuizDTO newQuiz = new QuizDTO();
+                newQuiz.setUser_id(UserSingleton.getUserSingleton().getUser().getId());
+                newQuiz.setName(UserSingleton.getUserSingleton().getUser().getQuizzes().get(getIntent().getExtras().getInt("quizId")).getName());
                 newQuiz.setQuestions(QuizQuestions);
+                newQuiz.setId(UserSingleton.getUserSingleton().getUser().getQuizzes().get(getIntent().getExtras().getInt("quizId")).getId());
+
                 quizDAO.createQuiz(newQuiz,connection);
+
+                connection.commit();
+
+                UserDAO updateUser = new UserDAO();
+                UserDTO updatedUser = new UserDTO();
+                updatedUser = updateUser.getUserById(UserSingleton.getUserSingleton().getUser().getId(), connection);
+
+                UserSingleton.getUserSingleton().setUser(updatedUser);
+
+
 
                 connection.close();
 

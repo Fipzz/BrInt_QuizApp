@@ -179,6 +179,8 @@ public class QuizDAO {
 
                 statement.executeUpdate();
 
+
+
                 query = "SELECT * FROM question WHERE quiz_id = ? AND number = ?";
                 statement = c.prepareStatement(query);
 
@@ -197,6 +199,8 @@ public class QuizDAO {
                 p.printStackTrace();
                 return false;
             }
+
+            answers = question.getAnswers();
 
             for (AnswerDTO answer : answers) {
 
