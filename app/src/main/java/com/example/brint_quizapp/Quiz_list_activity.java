@@ -12,6 +12,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -21,7 +23,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.brint_quizapp.dal.dao.QuizDAO;
 import com.example.brint_quizapp.dal.dao.UserDAO;
+import com.example.brint_quizapp.dal.dto.QuestionDTO;
 import com.example.brint_quizapp.dal.dto.QuizDTO;
 import com.example.brint_quizapp.dal.dto.UserDTO;
 import com.google.firebase.internal.InternalTokenProvider;
@@ -38,6 +42,9 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
     private ArrayList<QuizDTO> myQuizDTO;
 
     CountDownTimer timer;
+
+    Button makequiz;
+    EditText quizname;
 
     boolean making_quiz = false;
 
@@ -57,6 +64,13 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
 
         addQuiz = (ImageView) findViewById(R.id.addQuiz); addQuiz.setOnClickListener(this);
 
+        makequiz = (Button) findViewById(R.id.make_new_quiz);
+        makequiz.setOnClickListener(this);
+
+        quizname = (EditText) findViewById(R.id.new_quiz_name);
+
+        quizname.setVisibility(View.INVISIBLE);
+        makequiz.setVisibility(View.INVISIBLE);
 
         initMyQuiz();
 
@@ -116,6 +130,9 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
 
             listView.setVisibility(View.VISIBLE);
 
+            quizname.setVisibility(View.INVISIBLE);
+            makequiz.setVisibility(View.INVISIBLE);
+
             addQuiz.setImageResource(android.R.drawable.ic_menu_add);
 
         } else if (v.getId() == addQuiz.getId() && making_quiz == false){
@@ -124,7 +141,17 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
 
             listView.setVisibility(View.INVISIBLE);
 
+            quizname.setVisibility(View.VISIBLE);
+            makequiz.setVisibility(View.VISIBLE);
+
             addQuiz.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
+
+        }
+
+        if (v.getId() == makequiz.getId()){
+
+            CreateNewQuiz createNewQuiz = new CreateNewQuiz();
+            createNewQuiz.execute();
 
         }
 
@@ -141,5 +168,57 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
             quizNames.add(quiz.getName());
         }
 
+    }
+
+    private class CreateNewQuiz extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... strings) {
+
+            Connection connection;
+            DBconnector databaseconn = new DBconnector();
+
+            try {
+
+                try {
+                    Class.forName("com.mysql.jdbc.Driver");
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                connection = databaseconn.CONN();
+                connection.setAutoCommit(false);
+
+                QuizDAO quizDAO = new QuizDAO();
+
+                QuizDTO newquiz = new QuizDTO();
+
+                newquiz.setUser_id(UserSingleton.getUserSingleton().getUser().getId());
+                newquiz.setName(quizname.getText().toString());
+                newquiz.setQuestions(new ArrayList<QuestionDTO>());
+                quizDAO.createQuiz(newquiz,connection);
+
+                connection.commit();
+
+                UserDAO updateUser = new UserDAO();
+                UserDTO updatedUser = new UserDTO();
+                updatedUser = updateUser.getUserById(UserSingleton.getUserSingleton().getUser().getId(), connection);
+
+                UserSingleton.getUserSingleton().setUser(updatedUser);
+
+                connection.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+
+            startActivity(new Intent(Quiz_list_activity.this, Quiz_logic_activity.class));
+
+        }
     }
 }
