@@ -245,7 +245,7 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
                     Toast.makeText(getApplicationContext(), "Ændringer gemt", Toast.LENGTH_SHORT).show();
 
                     QuizQuestions.get(currentQuestion).setText(questionOnScreen.getText().toString());
-                    saveQuestions(QuizQuestions.get(currentQuestion));
+                    saveQuestions();
                     updateCheckBox ();
                     UpdateDatabase update = new UpdateDatabase();
                     update.execute();
@@ -276,8 +276,6 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
                 public void onClick(DialogInterface dialog, int which) {
                     Toast.makeText(getApplicationContext(), "Spørgsmål Slettet", Toast.LENGTH_SHORT).show();
                     if(QuizQuestions.size() == 1){
-
-
 
                     } else if (currentQuestion+1 == QuizQuestions.size()) {
                         currentQuestion--;
@@ -371,7 +369,14 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
 
     }
 
-    public void saveQuestions(QuestionDTO questions) {
+    public void saveQuestions() {
+
+        QuizAnswers.get(0).setText(a1.getText().toString());
+        QuizAnswers.get(1).setText(a1.getText().toString());
+        QuizAnswers.get(2).setText(a1.getText().toString());
+        QuizAnswers.get(3).setText(a1.getText().toString());
+
+        QuizQuestions.get(currentQuestion).setAnswers(QuizAnswers);
 
         QuizQuestions.get(currentQuestion).getAnswers().get(0).setText(a1.getText().toString());
         QuizQuestions.get(currentQuestion).getAnswers().get(1).setText(a2.getText().toString());

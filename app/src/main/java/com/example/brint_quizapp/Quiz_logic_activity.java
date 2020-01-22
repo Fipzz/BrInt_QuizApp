@@ -240,6 +240,7 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
                 }
 
             } else if (v.getId() == d.getId()) {
+
                 resultDTO = new ResultDTO();
                 answerDTO = new AnswerDTO();
                 answerDTO = answers.get(3);

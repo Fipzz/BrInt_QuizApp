@@ -53,11 +53,10 @@ public class ResultDAO {
                 statement.setInt(1, result.getQuestion_id());
                 statement.setInt(2, result.getUser_id());
                 statement.setInt(3, result.getAnswer().getId());
-                statement.setInt(3, result.getQuiz_id());
+                statement.setInt(4, result.getQuiz_id());
 
                 statement.execute();
             }
-            c.commit();
 
         }catch (SQLException e){
             e.printStackTrace();

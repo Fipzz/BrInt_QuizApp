@@ -92,9 +92,6 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
 
         if(quiz.getId() == v.getId()){
 
-
-
-
             unikKode = quiz_code.getText().toString();
 
             if (unikKode.matches("")){
@@ -105,7 +102,8 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
 
                 toast.show();
 
-            }else {
+            } else {
+
                 quizID = Integer.parseInt(quiz_code.getText().toString());
                 startLoading();
                 GetQuizDataClass getQuizDataClass = new GetQuizDataClass();

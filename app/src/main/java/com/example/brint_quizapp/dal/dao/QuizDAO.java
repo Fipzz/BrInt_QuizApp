@@ -173,7 +173,7 @@ public class QuizDAO {
                 String query = "INSERT INTO question (quiz_id, question_text, number) VALUES (?, ?, ?)";
                 PreparedStatement statement = c.prepareStatement(query);
 
-                statement.setInt(1, question.getQuiz_id());
+                statement.setInt(1, quiz.getId());
                 statement.setString(2, question.getText());
                 statement.setInt(3, question.getNumber());
 
