@@ -23,6 +23,10 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
     String themeSwitch,sharedPreference, currentTheme, theme;
     SharedPreferences sharedPref;
 
+    @Override
+    public void onBackPressed(){
+        startActivity(new Intent(Profile_activity.this, Homepage_activity.class));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,10 +83,10 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
 
     }
 
-
     @Override
     public void onClick(View v) {
 
+        /*
         SharedPreferences.Editor edit = sharedPref.edit();
 
         sharedPref
@@ -90,9 +94,8 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
                 .putString("current_theme","purple_theme")
                 .apply();
         recreate();
-
+        */
         if (resultsButton.getId() == v.getId()) {
-
 
         }
 

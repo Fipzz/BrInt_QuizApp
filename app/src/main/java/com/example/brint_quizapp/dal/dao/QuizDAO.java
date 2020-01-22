@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class QuizDAO {
+
+    int currentQuestionId;
+
     public ArrayList<QuizDTO> getQuizzesByUserId(int id, Connection c) {
         ArrayList<QuizDTO> quizzes = new ArrayList<QuizDTO>();
 
@@ -141,15 +144,16 @@ public class QuizDAO {
 
         try {
 
-            String query = "INSERT INTO quiz (user_id, name, type) VALUES (?, ?, ?, ?)";
+            String query = "INSERT INTO quiz (id, user_id, name, type) VALUES (?, ?, ?, ?)";
             PreparedStatement statement = c.prepareStatement(query);
 
-            statement.setInt(1, quiz.getUser_id());
-            statement.setString(2, quiz.getName());
-            statement.setInt(3, quiz.getType());
-            statement.setInt(4, quiz.getCode());
+            statement.setInt(1, quiz.getId());
+            statement.setInt(2, quiz.getUser_id());
+            statement.setString(3, quiz.getName());
+            statement.setInt(4, quiz.getType());
 
             statement.execute();
+
 
         } catch (SQLException p) {
             return false;
@@ -159,7 +163,7 @@ public class QuizDAO {
             ArrayList<AnswerDTO> answers = new ArrayList<>();
 
             try {
-                String query = "INSERT INTO question (quiz_id, question_text, number) VALUES (?, ?, ?);";
+                String query = "INSERT INTO question (quiz_id, question_text, number) VALUES (?, ?, ?)";
                 PreparedStatement statement = c.prepareStatement(query);
 
                 statement.setInt(1, question.getQuiz_id());
@@ -168,6 +172,20 @@ public class QuizDAO {
 
                 statement.executeUpdate();
 
+                query = "SELECT * FROM question WHERE quiz_id = ? AND number = ?";
+                statement = c.prepareStatement(query);
+
+                statement.setInt(1, question.getQuiz_id());
+                statement.setInt(2, question.getNumber());
+
+                ResultSet resultSet = statement.executeQuery();
+
+                if(resultSet.next()){
+                    currentQuestionId = resultSet.getInt("id");
+                }else{
+                    return false;
+                }
+
             } catch (SQLException p) {
                 return false;
             }
@@ -175,7 +193,7 @@ public class QuizDAO {
             for (AnswerDTO answer : answers) {
 
                 try {
-                    String query = "INSERT INTO answer (question_id, answer_text, correct) VALUES (?, ?, ?);";
+                    String query = "INSERT INTO answer (question_id, answer_text, correct) VALUES (?, ?, ?)";
                     PreparedStatement statement = c.prepareStatement(query);
 
                     int correct;
@@ -185,7 +203,7 @@ public class QuizDAO {
                         correct = 0;
                     }
 
-                    statement.setInt(1, answer.getQuestion_id());
+                    statement.setInt(1, currentQuestionId);
                     statement.setString(2, answer.getText());
                     statement.setInt(3, correct);
 

@@ -10,6 +10,24 @@
 
     <!-- Quizz code tekst -->
     <TextView
+        android:id="@+id/loading_view"
+        android:layout_width="433dp"
+        android:layout_height="152dp"
+        android:layout_marginStart="108dp"
+        android:fontFamily="monospace"
+        android:gravity="center"
+
+        android:text="LOADING"
+        android:textColor="@color/buttonblue"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.851"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.405" />
+
+    <TextView
         android:id="@+id/text_over_unik"
         android:layout_width="231dp"
         android:layout_height="48dp"
@@ -50,8 +68,8 @@
         android:layout_height="46dp"
         android:ems="10"
         android:gravity="center"
+        android:inputType="number"
         android:hint="unik kode"
-        android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

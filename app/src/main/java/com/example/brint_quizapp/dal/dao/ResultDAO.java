@@ -1,5 +1,6 @@
 package com.example.brint_quizapp.dal.dao;
 
+import com.example.brint_quizapp.UserSingleton;
 import com.example.brint_quizapp.dal.dto.AnswerDTO;
 import com.example.brint_quizapp.dal.dto.ResultDTO;
 
@@ -25,6 +26,39 @@ public class ResultDAO {
             c.commit();
 
         } catch (SQLException p) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean createResults(ArrayList<ResultDTO> results, Connection c){
+
+        try{
+
+            for (ResultDTO result : results) {
+                String query = "DELETE FROM result WHERE question_id = ? AND user_id = ?";
+
+                PreparedStatement statement = c.prepareStatement(query);
+
+                statement.setInt(1, result.getQuestion_id());
+                statement.setInt(2, result.getUser_id());
+
+                statement.execute();
+
+                query = "INSERT INTO result (question_id, user_id, answer_id) VALUES (?, ?, ?)";
+
+                statement = c.prepareStatement(query);
+
+                statement.setInt(1, result.getQuestion_id());
+                statement.setInt(2, result.getUser_id());
+                statement.setInt(3, result.getAnswer().getId());
+
+                statement.execute();
+            }
+            c.commit();
+
+        }catch (SQLException e){
+            e.printStackTrace();
             return false;
         }
         return true;
