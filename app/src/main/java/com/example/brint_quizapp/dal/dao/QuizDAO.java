@@ -75,7 +75,7 @@ public class QuizDAO {
                 questions.add(question);
             }
 
-            if(questions.size() < 1) {
+            if(questions.size() > 0) {
 
                 query = "SELECT * FROM answer WHERE ";
                 for (int i = 0; i < questions.size(); i++) {
