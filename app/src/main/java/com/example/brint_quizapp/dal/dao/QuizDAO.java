@@ -75,41 +75,44 @@ public class QuizDAO {
                 questions.add(question);
             }
 
-            query = "SELECT * FROM answer WHERE ";
-            for (int i = 0; i < questions.size(); i++) {
-                query = query + "question_id = " + questions.get(i).getId();
-                if (i != questions.size() - 1) {
-                    query = query + " OR ";
-                }
-            }
-            query = query + ";";
+            if(questions.size() > 0) {
 
-            statement = c.prepareStatement(query);
-            result = statement.executeQuery();
-
-            c.commit();
-
-            ArrayList<AnswerDTO> allAnswers = new ArrayList<>();
-
-            while (result.next()) {
-                AnswerDTO answer = new AnswerDTO();
-                answer.setCorrect(result.getBoolean("correct"));
-                answer.setId(result.getInt("id"));
-                answer.setText(result.getString("answer_text"));
-                answer.setQuestion_id(result.getInt("question_id"));
-
-                allAnswers.add(answer);
-            }
-
-            for (QuestionDTO question : questions) {
-                ArrayList<AnswerDTO> answers = new ArrayList<>();
-                for (AnswerDTO answer : allAnswers) {
-                    if (answer.getQuestion_id() == question.getId()) {
-                        answers.add(answer);
+                query = "SELECT * FROM answer WHERE ";
+                for (int i = 0; i < questions.size(); i++) {
+                    query = query + "question_id = " + questions.get(i).getId();
+                    if (i != questions.size() - 1) {
+                        query = query + " OR ";
                     }
                 }
+                query = query + ";";
 
-                question.setAnswers(answers);
+                statement = c.prepareStatement(query);
+                result = statement.executeQuery();
+
+                c.commit();
+
+                ArrayList<AnswerDTO> allAnswers = new ArrayList<>();
+
+                while (result.next()) {
+                    AnswerDTO answer = new AnswerDTO();
+                    answer.setCorrect(result.getBoolean("correct"));
+                    answer.setId(result.getInt("id"));
+                    answer.setText(result.getString("answer_text"));
+                    answer.setQuestion_id(result.getInt("question_id"));
+
+                    allAnswers.add(answer);
+                }
+
+                for (QuestionDTO question : questions) {
+                    ArrayList<AnswerDTO> answers = new ArrayList<>();
+                    for (AnswerDTO answer : allAnswers) {
+                        if (answer.getQuestion_id() == question.getId()) {
+                            answers.add(answer);
+                        }
+                    }
+
+                    question.setAnswers(answers);
+                }
 
             }
 
