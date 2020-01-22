@@ -15,12 +15,13 @@ public class ResultDAO {
     public boolean createResult(ResultDTO result, Connection c){
         try {
 
-            String query = "INSERT INTO result (question_id, user_id, answer_id) VALUES (?, ?, ?)";
+            String query = "INSERT INTO result (question_id, user_id, answer_id, quiz_id) VALUES (?, ?, ?, ?)";
             PreparedStatement statement = c.prepareStatement(query);
 
             statement.setInt(1, result.getQuestion_id());
             statement.setInt(2, result.getUser_id());
             statement.setInt(3, result.getAnswer().getId());
+            statement.setInt(3, result.getQuiz_id());
 
             statement.execute();
             c.commit();
@@ -45,13 +46,14 @@ public class ResultDAO {
 
                 statement.execute();
 
-                query = "INSERT INTO result (question_id, user_id, answer_id) VALUES (?, ?, ?)";
+                query = "INSERT INTO result (question_id, user_id, answer_id, quiz_id) VALUES (?, ?, ?, ?)";
 
                 statement = c.prepareStatement(query);
 
                 statement.setInt(1, result.getQuestion_id());
                 statement.setInt(2, result.getUser_id());
                 statement.setInt(3, result.getAnswer().getId());
+                statement.setInt(3, result.getQuiz_id());
 
                 statement.execute();
             }
