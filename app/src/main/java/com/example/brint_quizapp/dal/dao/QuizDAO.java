@@ -91,28 +91,28 @@ public class QuizDAO {
 
                 c.commit();
 
-            }
-            ArrayList<AnswerDTO> allAnswers = new ArrayList<>();
+                ArrayList<AnswerDTO> allAnswers = new ArrayList<>();
 
-            while (result.next()) {
-                AnswerDTO answer = new AnswerDTO();
-                answer.setCorrect(result.getBoolean("correct"));
-                answer.setId(result.getInt("id"));
-                answer.setText(result.getString("answer_text"));
-                answer.setQuestion_id(result.getInt("question_id"));
+                while (result.next()) {
+                    AnswerDTO answer = new AnswerDTO();
+                    answer.setCorrect(result.getBoolean("correct"));
+                    answer.setId(result.getInt("id"));
+                    answer.setText(result.getString("answer_text"));
+                    answer.setQuestion_id(result.getInt("question_id"));
 
-                allAnswers.add(answer);
-            }
-
-            for (QuestionDTO question : questions) {
-                ArrayList<AnswerDTO> answers = new ArrayList<>();
-                for (AnswerDTO answer : allAnswers) {
-                    if (answer.getQuestion_id() == question.getId()) {
-                        answers.add(answer);
-                    }
+                    allAnswers.add(answer);
                 }
 
-                question.setAnswers(answers);
+                for (QuestionDTO question : questions) {
+                    ArrayList<AnswerDTO> answers = new ArrayList<>();
+                    for (AnswerDTO answer : allAnswers) {
+                        if (answer.getQuestion_id() == question.getId()) {
+                            answers.add(answer);
+                        }
+                    }
+
+                    question.setAnswers(answers);
+                }
 
             }
 
