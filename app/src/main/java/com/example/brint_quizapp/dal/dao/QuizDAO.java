@@ -143,7 +143,6 @@ public class QuizDAO {
 
     }
 
-
     public boolean createQuiz(QuizDTO quiz, Connection c) {
         ArrayList<QuestionDTO> questions = new ArrayList<>();
         questions = quiz.getQuestions();
@@ -227,6 +226,7 @@ public class QuizDAO {
                 }
 
             }
+
 
         }
 

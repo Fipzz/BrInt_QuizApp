@@ -27,9 +27,6 @@ import com.example.brint_quizapp.dal.dto.UserDTO;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-import io.sentry.Sentry;
-import io.sentry.android.AndroidSentryClientFactory;
-
 public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener{
 
     //TODO add a button to remove a question

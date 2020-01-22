@@ -14,17 +14,46 @@ import java.util.ArrayList;
 
 public class Statistics_Activity extends AppCompatActivity {
 
-    int numberThatTookQuiz;
+    int numberThatTookQuiz = 0;
+    int numberOfCorrect = 0;
+    int numberOfQuestion = 0;
     int averageCorrectAnswers;
     int[][] averageCorrectPrQuestionArray;
+    ArrayList<ResultDTO> results;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics_);
+
+        GetResultsClass getStatisticsClass = new GetResultsClass();
+
+        getStatisticsClass.setQuiz_id(getIntent().getExtras().getInt("quizId"));
+
+        getStatisticsClass.execute();
+
+        this.results = getStatisticsClass.getResults();
+
+        if(results.size() < 0) {
+            int randomQuestionId = results.get(1).getQuestion_id();
+
+            for (ResultDTO result : results) {
+                if(result.getAnswer().getCorrect()){
+                    numberOfCorrect++;
+                }
+                if (result.getQuestion_id() == randomQuestionId) {
+                    numberThatTookQuiz++;
+                }
+            }
+            numberOfQuestion = results.size()/numberThatTookQuiz;
+            averageCorrectAnswers = numberOfCorrect/numberOfQuestion;
+        }
+
+
+
     }
 
-    private class GetStatisticsClass extends AsyncTask<String, Void, Void>{
+    private class GetResultsClass extends AsyncTask<String, Void, Void>{
 
         int quiz_id;
 

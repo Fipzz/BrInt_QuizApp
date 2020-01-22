@@ -57,19 +57,19 @@ public class Create_user_activity extends AppCompatActivity implements View.OnCl
         String passwordString =  password.getText().toString();
         String password2String =  password2.getText().toString();
 
-        if(nameString == ""){
+        if(nameString.equals("")){
             Toast toast = Toast.makeText(getApplicationContext(),
                     "Please enter a name",
                     Toast.LENGTH_LONG);
 
             toast.show();
-        }else if(emailString == ""){
+        }else if(emailString.equals("")){
             Toast toast = Toast.makeText(getApplicationContext(),
                     "Please enter an email",
                     Toast.LENGTH_LONG);
 
             toast.show();
-        }else if(passwordString == ""){
+        }else if(passwordString.equals("")){
             Toast toast = Toast.makeText(getApplicationContext(),
                     "Please enter a password",
                     Toast.LENGTH_LONG);
@@ -81,7 +81,7 @@ public class Create_user_activity extends AppCompatActivity implements View.OnCl
                     Toast.LENGTH_LONG);
 
             toast.show();
-        }else if(nameString != "" && emailString != "" && passwordString != "" && passwordString.equals(password2String)){
+        }else if(nameString.equals("") && emailString.equals("") && passwordString.equals("") && passwordString.equals(password2String)){
 
             UserDTO userDTO = new UserDTO();
             userDTO.setName(nameString);

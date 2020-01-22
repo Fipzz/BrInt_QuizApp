@@ -18,9 +18,6 @@ import com.example.brint_quizapp.dal.dto.QuizDTO;
 
 import java.util.ArrayList;
 
-import io.sentry.event.User;
-
-
 public class Edit_quiz_home_activity extends AppCompatActivity implements View.OnClickListener {
 
     Button edit_quiz, stats;
@@ -50,6 +47,7 @@ public class Edit_quiz_home_activity extends AppCompatActivity implements View.O
 
         quiz_navn = (TextView) findViewById(R.id.quiz_navn);
         quiz_navn.setText(theQuiz.getName());
+
         uniqeCode = (EditText) findViewById(R.id.codeNumber);
         uniqeCode.setText(Integer.toString(theQuiz.getId()));
         uniqeCode.setEnabled(false);
