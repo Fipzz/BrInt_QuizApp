@@ -155,9 +155,6 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
 
         }
 
-
-
-
     }
 
     private void initMyQuiz(){
@@ -217,7 +214,7 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
         @Override
         protected void onPostExecute(Void aVoid) {
 
-            startActivity(new Intent(Quiz_list_activity.this, Quiz_logic_activity.class));
+            startActivity(new Intent(Quiz_list_activity.this, Quiz_list_activity.class));
 
         }
     }

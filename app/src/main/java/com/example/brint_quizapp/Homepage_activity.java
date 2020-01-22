@@ -59,6 +59,12 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
         loading = (TextView) findViewById(R.id.loading_view);
         loading.setVisibility(View.INVISIBLE);
 
+        if(UserSingleton.getUserSingleton().getUser() == null){
+
+            edit.setVisibility(View.INVISIBLE);
+
+        }
+
     }
 
     private void startLoading(){
@@ -116,6 +122,7 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
                     @Override
                     public void onFinish() {
                         if(quizDTO != null){
+
                             Intent quiz = new Intent(Homepage_activity.this, Quiz_logic_activity.class);
 
                             Bundle data = new Bundle();
@@ -123,6 +130,7 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
                             quiz.putExtras(data);
 
                             startActivity(quiz);
+
                         }else{
                             Toast toast = Toast.makeText(getApplicationContext(),
                                     "Could not find quiz",

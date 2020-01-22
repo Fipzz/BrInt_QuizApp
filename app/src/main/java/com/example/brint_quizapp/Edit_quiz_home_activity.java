@@ -18,6 +18,8 @@ import com.example.brint_quizapp.dal.dto.QuizDTO;
 
 import java.util.ArrayList;
 
+import io.sentry.event.User;
+
 
 public class Edit_quiz_home_activity extends AppCompatActivity implements View.OnClickListener {
 
@@ -75,6 +77,14 @@ public class Edit_quiz_home_activity extends AppCompatActivity implements View.O
                     Toast.LENGTH_SHORT);
 
             toast.show();
+
+            Intent quiz = new Intent(Edit_quiz_home_activity.this, Statistics_Activity.class);
+
+            Bundle data = new Bundle();
+            data.putInt("quizId", UserSingleton.getUserSingleton().getUser().getQuizzes().get(getIntent().getExtras().getInt("chosenQuiz")).getId());
+            quiz.putExtras(data);
+
+            startActivity(quiz);
 
         }
     }
