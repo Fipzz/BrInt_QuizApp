@@ -193,6 +193,7 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
                 resultDTO = new ResultDTO();
                 answerDTO = new AnswerDTO();
                 answerDTO = answers.get(0);
+                resultDTO.setQuiz_id(quizDTO.getId());
                 resultDTO.setUser_id(UserSingleton.getUserSingleton().getUser().getId());
                 resultDTO.setQuestion_id(answers.get(0).getQuestion_id());
                 resultDTO.setAnswer(answerDTO);
@@ -209,6 +210,7 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
                 resultDTO = new ResultDTO();
                 answerDTO = new AnswerDTO();
                 answerDTO = answers.get(1);
+                resultDTO.setQuiz_id(quizDTO.getId());
                 resultDTO.setUser_id(UserSingleton.getUserSingleton().getUser().getId());
                 resultDTO.setQuestion_id(answers.get(1).getQuestion_id());
                 resultDTO.setAnswer(answerDTO);
@@ -225,6 +227,7 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
                 resultDTO = new ResultDTO();
                 answerDTO = new AnswerDTO();
                 answerDTO = answers.get(2);
+                resultDTO.setQuiz_id(quizDTO.getId());
                 resultDTO.setUser_id(UserSingleton.getUserSingleton().getUser().getId());
                 resultDTO.setQuestion_id(answers.get(2).getQuestion_id());
                 resultDTO.setAnswer(answerDTO);
@@ -240,6 +243,7 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
                 resultDTO = new ResultDTO();
                 answerDTO = new AnswerDTO();
                 answerDTO = answers.get(3);
+                resultDTO.setQuiz_id(quizDTO.getId());
                 resultDTO.setUser_id(UserSingleton.getUserSingleton().getUser().getId());
                 resultDTO.setQuestion_id(answers.get(3).getQuestion_id());
                 resultDTO.setAnswer(answerDTO);

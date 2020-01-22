@@ -60,6 +60,7 @@ public class DDL{
 
             query = "CREATE TABLE IF NOT EXISTS " + "result" + " ("
                     + "question_id int(10),"
+                    + "quiz_id int(10),"
                     + "user_id int(10),"
                     + "answer_id int(10),"
                     + "PRIMARY KEY (question_id, user_id),"
