@@ -61,6 +61,11 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
     boolean making_quiz = false;
 
     @Override
+    public void onBackPressed(){
+        startActivity(new Intent(Quiz_list_activity.this, Homepage_activity.class));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -178,7 +183,7 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
 
             makequiz.setEnabled(false);
             quizname.setEnabled(false);
-            makequiz.setText("Makeing quiz...");
+            makequiz.setText("Making quiz...");
             addQuiz.setEnabled(false);
             CreateNewQuiz createNewQuiz = new CreateNewQuiz();
             createNewQuiz.execute();
