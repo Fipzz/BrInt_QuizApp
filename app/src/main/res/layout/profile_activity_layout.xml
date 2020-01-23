@@ -12,12 +12,13 @@
 
     <TextView
         android:id="@+id/name"
-        android:layout_width="281dp"
+        android:layout_width="319dp"
         android:layout_height="65dp"
         android:fontFamily="@font/quicksand_light"
-        android:gravity="top"
         android:text="@string/name"
-        android:textColor="?attr/colorPrimary"
+        android:textColor="?attr/questionTextColor"
+        android:textStyle="bold"
+        android:gravity="center"
         android:textSize="47sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
