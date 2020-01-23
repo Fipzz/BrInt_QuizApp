@@ -11,14 +11,16 @@
     <!-- Titel -->
     <TextView
         android:id="@+id/name"
-        android:layout_width="281dp"
-        android:layout_height="65dp"
+        android:layout_width="308dp"
+        android:layout_height="61dp"
         android:fontFamily="@font/quicksand_light"
-        android:gravity="top"
+
         android:text="@string/name"
         android:textAppearance="@style/name"
-        android:textSize="47sp"
         android:textColor="?attr/colorPrimary"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textSize="47sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
