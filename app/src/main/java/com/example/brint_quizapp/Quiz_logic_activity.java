@@ -277,7 +277,9 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
                 answerDTO = new AnswerDTO();
                 answerDTO = answers.get(1);
                 resultDTO.setQuiz_id(quizDTO.getId());
-                resultDTO.setUser_id(UserSingleton.getUserSingleton().getUser().getId());
+                if(UserSingleton.getUserSingleton().getUser() != null){
+                    resultDTO.setUser_id(UserSingleton.getUserSingleton().getUser().getId());
+                }
                 resultDTO.setQuestion_id(answers.get(1).getQuestion_id());
                 resultDTO.setAnswer(answerDTO);
                 results.add(resultDTO);
@@ -295,7 +297,9 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
                 answerDTO = new AnswerDTO();
                 answerDTO = answers.get(2);
                 resultDTO.setQuiz_id(quizDTO.getId());
-                resultDTO.setUser_id(UserSingleton.getUserSingleton().getUser().getId());
+                if(UserSingleton.getUserSingleton().getUser() != null) {
+                    resultDTO.setUser_id(UserSingleton.getUserSingleton().getUser().getId());
+                }
                 resultDTO.setQuestion_id(answers.get(2).getQuestion_id());
                 resultDTO.setAnswer(answerDTO);
                 results.add(resultDTO);

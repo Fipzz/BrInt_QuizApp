@@ -97,7 +97,10 @@ public class Statistics_Activity extends AppCompatActivity {
             }
         }
 
-        getStatisticsClass.execute();
+        if(UserSingleton.getUserSingleton().getUser() != null){
+            getStatisticsClass.execute();
+        }
+
 
         averageCorrectPrQuestionArray = new String[2][];
 
