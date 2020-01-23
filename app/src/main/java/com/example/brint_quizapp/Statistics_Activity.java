@@ -1,67 +1,196 @@
 package com.example.brint_quizapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.brint_quizapp.dal.dao.ResultDAO;
+import com.example.brint_quizapp.dal.dto.QuestionDTO;
+import com.example.brint_quizapp.dal.dto.QuizDTO;
 import com.example.brint_quizapp.dal.dto.ResultDTO;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Statistics_Activity extends AppCompatActivity {
 
-    int numberThatTookQuiz = 0;
-    int numberOfCorrect = 0;
-    int numberOfQuestion = 0;
-    int averageCorrectAnswers;
-    int[][] averageCorrectPrQuestionArray;
+    double numberThatTookQuiz = 0;
+    double numberOfCorrect = 0;
+    double numberOfQuestion = 0;
+    double averageCorrectAnswers;
+    String[][] averageCorrectPrQuestionArray;
     ArrayList<ResultDTO> results;
+    TextView averageCorrectTextView, usersTakenTextView, texttext, texttext1, texttext2;
+    CountDownTimer timer;
+    int quiz_id;
+    ArrayList<QuizDTO> userQuizzes;
+    QuizDTO currentQuiz;
+    ArrayList<String> listViewData;
+    ListView statListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics_);
 
+        averageCorrectTextView = (TextView) findViewById(R.id.averageCorrect);
+
+        usersTakenTextView = (TextView) findViewById(R.id.usersTaken);
+
+        texttext = (TextView) findViewById(R.id.texttext);
+
+        texttext1 = (TextView) findViewById(R.id.texttext1);
+
+        texttext2 = (TextView) findViewById(R.id.texttext2);
+
+        startLoading();
+
+        listViewData = new ArrayList<>();
+
         GetResultsClass getStatisticsClass = new GetResultsClass();
 
-        getStatisticsClass.setQuiz_id(getIntent().getExtras().getInt("quizId"));
+        quiz_id = getIntent().getExtras().getInt("quizId");
+
+        getStatisticsClass.setQuiz_id(quiz_id);
+
+        userQuizzes = UserSingleton.getUserSingleton().getUser().getQuizzes();
+
+        for (QuizDTO quiz : userQuizzes) {
+            if(quiz.getId() == quiz_id){
+                currentQuiz = quiz;
+            }
+        }
 
         getStatisticsClass.execute();
 
-        this.results = getStatisticsClass.getResults();
+        averageCorrectPrQuestionArray = new String[2][];
 
-        if(results.size() < 0) {
-            int randomQuestionId = results.get(1).getQuestion_id();
+        timer = new CountDownTimer(20000,500) {
+            @Override
+            public void onTick(long millisUntilFinished) {
 
-            for (ResultDTO result : results) {
-                if(result.getAnswer().getCorrect()){
-                    numberOfCorrect++;
-                }
-                if (result.getQuestion_id() == randomQuestionId) {
-                    numberThatTookQuiz++;
+                if(results != null) {
+                    timer.cancel();
+                    timer.onFinish();
                 }
             }
-            numberOfQuestion = results.size()/numberThatTookQuiz;
-            averageCorrectAnswers = numberOfCorrect/numberOfQuestion;
-        }
+
+            @Override
+            public void onFinish() {
+                if(results != null) {
+                    if (results.size() > 0) {
+                        int randomQuestionId = results.get(0).getQuestion_id();
+
+                        for (ResultDTO result : results) {
+                            if (result.getAnswer().getCorrect()) {
+                                numberOfCorrect += 1;
+                            }
+                            if (result.getQuestion_id() == randomQuestionId) {
+                                numberThatTookQuiz += 1;
+                            }
+                        }
 
 
 
+                        numberOfQuestion = results.size() / numberThatTookQuiz;
+                        averageCorrectAnswers = numberOfCorrect / numberOfQuestion / numberThatTookQuiz * 100;
+
+                        DecimalFormat df = new DecimalFormat("#.00");
+
+                        averageCorrectTextView.setText(df.format(averageCorrectAnswers) + "%");
+
+                        int intNumberThatTookQuiz = (int) numberThatTookQuiz;
+
+                        usersTakenTextView.setText(Integer.toString(intNumberThatTookQuiz));
+
+                        ArrayList<QuestionDTO> questions = currentQuiz.getQuestions();
+
+                        for (QuestionDTO question : questions) {
+                            String dataString = question.getText();
+                            double numberCorrectOnCurrentQuestion = 0;
+                            double percentCorrectOnCurrentQuestion;
+                            for (ResultDTO result : results) {
+                                if(result.getQuestion_id() == question.getId() && result.getAnswer().getCorrect()){
+                                    numberCorrectOnCurrentQuestion += 1;
+                                }
+                            }
+                            percentCorrectOnCurrentQuestion = numberCorrectOnCurrentQuestion / numberThatTookQuiz * 100;
+                            dataString = dataString + ":\n" + df.format(percentCorrectOnCurrentQuestion) + "%";
+                            listViewData.add(dataString);
+                        }
+
+                        statListView = findViewById(R.id.statListView);
+
+                        ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(
+                                getBaseContext(),
+                                android.R.layout.simple_list_item_1,
+                                listViewData
+                        ){
+                            @Override
+                            public View getView(int position, View convertView, ViewGroup parent){
+
+                                View view = super.getView(position,convertView,parent);
+
+                                TextView tv = (TextView) view.findViewById(android.R.id.text1);
+
+                                tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.buttonblue));
+                                tv.setGravity(Gravity.CENTER);
+                                tv.setPadding(0, 25, 0,25 );
+                                tv.setTextSize(20);
+
+                                return view;
+                            }
+
+                        };
+
+                        statListView.setAdapter(listAdapter);
+
+                        stopLoading();
+                    }
+                }else{
+                    averageCorrectTextView.setText("0");
+
+                    usersTakenTextView.setText("0");
+                }
+            }
+        }.start();
+
+    }
+
+    private void startLoading(){
+        averageCorrectTextView.setVisibility(View.INVISIBLE);
+        usersTakenTextView.setVisibility(View.INVISIBLE);
+        texttext.setVisibility(View.INVISIBLE);
+        texttext1.setVisibility(View.INVISIBLE);
+        texttext2.setVisibility(View.INVISIBLE);
+    }
+
+    private void stopLoading(){
+        averageCorrectTextView.setVisibility(View.VISIBLE);
+        usersTakenTextView.setVisibility(View.VISIBLE);
+        texttext.setVisibility(View.VISIBLE);
+        texttext1.setVisibility(View.VISIBLE);
+        texttext2.setVisibility(View.VISIBLE);
     }
 
     private class GetResultsClass extends AsyncTask<String, Void, Void>{
 
         int quiz_id;
-
-        ArrayList<ResultDTO> results;
         Connection connection;
         DBconnector connectionClass = new DBconnector();
-        boolean succes;
-        boolean done = false;
 
         public ArrayList<ResultDTO> getResults() {
             return results;
@@ -83,7 +212,6 @@ public class Statistics_Activity extends AppCompatActivity {
 
             }catch (SQLException e){
                 e.printStackTrace();
-                succes = false;
             }
 
             return null;
