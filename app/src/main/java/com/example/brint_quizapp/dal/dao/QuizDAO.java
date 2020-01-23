@@ -183,7 +183,7 @@ public class QuizDAO {
                 query = "SELECT * FROM question WHERE quiz_id = ? AND number = ?";
                 statement = c.prepareStatement(query);
 
-                statement.setInt(1, question.getQuiz_id());
+                statement.setInt(1, quiz.getId());
                 statement.setInt(2, question.getNumber());
 
                 ResultSet resultSet = statement.executeQuery();
