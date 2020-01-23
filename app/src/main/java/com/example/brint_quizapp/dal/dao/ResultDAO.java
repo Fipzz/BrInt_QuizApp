@@ -105,6 +105,7 @@ public class ResultDAO {
                 r.setAnswer(answerDTO);
                 r.setQuestion_id(result.getInt("question_id"));
                 r.setUser_id(result.getInt("user_id"));
+                r.setQuiz_id(result.getInt("quiz_id"));
 
                 results.add(r);
             }
