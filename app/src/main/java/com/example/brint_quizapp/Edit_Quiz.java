@@ -315,15 +315,29 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
         if (v.getId() == c1.getId() && c1.isChecked() == true) {
             toast1 = Toast.makeText(getApplicationContext(), "Svar 1 sat til rigtigt", Toast.LENGTH_SHORT); toast1.show();
             QuizAnswers.get(0).setCorrect(true);
-        } else if (v.getId() == c2.getId() && c2.isChecked() == true){
+        } else if (v.getId() == c1.getId() && c1.isChecked() == false) {
+            QuizAnswers.get(0).setCorrect(false);
+        }
+
+        if (v.getId() == c2.getId() && c2.isChecked() == true){
             toast2 = Toast.makeText(getApplicationContext(), "Svar 2 sat til rigtigt", Toast.LENGTH_SHORT); toast2.show();
             QuizAnswers.get(1).setCorrect(true);
-        } else if (v.getId() == c3.getId() && c3.isChecked() == true) {
+        } else if (v.getId() == c2.getId() && c2.isChecked() == false) {
+            QuizAnswers.get(1).setCorrect(false);
+        }
+
+        if (v.getId() == c3.getId() && c3.isChecked() == true) {
             toast3 = Toast.makeText(getApplicationContext(), "Svar 3 sat til rigtigt", Toast.LENGTH_SHORT); toast3.show();
             QuizAnswers.get(2).setCorrect(true);
-        } else if (v.getId() == c4.getId() && c4.isChecked() == true) {
+        } else if (v.getId() == c3.getId() && c3.isChecked() == false) {
+            QuizAnswers.get(2).setCorrect(false);
+        }
+
+        if (v.getId() == c4.getId() && c4.isChecked() == true) {
             toast4 = Toast.makeText(getApplicationContext(), "Svar 4 sat til rigtigt", Toast.LENGTH_SHORT); toast4.show();
             QuizAnswers.get(3).setCorrect(true);
+        } else if (v.getId() == c4.getId() && c4.isChecked() == false) {
+            QuizAnswers.get(3).setCorrect(false);
         }
     }
 
@@ -374,9 +388,9 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
     public void saveQuestions() {
 
         QuizAnswers.get(0).setText(a1.getText().toString());
-        QuizAnswers.get(1).setText(a1.getText().toString());
-        QuizAnswers.get(2).setText(a1.getText().toString());
-        QuizAnswers.get(3).setText(a1.getText().toString());
+        QuizAnswers.get(1).setText(a2.getText().toString());
+        QuizAnswers.get(2).setText(a3.getText().toString());
+        QuizAnswers.get(3).setText(a4.getText().toString());
 
         QuizQuestions.get(currentQuestion).setAnswers(QuizAnswers);
 
