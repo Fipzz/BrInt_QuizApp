@@ -36,11 +36,11 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
 
     Button next, prev;
 
-    EditText a1, a2, a3, a4;
+    EditText a1, a2, a3, a4, quizName;
 
     CheckBox c1, c2, c3, c4;
 
-    TextView quizName, questionOnScreen, questionCounter;
+    TextView questionOnScreen, questionCounter;
 
     Toast toast1, toast2, toast3, toast4;
 
@@ -123,9 +123,10 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
 
         prev.setEnabled(false);
 
-        quizName = (TextView) findViewById(R.id.name);
         questionCounter = (TextView) findViewById(R.id.questionCounter);
+
         questionOnScreen = (EditText) findViewById(R.id.question);
+        quizName = (EditText) findViewById(R.id.quiz_navn);
 
         c1 = (CheckBox) findViewById(R.id.checkBox);
         c2 = (CheckBox) findViewById(R.id.checkBox2);
@@ -286,6 +287,9 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
                     QuizQuestions.get(currentQuestion).setText(questionOnScreen.getText().toString());
                     saveQuestions();
                     updateCheckBox ();
+
+
+
                     UpdateDatabase update = new UpdateDatabase();
                     update.execute();
 
@@ -467,6 +471,7 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
                 newQuiz.setUser_id(UserSingleton.getUserSingleton().getUser().getId());
                 newQuiz.setName(UserSingleton.getUserSingleton().getUser().getQuizzes().get(getIntent().getExtras().getInt("quizId")).getName());
                 newQuiz.setQuestions(QuizQuestions);
+                newQuiz.setName(quizName.getText().toString());
                 newQuiz.setId(UserSingleton.getUserSingleton().getUser().getQuizzes().get(getIntent().getExtras().getInt("quizId")).getId());
 
                 quizDAO.createQuiz(newQuiz,connection);

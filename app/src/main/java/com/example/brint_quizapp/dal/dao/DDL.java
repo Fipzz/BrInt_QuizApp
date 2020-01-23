@@ -1,11 +1,6 @@
 package com.example.brint_quizapp.dal.dao;
 
-import android.os.AsyncTask;
-
-import com.example.brint_quizapp.dal.DALException;
-
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -15,7 +10,7 @@ public class DDL{
 
     }
 
-    public void createTables(Connection c) throws DALException {
+    public void createTables(Connection c) throws SQLException {
 
         try {
             String query = "CREATE TABLE IF NOT EXISTS " + "user" + " ("
@@ -73,12 +68,12 @@ public class DDL{
             c.commit();
             c.close();
         } catch (SQLException e) {
-            throw new DALException(e.getMessage());
+            e.printStackTrace();
         }
 
     }
 
-    public void deleteTables(Connection c) throws DALException{
+    public void deleteTables(Connection c) throws SQLException{
 
         try {
 
@@ -100,7 +95,7 @@ public class DDL{
             c.commit();
 
         } catch (SQLException e) {
-            throw new DALException(e.getMessage());
+            e.printStackTrace();
         }
     }
 
