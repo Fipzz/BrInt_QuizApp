@@ -1,6 +1,7 @@
 package com.example.brint_quizapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -26,6 +27,8 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
     Button quiz, profile, edit;
     EditText quiz_code;
     Toast toast;
+    SharedPreferences sharedPref;
+    String currentTheme, sharedPreference;
     QuizDAO quizDAO;
     DBconnector dBconnector;
     Connection connection;
@@ -38,9 +41,36 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
     String unikKode;
 
     @Override
+    public void onBackPressed(){
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.homepage_activity_layout);
+
+        sharedPreference = getString(R.string.preferenceFile);
+
+        sharedPref = getSharedPreferences(sharedPreference, MODE_PRIVATE);
+        currentTheme = sharedPref.getString("current_theme", "blue_theme");
+
+        if (currentTheme.equals("blue_theme")){
+
+            setTheme(R.style.Theme_App_Blue);
+
+
+        } else if (currentTheme.equals("purple_theme")) {
+
+            setTheme(R.style.Theme_App_Purple);
+
+        }
+
+        setContentView(R.layout.homepage_activity_layout);
+
+
+
 
         quiz = (Button) findViewById(R.id.start_quiz_knap);
         quiz.setOnClickListener(this);
@@ -65,6 +95,7 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
 
         }
 
+
     }
 
     private void startLoading(){
@@ -85,10 +116,23 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
         loading.setVisibility(View.INVISIBLE);
     }
 
+    private void disableButtons(){
+        quiz.setEnabled(false);
+        profile.setEnabled(false);
+        edit.setEnabled(false);
+    }
+
+    private void enableButtons(){
+        quiz.setEnabled(true);
+        profile.setEnabled(true);
+        edit.setEnabled(true);
+    }
+
     @Override
     public void onClick(View v) {
 
         if(quiz.getId() == v.getId()){
+            disableButtons();
 
             unikKode = quiz_code.getText().toString();
 
@@ -99,6 +143,7 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
                         Toast.LENGTH_LONG);
 
                 toast.show();
+                enableButtons();
 
             } else {
 
@@ -106,7 +151,7 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
                 startLoading();
                 GetQuizDataClass getQuizDataClass = new GetQuizDataClass();
                 getQuizDataClass.execute();
-                timer = new CountDownTimer(20000,500) {
+                timer = new CountDownTimer(60000,500) {
                     @Override
                     public void onTick(long millisUntilFinished) {
                         if(quizDTO != null || complete){
@@ -126,12 +171,14 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
                             quiz.putExtras(data);
 
                             startActivity(quiz);
+                            enableButtons();
 
                         }else{
                             Toast toast = Toast.makeText(getApplicationContext(),
                                     "Could not find quiz",
                                     Toast.LENGTH_LONG);
 
+                            enableButtons();
                             toast.show();
                             stopLoading();
                             complete = false;

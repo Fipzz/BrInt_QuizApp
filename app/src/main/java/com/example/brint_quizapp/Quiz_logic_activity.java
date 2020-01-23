@@ -1,12 +1,24 @@
 package com.example.brint_quizapp;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -42,7 +54,7 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
     ResultDTO resultDTO;
     AnswerDTO answerDTO;
 
-    int correctAnswers = 0, wrongAnswers = 0, currentQuestion = 0, isCorrect;
+    int correctAnswers = 0, wrongAnswers = 0, currentQuestion = 0, isCorrect, resetColor;
 
     String quizId;
 
@@ -51,9 +63,32 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
     QuizDTO quizDTO;
     int load = 0;
 
+    SharedPreferences sharedPref;
+
+    String currentTheme, sharedPreference;
+
+    ColorStateList oldcolor;
+
     @Override
     public void onBackPressed(){
-        startActivity(new Intent(Quiz_logic_activity.this, Homepage_activity.class));
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("End quiz");
+        builder.setMessage("You are about to end the quiz.\nYour result will not be saved.\nAre you sure you want to quit?");
+        builder.setCancelable(true);
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(Quiz_logic_activity.this, Homepage_activity.class));
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.show();
+
     }
 
     @Override
@@ -62,6 +97,22 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        sharedPreference = getString(R.string.preferenceFile);
+
+        sharedPref = getSharedPreferences(sharedPreference, MODE_PRIVATE);
+        currentTheme = sharedPref.getString("current_theme", "blue_theme");
+
+        if (currentTheme.equals("blue_theme")){
+
+            setTheme(R.style.Theme_App_Blue);
+
+
+        } else if (currentTheme.equals("purple_theme")) {
+
+            setTheme(R.style.Theme_App_Purple);
+
+        }
 
         setContentView(R.layout.quiz_activity_layout);
 
@@ -99,12 +150,19 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
 
         quizDTO = null;
 
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = getApplicationContext().getTheme();
+        theme.resolveAttribute(R.attr.buttonNormalColor, typedValue, true);
+        resetColor = typedValue.data;
+
+        oldcolor = a.getBackgroundTintList();
+
 
         getData getdat = new getData();
 
         getdat.execute();
 
-        wait = new CountDownTimer(10000, 500) {
+        wait = new CountDownTimer(60000, 500) {
             @Override
             public void onTick(long l) {
 
@@ -297,6 +355,8 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
                         resetButton(c);
                         resetButton(d);
 
+
+
                         currentQuestion++;
                         showNextQuestion(currentQuestion);
                     }
@@ -348,7 +408,8 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
     private void resetButton(Button a) {
 
         a.setEnabled(true);
-        a.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.buttonblue));
+        a.setBackgroundTintList(oldcolor);
+        ColorStateList oldcolor  = a.getBackgroundTintList();
         a.setBackground(getDrawable(R.drawable.log_in));
 
     }

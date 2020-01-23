@@ -5,26 +5,10 @@
     android:id="@+id/student_log"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="?attr/background"
-    >
+    android:background="?attr/background">
 
 
     <!-- Titel -->
-
-    <Button
-        android:id="@+id/results_button"
-        android:layout_width="140dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="65dp"
-        android:background="@drawable/log_in"
-        android:backgroundTint="?attr/buttonNormalColor"
-        android:text="My results"
-        android:textColor="?attr/buttonTextColor"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/theme_switch" />
 
     <TextView
         android:id="@+id/name"
@@ -33,8 +17,8 @@
         android:fontFamily="@font/quicksand_light"
         android:gravity="top"
         android:text="@string/name"
-        android:textSize="47sp"
         android:textColor="?attr/colorPrimary"
+        android:textSize="47sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,8 +48,8 @@
         android:layout_alignParentTop="true"
         android:gravity="center_horizontal|center_vertical"
         android:text="@string/username"
-        android:textSize="32sp"
         android:textColor="?attr/questionTextColor"
+        android:textSize="32sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

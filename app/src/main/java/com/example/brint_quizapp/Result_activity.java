@@ -20,7 +20,8 @@ public class Result_activity extends AppCompatActivity implements View.OnClickLi
     TextView right, wrong;
     Button back;
     SharedPreferences sharedPref;
-    String currentTheme, theme;
+
+    String currentTheme, sharedPreference;
 
     int rightAnswers, wrongAnswers;
 
@@ -30,13 +31,13 @@ public class Result_activity extends AppCompatActivity implements View.OnClickLi
         builder.setTitle("End quiz");
         builder.setMessage("You are about to end the quiz.\nYour result will not be saved.\nAre you sure you want to quit?");
         builder.setCancelable(true);
-        builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 startActivity(new Intent(Result_activity.this, Homepage_activity.class));
             }
         });
-        builder.setNegativeButton("Nej", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -52,13 +53,21 @@ public class Result_activity extends AppCompatActivity implements View.OnClickLi
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        /*
-        theme = sharedPref.getString("current_theme", "blue_theme");
-        if (currentTheme != theme){
-            recreate();
-        }
+        sharedPreference = getString(R.string.preferenceFile);
 
-         */
+        sharedPref = getSharedPreferences(sharedPreference, MODE_PRIVATE);
+        currentTheme = sharedPref.getString("current_theme", "blue_theme");
+
+        if (currentTheme.equals("blue_theme")){
+
+            setTheme(R.style.Theme_App_Blue);
+
+
+        } else if (currentTheme.equals("purple_theme")) {
+
+            setTheme(R.style.Theme_App_Purple);
+
+        }
 
         setContentView(R.layout.result_activity_layout);
 

@@ -2,6 +2,7 @@ package com.example.brint_quizapp;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -52,9 +53,29 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
     ArrayList<QuestionDTO> QuizQuestions;
     ArrayList<AnswerDTO> QuizAnswers;
 
+    SharedPreferences sharedPref;
+
+    String currentTheme, sharedPreference;
+
     @Override
     public void onBackPressed(){
-        this.finish();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("End quiz editing");
+        builder.setMessage("You are about to end the quiz editing.\nThe changes will not be saved.\nAre you sure you want to quit?");
+        builder.setCancelable(true);
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(Edit_Quiz.this, Homepage_activity.class));
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.show();
     }
 
     @Override
@@ -63,6 +84,22 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        sharedPreference = getString(R.string.preferenceFile);
+
+        sharedPref = getSharedPreferences(sharedPreference, MODE_PRIVATE);
+        currentTheme = sharedPref.getString("current_theme", "blue_theme");
+
+        if (currentTheme.equals("blue_theme")){
+
+            setTheme(R.style.Theme_App_Blue);
+
+
+        } else if (currentTheme.equals("purple_theme")) {
+
+            setTheme(R.style.Theme_App_Purple);
+
+        }
 
         setContentView(R.layout.edit_question_activity_layout);
 

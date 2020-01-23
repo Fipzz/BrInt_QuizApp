@@ -126,7 +126,7 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
 
             getUserClass.execute();
 
-            timer = new CountDownTimer(20000,500) {
+            timer = new CountDownTimer(60000,500) {
                 @Override
                 public void onTick(long millisUntilFinished) {
 
@@ -178,7 +178,6 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
 
                 }
             }.start();
-
 
 
         } else if(anon.getId() == v.getId()){

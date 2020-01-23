@@ -11,9 +11,9 @@
         android:layout_height="70dp"
         android:layout_centerInParent="true"
         android:background="@drawable/log_in"
-        android:backgroundTint="@color/buttonblue"
+        android:backgroundTint="?attr/questionTextColor"
         android:text="@string/quiz_navn"
-        android:textColor="#243665"
+        android:textColor="?attr/buttonTextColor"
         android:textSize="20sp" />
 
 

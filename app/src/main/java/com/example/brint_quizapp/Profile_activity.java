@@ -18,9 +18,8 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
 
     TextView title, username;
     Icon profilePicture;
-    Button resultsButton;
     Switch themeToggle;
-    String themeSwitch,sharedPreference, currentTheme, theme;
+    String themeSwitch,sharedPreference, currentTheme;
     SharedPreferences sharedPref;
 
     @Override
@@ -35,45 +34,37 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
 
         setContentView(R.layout.profile_activity_layout);
 
-        /*
-        sharedPref = getSharedPreferences(sharedPreference, MODE_PRIVATE);
 
+        sharedPreference = getString(R.string.preferenceFile);
+
+        sharedPref = getSharedPreferences(sharedPreference, MODE_PRIVATE);
+        currentTheme = sharedPref.getString("current_theme", "blue_theme");
+
+        if (currentTheme.equals("blue_theme")){
+
+            setTheme(R.style.Theme_App_Blue);
+
+
+        } else if (currentTheme.equals("purple_theme")) {
+
+            setTheme(R.style.Theme_App_Purple);
+
+        }
+
+        setContentView(R.layout.profile_activity_layout);
+        title = findViewById(R.id.name);
+
+        username = findViewById(R.id.username);
+
+
+        themeToggle = findViewById(R.id.theme_switch);
+
+        themeToggle.setOnClickListener(this);
 
         if (sharedPref.getBoolean(themeSwitch, false) == true){
             themeToggle.setChecked(true);
         }
 
-        currentTheme = sharedPref.getString("current_theme", "blue_theme");
-        if (currentTheme == "blue_theme"){
-            setTheme(R.style.Theme_App_Blue);
-
-        } else {
-            setTheme(R.style.Theme_App_Purple);
-        }
-
-        theme = sharedPref.getString("current_theme", "blue_theme");
-        if (currentTheme != theme){
-            recreate();
-        }
-
-        setContentView(R.layout.profile_activity_layout);
-
-
-
-        themeToggle = findViewById(R.id.theme_switch);
-        themeToggle.setOnClickListener(this);
-
-        sharedPreference = getString(R.string.preferenceFile);
-        themeSwitch = getString(R.string.themeSwitch);
-
-         */
-
-        title = findViewById(R.id.name);
-
-        username = findViewById(R.id.username);
-
-        resultsButton = findViewById(R.id.results_button);
-        resultsButton.setOnClickListener(this);
 
         UserDTO user = UserSingleton.getUserSingleton().getUser();
 
@@ -86,18 +77,40 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
 
-        /*
-        SharedPreferences.Editor edit = sharedPref.edit();
+        if (v.getId() == findViewById(R.id.theme_switch).getId() ) {
+            if (themeToggle.isChecked() == true) {
 
-        sharedPref
-                .edit()
-                .putString("current_theme","purple_theme")
-                .apply();
-        recreate();
-        */
-        if (resultsButton.getId() == v.getId()) {
+                SharedPreferences.Editor edit = sharedPref.edit();
+
+                sharedPref
+                        .edit()
+                        .putString("current_theme", "purple_theme")
+                        .apply();
+                recreate();
+
+                edit.putString(sharedPreference, "purple_theme");
+                edit.putBoolean(themeSwitch, true);
+                edit.apply();
+
+            } else if (themeToggle.isChecked() == false) {
+
+                SharedPreferences.Editor edit = sharedPref.edit();
+
+                sharedPref
+                        .edit()
+                        .putString("current_theme", "blue_theme")
+                        .apply();
+                recreate();
+
+                edit.putString(sharedPreference, "blue_theme");
+                edit.putBoolean(themeSwitch, false);
+                edit.apply();
+
+            }
 
         }
+
+
 
     }
 }

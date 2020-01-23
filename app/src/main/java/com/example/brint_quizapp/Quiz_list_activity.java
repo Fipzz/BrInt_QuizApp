@@ -1,6 +1,8 @@
 package com.example.brint_quizapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -37,9 +39,14 @@ import java.util.ArrayList;
 public class Quiz_list_activity extends AppCompatActivity implements View.OnClickListener{
 
     private ListView listView;
+
     private ImageView addQuiz;
 
     private ListAdapter listAdapter;
+
+    SharedPreferences sharedPref;
+
+    String currentTheme, sharedPreference;
 
     private ArrayList<String> quizNames;
     private ArrayList<QuizDTO> myQuizDTO;
@@ -48,6 +55,8 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
 
     Button makequiz;
     EditText quizname;
+
+    ColorStateList oldcolor;
 
     boolean making_quiz = false;
 
@@ -58,6 +67,22 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        sharedPreference = getString(R.string.preferenceFile);
+
+        sharedPref = getSharedPreferences(sharedPreference, MODE_PRIVATE);
+        currentTheme = sharedPref.getString("current_theme", "blue_theme");
+
+        if (currentTheme.equals("blue_theme")){
+
+            setTheme(R.style.Theme_App_Blue);
+
+
+        } else if (currentTheme.equals("purple_theme")) {
+
+            setTheme(R.style.Theme_App_Purple);
+
+        }
 
         setContentView(R.layout.quiz_list_activity_layout);
 
@@ -91,7 +116,8 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
 
                 TextView tv = (TextView) view.findViewById(android.R.id.text1);
 
-                tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.buttonblue));
+                ColorStateList oldcolor  = tv.getTextColors();
+                tv.setTextColor(oldcolor);
                 tv.setGravity(Gravity.CENTER);
                 tv.setPadding(0, 25, 0,25 );
                 tv.setTextSize(30);

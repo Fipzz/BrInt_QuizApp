@@ -12,8 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.App.Blue">
-        <activity android:name=".Statistics_Activity"></activity>
-        <activity android:name=".Db_test" />
+        <activity android:name=".Db_test"></activity>
         <activity android:name=".MainScreen_login_activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,6 +33,7 @@
         <activity android:name=".Create_user_activity" />
         <activity android:name=".Profile_activity" />
         <activity android:name=".Edit_quiz_home_activity" />
+        <activity android:name=".Statistics_Activity"></activity>
 
         <meta-data
             android:name="preloaded_fonts"

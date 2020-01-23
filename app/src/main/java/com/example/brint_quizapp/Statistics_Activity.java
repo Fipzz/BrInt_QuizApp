@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -40,10 +42,31 @@ public class Statistics_Activity extends AppCompatActivity {
     QuizDTO currentQuiz;
     ArrayList<String> listViewData;
     ListView statListView;
+    SharedPreferences sharedPref;
+    String currentTheme, sharedPreference;
+    ColorStateList oldcolor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        sharedPreference = getString(R.string.preferenceFile);
+
+        sharedPref = getSharedPreferences(sharedPreference, MODE_PRIVATE);
+        currentTheme = sharedPref.getString("current_theme", "blue_theme");
+
+        if (currentTheme.equals("blue_theme")){
+
+            setTheme(R.style.Theme_App_Blue);
+
+
+        } else if (currentTheme.equals("purple_theme")) {
+
+            setTheme(R.style.Theme_App_Purple);
+
+        }
+
+
         setContentView(R.layout.activity_statistics_);
 
         averageCorrectTextView = (TextView) findViewById(R.id.averageCorrect);
@@ -78,7 +101,7 @@ public class Statistics_Activity extends AppCompatActivity {
 
         averageCorrectPrQuestionArray = new String[2][];
 
-        timer = new CountDownTimer(20000,500) {
+        timer = new CountDownTimer(60000,500) {
             @Override
             public void onTick(long millisUntilFinished) {
 
@@ -146,7 +169,8 @@ public class Statistics_Activity extends AppCompatActivity {
 
                                 TextView tv = (TextView) view.findViewById(android.R.id.text1);
 
-                                tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.buttonblue));
+                                ColorStateList oldcolor  = tv.getTextColors();
+                                tv.setTextColor(oldcolor);
                                 tv.setGravity(Gravity.CENTER);
                                 tv.setPadding(0, 25, 0,25 );
                                 tv.setTextSize(20);
@@ -161,9 +185,12 @@ public class Statistics_Activity extends AppCompatActivity {
                         stopLoading();
                     }
                 }else{
-                    averageCorrectTextView.setText("0");
+                    Intent quiz = new Intent(Statistics_Activity.this, Statistics_Activity.class);
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Could not load data",
+                            Toast.LENGTH_LONG);
 
-                    usersTakenTextView.setText("0");
+                    toast.show();
                 }
             }
         }.start();
@@ -221,6 +248,8 @@ public class Statistics_Activity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             boolean done = true;
+            timer.cancel();
+            timer.onFinish();
         }
     }
 
