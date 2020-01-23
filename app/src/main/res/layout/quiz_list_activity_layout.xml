@@ -18,23 +18,22 @@
         android:textAppearance="@style/name"
         android:textColor="@color/buttonblue"
         android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/quiz_listView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <ListView
         android:id="@+id/quiz_listView"
-        android:layout_width="411dp"
-        android:layout_height="468dp"
-        android:layout_marginTop="44dp"
+        android:layout_width="409dp"
+        android:layout_height="466dp"
         android:cacheColorHint="#00632424"
-        app:layout_constraintBottom_toTopOf="@+id/addQuiz"
+        app:layout_constraintBottom_toBottomOf="@+id/addQuiz"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4">
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintVertical_bias="0.0">
 
     </ListView>
 
@@ -44,7 +43,7 @@
         android:layout_height="95dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@android:drawable/ic_menu_add" />
 

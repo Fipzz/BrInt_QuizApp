@@ -26,6 +26,7 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+        android.screenOrientation="portrait"
         <activity android:name=".Quiz_logic_activity" />
         <activity android:name=".Homepage_activity" />
         <activity android:name=".Result_activity" />

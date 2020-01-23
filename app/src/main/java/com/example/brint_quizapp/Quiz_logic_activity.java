@@ -142,6 +142,9 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
                     c.setVisibility(View.VISIBLE);
                     d.setVisibility(View.VISIBLE);
                     questionView.setVisibility(View.VISIBLE);
+                    quizName.setVisibility(View.VISIBLE);
+
+                    quizName.setText(quizDTO.getName());
 
                     showNextQuestion(currentQuestion);
 
@@ -207,6 +210,7 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
                 }
 
             } else if (v.getId() == b.getId()) {
+
                 resultDTO = new ResultDTO();
                 answerDTO = new AnswerDTO();
                 answerDTO = answers.get(1);
@@ -224,6 +228,7 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
                 }
 
             } else if (v.getId() == c.getId()) {
+
                 resultDTO = new ResultDTO();
                 answerDTO = new AnswerDTO();
                 answerDTO = answers.get(2);
