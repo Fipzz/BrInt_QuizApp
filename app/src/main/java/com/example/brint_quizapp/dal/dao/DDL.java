@@ -60,12 +60,13 @@ public class DDL{
 
             query = "CREATE TABLE IF NOT EXISTS " + "result" + " ("
                     + "question_id int(10),"
+                    + "quiz_id int(10),"
                     + "user_id int(10),"
                     + "answer_id int(10),"
-                    + "correct int(1),"
                     + "PRIMARY KEY (question_id, user_id),"
                     + "FOREIGN KEY (user_id) references user (id) ON DELETE CASCADE,"
-                    + "FOREIGN KEY (question_id) references question (id) ON DELETE CASCADE)";
+                    + "FOREIGN KEY (question_id) references question (id) ON DELETE CASCADE,"
+                    + "FOREIGN KEY (answer_id) references answer (id) ON DELETE CASCADE)";
             statement = c.prepareStatement(query);
             statement.execute();
 

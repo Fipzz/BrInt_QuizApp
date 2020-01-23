@@ -1,5 +1,7 @@
 package com.example.brint_quizapp.dal.dao;
 
+import com.example.brint_quizapp.UserSingleton;
+import com.example.brint_quizapp.dal.dto.AnswerDTO;
 import com.example.brint_quizapp.dal.dto.ResultDTO;
 
 import java.sql.Connection;
@@ -13,20 +15,13 @@ public class ResultDAO {
     public boolean createResult(ResultDTO result, Connection c){
         try {
 
-            String query = "INSERT INTO result (question_id, user_id, answer_id, correct) VALUES (?, ?, ?, ?)";
+            String query = "INSERT INTO result (question_id, user_id, answer_id, quiz_id) VALUES (?, ?, ?, ?)";
             PreparedStatement statement = c.prepareStatement(query);
-
-            int correct;
-            if (result.isCorrect()) {
-                correct = 1;
-            } else {
-                correct = 0;
-            }
 
             statement.setInt(1, result.getQuestion_id());
             statement.setInt(2, result.getUser_id());
-            statement.setInt(3, result.getAnswer_id());
-            statement.setInt(4, correct);
+            statement.setInt(3, result.getAnswer().getId());
+            statement.setInt(3, result.getQuiz_id());
 
             statement.execute();
             c.commit();
@@ -36,6 +31,41 @@ public class ResultDAO {
         }
         return true;
     }
+
+    public boolean createResults(ArrayList<ResultDTO> results, Connection c){
+
+        try{
+
+            for (ResultDTO result : results) {
+                String query = "DELETE FROM result WHERE question_id = ? AND user_id = ?";
+
+                PreparedStatement statement = c.prepareStatement(query);
+
+                statement.setInt(1, result.getQuestion_id());
+                statement.setInt(2, result.getUser_id());
+
+                statement.execute();
+
+                query = "INSERT INTO result (question_id, user_id, answer_id, quiz_id) VALUES (?, ?, ?, ?)";
+
+                statement = c.prepareStatement(query);
+
+                statement.setInt(1, result.getQuestion_id());
+                statement.setInt(2, result.getUser_id());
+                statement.setInt(3, result.getAnswer().getId());
+                statement.setInt(4, result.getQuiz_id());
+
+                statement.execute();
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+
 
     public ArrayList<ResultDTO> getResultsFromQuizId(int id, Connection c){
         ArrayList<ResultDTO> results = new ArrayList<>();
@@ -49,14 +79,30 @@ public class ResultDAO {
 
             while(result.next()){
                 ResultDTO r = new ResultDTO();
-                boolean correct;
-                if(result.getInt("correct") == 0){
-                    correct = false;
-                }else{
-                    correct = true;
+                AnswerDTO answerDTO = new AnswerDTO();
+                int answer_id = result.getInt("answer_id");
+
+                query = "SELECT * FROM answer WHERE id = " + answer_id + ";";
+                statement = c.prepareStatement(query);
+                ResultSet result1 = statement.executeQuery();
+                c.commit();
+
+                if(!result1.next()){
+                    return null;
                 }
-                r.setCorrect(correct);
-                r.setAnswer_id(result.getInt("answer_id"));
+
+                answerDTO.setQuestion_id(result1.getInt("question_id"));
+                answerDTO.setText(result1.getString("answer_text"));
+                answerDTO.setId(result1.getInt("id"));
+                int correct = result1.getInt("correct");
+
+                if(correct == 0) {
+                    answerDTO.setCorrect(false);
+                }else{
+                    answerDTO.setCorrect(true);
+                }
+
+                r.setAnswer(answerDTO);
                 r.setQuestion_id(result.getInt("question_id"));
                 r.setUser_id(result.getInt("user_id"));
 
@@ -81,14 +127,30 @@ public class ResultDAO {
 
             while(result.next()){
                 ResultDTO r = new ResultDTO();
-                boolean correct;
-                if(result.getInt("correct") == 0){
-                    correct = false;
-                }else{
-                    correct = true;
+                AnswerDTO answerDTO = new AnswerDTO();
+                int answer_id = result.getInt("answer_id");
+
+                query = "SELECT * FROM answer WHERE id = " + answer_id + ";";
+                statement = c.prepareStatement(query);
+                ResultSet result1 = statement.executeQuery();
+                c.commit();
+
+                if(!result1.next()){
+                    return null;
                 }
-                r.setCorrect(correct);
-                r.setAnswer_id(result.getInt("answer_id"));
+
+                answerDTO.setQuestion_id(result1.getInt("question_id"));
+                answerDTO.setText(result1.getString("answer_text"));
+                answerDTO.setId(result1.getInt("id"));
+                int correct = result1.getInt("correct");
+
+                if(correct == 0) {
+                    answerDTO.setCorrect(false);
+                }else{
+                    answerDTO.setCorrect(true);
+                }
+
+                r.setAnswer(answerDTO);
                 r.setQuestion_id(result.getInt("question_id"));
                 r.setUser_id(result.getInt("user_id"));
 

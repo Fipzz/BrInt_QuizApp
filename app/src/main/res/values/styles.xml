@@ -18,7 +18,7 @@
         <item name="primaryTextColor">@color/bluePrimary_text</item>
         <item name="buttonTextColor">@color/blueButtonText</item>
         <item name="buttonNormalColor">@color/blueButtonNormal</item>
-        <item name="questionTextColor">@color/blueQuestionColor</item>
+        <item name="questionTextColor">@color/buttonblue</item>
 
 
 

@@ -10,21 +10,22 @@
 
     <!-- Quizz code tekst -->
     <TextView
-        android:id="@+id/text_over_unik"
-        android:layout_width="231dp"
-        android:layout_height="48dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:fontFamily="@font/open_sans_light"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="Quiz kode:"
-        android:textSize="24sp"
-        android:textColor="?attr/colorPrimary"
+        android:id="@+id/loading_view"
+        android:layout_width="433dp"
+        android:layout_height="152dp"
+        android:layout_marginStart="108dp"
+        android:fontFamily="monospace"
+        android:gravity="center"
+
+        android:text="Loading"
+        android:textColor="@color/buttonblue"
+        android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.851"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.273" />
+        app:layout_constraintVertical_bias="0.3" />
 
     <!-- Titel -->
     <TextView
@@ -46,51 +47,51 @@
     <!-- Quizz code tekst input -->
     <EditText
         android:id="@+id/unikkode"
-        android:layout_width="136dp"
-        android:layout_height="46dp"
+        android:layout_width="200dp"
+        android:layout_height="75dp"
+        android:layout_marginBottom="20dp"
         android:ems="10"
         android:gravity="center"
-        android:hint="unik kode"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:hint="Insert code"
+        android:inputType="number"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/start_quiz_knap"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_over_unik"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Start quiz button -->
+
+
+    <!-- Profile button -->
     <Button
         android:id="@+id/start_quiz_knap"
         android:layout_width="140dp"
         android:layout_height="55dp"
+        android:layout_marginBottom="50dp"
         android:background="@drawable/log_in"
         android:backgroundTint="?attr/buttonNormalColor"
         android:text="Start quiz"
         android:textColor="?attr/buttonTextColor"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/profil_knap"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.45" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
-
-    <!-- Profile button -->
     <Button
         android:id="@+id/profil_knap"
         android:layout_width="140dp"
         android:layout_height="55dp"
+        android:layout_marginBottom="50dp"
         android:background="@drawable/log_in"
         android:backgroundTint="?attr/buttonNormalColor"
-        android:text="Profil"
+        android:text="Profile"
         android:textColor="?attr/buttonTextColor"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/rediger_knap"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/start_quiz_knap"
-        app:layout_constraintVertical_bias="0.51" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <!-- Edit quiz button -->
@@ -98,10 +99,10 @@
         android:id="@+id/rediger_knap"
         android:layout_width="140dp"
         android:layout_height="55dp"
-        android:layout_marginBottom="164dp"
+        android:layout_marginBottom="100dp"
         android:background="@drawable/log_in"
         android:backgroundTint="?attr/buttonNormalColor"
-        android:text="Rediger quiz"
+        android:text="My quizzes"
         android:textColor="?attr/buttonTextColor"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"

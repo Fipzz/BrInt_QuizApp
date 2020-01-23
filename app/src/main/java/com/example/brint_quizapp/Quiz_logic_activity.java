@@ -1,10 +1,7 @@
 package com.example.brint_quizapp;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,34 +13,40 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Looper;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.brint_quizapp.dal.dao.DDL;
 import com.example.brint_quizapp.dal.dao.QuizDAO;
-import com.example.brint_quizapp.dal.dao.UserDAO;
+import com.example.brint_quizapp.dal.dao.ResultDAO;
 import com.example.brint_quizapp.dal.dto.AnswerDTO;
 import com.example.brint_quizapp.dal.dto.QuestionDTO;
 import com.example.brint_quizapp.dal.dto.QuizDTO;
+import com.example.brint_quizapp.dal.dto.ResultDTO;
 
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 
 public class Quiz_logic_activity extends AppCompatActivity implements View.OnClickListener {
 
     Button a, b, c, d;
-    TextView questionView, loading, quiznavn;
+    TextView questionView, loading, quizName;
 
     Intent resultIntent;
 
     ArrayList<AnswerDTO> answers;
     ArrayList<QuestionDTO> quizQuestions;
+    ArrayList<ResultDTO> results;
+
+    DBconnector dBconnector;
+    Connection connection;
+
+    boolean done = false;
+
+    ResultDTO resultDTO;
+    AnswerDTO answerDTO;
 
     int correctAnswers = 0, wrongAnswers = 0, currentQuestion = 0, isCorrect;
 
@@ -57,6 +60,11 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
     SharedPreferences sharedPref;
 
     String currentTheme, sharedPreference;
+
+    @Override
+    public void onBackPressed(){
+        startActivity(new Intent(Quiz_logic_activity.this, Homepage_activity.class));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,10 +103,13 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
         d = (Button) findViewById(R.id.answer4);
         d.setOnClickListener(this);
 
+        results = new ArrayList<>();
+        answerDTO = new AnswerDTO();
+
         questionView = (TextView) findViewById(R.id.question);
         loading = (TextView) findViewById(R.id.textView2);
         loading.setOnClickListener(this);
-        quiznavn = (TextView) findViewById(R.id.quiz_navn);
+        quizName = (TextView) findViewById(R.id.quiz_navn);
 
 
         a.setVisibility(View.INVISIBLE);
@@ -106,7 +117,7 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
         c.setVisibility(View.INVISIBLE);
         d.setVisibility(View.INVISIBLE);
         questionView.setVisibility(View.INVISIBLE);
-        quiznavn.setVisibility(View.INVISIBLE);
+        quizName.setVisibility(View.INVISIBLE);
 
         quizId = getIntent().getExtras().getString("quizcode");
 
@@ -115,7 +126,7 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
 
         getData getdat = new getData();
 
-        getdat.execute("");
+        getdat.execute();
 
         wait = new CountDownTimer(10000, 500) {
             @Override
@@ -135,11 +146,6 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
                     load = 0;
                 }
 
-                if (quizDTO != null) {
-                    this.cancel();
-                    this.onFinish();
-                }
-
             }
 
             @Override
@@ -148,6 +154,7 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
                 if(quizDTO == null){
 
                     loading.setText("No quiz found\n click here to go back");
+                    loading.setTextSize(25);
 
                 } else {
 
@@ -205,23 +212,50 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
                 wrong(d);
             }
 
-            if (R.id.answer1 == v.getId()) {
+            if (v.getId() == a.getId()) {
+
+                resultDTO = new ResultDTO();
+                answerDTO = new AnswerDTO();
+                answerDTO = answers.get(0);
+                resultDTO.setQuiz_id(quizDTO.getId());
+                resultDTO.setUser_id(UserSingleton.getUserSingleton().getUser().getId());
+                resultDTO.setQuestion_id(answers.get(0).getQuestion_id());
+                resultDTO.setAnswer(answerDTO);
+                results.add(resultDTO);
 
                 if (answers.get(0).getCorrect()) {
+
                     correctAnswers++;
                 } else {
                     wrongAnswers++;
                 }
 
             } else if (v.getId() == b.getId()) {
+                resultDTO = new ResultDTO();
+                answerDTO = new AnswerDTO();
+                answerDTO = answers.get(1);
+                resultDTO.setQuiz_id(quizDTO.getId());
+                resultDTO.setUser_id(UserSingleton.getUserSingleton().getUser().getId());
+                resultDTO.setQuestion_id(answers.get(1).getQuestion_id());
+                resultDTO.setAnswer(answerDTO);
+                results.add(resultDTO);
 
                 if (answers.get(1).getCorrect()) {
+
                     correctAnswers++;
                 } else {
                     wrongAnswers++;
                 }
 
             } else if (v.getId() == c.getId()) {
+                resultDTO = new ResultDTO();
+                answerDTO = new AnswerDTO();
+                answerDTO = answers.get(2);
+                resultDTO.setQuiz_id(quizDTO.getId());
+                resultDTO.setUser_id(UserSingleton.getUserSingleton().getUser().getId());
+                resultDTO.setQuestion_id(answers.get(2).getQuestion_id());
+                resultDTO.setAnswer(answerDTO);
+                results.add(resultDTO);
 
                 if (answers.get(2).getCorrect()) {
                     correctAnswers++;
@@ -231,6 +265,14 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
 
             } else if (v.getId() == d.getId()) {
 
+                resultDTO = new ResultDTO();
+                answerDTO = new AnswerDTO();
+                answerDTO = answers.get(3);
+                resultDTO.setQuiz_id(quizDTO.getId());
+                resultDTO.setUser_id(UserSingleton.getUserSingleton().getUser().getId());
+                resultDTO.setQuestion_id(answers.get(3).getQuestion_id());
+                resultDTO.setAnswer(answerDTO);
+                results.add(resultDTO);
 
                 if (answers.get(3).getCorrect()) {
                     correctAnswers++;
@@ -239,6 +281,8 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
                 }
 
             }
+
+
 
             CountDownTimer showAnswers = new CountDownTimer(3000, 3000) {
 
@@ -255,8 +299,14 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
                         Bundle data = new Bundle();
                         data.putInt("wrong", wrongAnswers);
                         data.putInt("right", correctAnswers);
-                        resultIntent.putExtras(data);
 
+                        dBconnector = new DBconnector();
+                        connection = dBconnector.CONN();
+
+                        ResultDAO resultDAO = new ResultDAO();
+                        resultDAO.createResults(results, connection);
+
+                        resultIntent.putExtras(data);
                         startActivity(resultIntent);
 
                     } else {
@@ -295,7 +345,7 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
 
     private void initializeQuiz() {
 
-        quizQuestions = quizDTO.getQuestions();
+            quizQuestions = quizDTO.getQuestions();
 
     }
 

@@ -32,16 +32,16 @@ public class UserDAO {
         return true;
     }
 
-    public UserDTO getUserByUsername(String username, Connection c){
+    public UserDTO getUserByEmail(String email, Connection c){
 
         UserDTO user = new UserDTO();
 
         try {
 
             ArrayList<QuizDTO> quizzes = new ArrayList<QuizDTO>();
-            String query = "SELECT * FROM user WHERE name = ?;";
+            String query = "SELECT * FROM user WHERE email = ?;";
             PreparedStatement statement = c.prepareStatement(query);
-            statement.setString(1, username);
+            statement.setString(1, email);
             ResultSet result = statement.executeQuery();
 
             c.commit();
@@ -53,8 +53,8 @@ public class UserDAO {
             int id = result.getInt("id");
 
             user.setId(id);
-            user.setName(username);
-            user.setEmail(result.getString("email"));
+            user.setName(result.getString("name"));
+            user.setEmail(email);
             user.setPassword(result.getString("password"));
             QuizDAO quizDAO = new QuizDAO();
             user.setQuizzes(quizDAO.getQuizzesByUserId(id, c));

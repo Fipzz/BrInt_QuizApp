@@ -2,11 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.brint_quizapp">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -21,23 +20,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Edit_Quiz">
+        <activity android:name=".Edit_Quiz">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".Quiz_logic_activity"></activity>
-        <activity android:name=".Homepage_activity"></activity>
-        <activity android:name=".Result_activity"></activity>
-        <activity android:name=".Quiz_list_activity"></activity>
-        <activity android:name=".Profile_activity"></activity>
+        <activity android:name=".Quiz_logic_activity" />
+        <activity android:name=".Homepage_activity" />
+        <activity android:name=".Result_activity" />
+        <activity android:name=".Quiz_list_activity" />
+        <activity android:name=".Create_user_activity" />
+        <activity android:name=".Profile_activity" />
+        <activity android:name=".Edit_quiz_home_activity" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
-
     </application>
+
 </manifest>

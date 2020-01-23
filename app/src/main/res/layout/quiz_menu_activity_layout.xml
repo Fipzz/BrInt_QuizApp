@@ -35,8 +35,8 @@
         android:layout_alignParentTop="true"
         android:fontFamily="@font/quicksand_light"
         android:gravity="center_horizontal|center_vertical"
-        android:text="Quiz kode: "
-        android:textAppearance="@style/name"
+        android:text="Quiz code:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="35sp"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -50,9 +50,9 @@
         android:id="@+id/codeNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/quiz_code"
-        android:textSize="20sp"
         android:importantForAutofill="no"
+        android:text="@string/quiz_code"
+        android:textSize="35sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,12 +60,12 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/changeName"
+        android:id="@+id/EditQuiz_home"
         android:layout_width="330dp"
         android:layout_height="70dp"
         android:background="@drawable/log_in"
+        android:text="Edit Quiz"
         android:backgroundTint="?attr/buttonNormalColor"
-        android:text="Skift Navn"
         android:textColor="?attr/buttonTextColor"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -75,18 +75,18 @@
         app:layout_constraintVertical_bias="0.25" />
 
     <Button
-        android:id="@+id/editQuestion"
+        android:id="@+id/Statistics_home"
         android:layout_width="330dp"
         android:layout_height="70dp"
         android:background="@drawable/log_in"
+        android:text="Statistics"
         android:backgroundTint="?attr/buttonNormalColor"
-        android:text="Rediger Spørgsmål"
         android:textColor="?attr/buttonTextColor"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/changeName"
+        app:layout_constraintTop_toBottomOf="@+id/EditQuiz_home"
         app:layout_constraintVertical_bias="0.13" />
 
     <Button

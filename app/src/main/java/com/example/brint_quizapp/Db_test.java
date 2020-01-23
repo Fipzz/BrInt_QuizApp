@@ -61,9 +61,6 @@ public class Db_test extends AppCompatActivity implements View.OnClickListener {
 
     private static class DeletetablesClass extends AsyncTask<String, Void, Void> {
         Connection connection;
-        String url = "remotemysql.com";
-        String un = "PG17gBGeZc";
-        String password = "Yqeou76dpr";
 
         @Override
         protected Void doInBackground(String... strings) {
@@ -73,7 +70,7 @@ public class Db_test extends AppCompatActivity implements View.OnClickListener {
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
-                connection = DriverManager.getConnection(url, un, password);
+                connection = new DBconnector().CONN();
                 connection.setAutoCommit(false);
                 DDL ddl = new DDL();
                 ddl.deleteTables(connection);

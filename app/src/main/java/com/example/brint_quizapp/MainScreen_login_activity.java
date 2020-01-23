@@ -4,39 +4,50 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.brint_quizapp.dal.dao.DDL;
 import com.example.brint_quizapp.dal.dao.UserDAO;
 import com.example.brint_quizapp.dal.dto.UserDTO;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import io.sentry.Sentry;
+import io.sentry.android.AndroidSentryClientFactory;
+
 import static com.example.brint_quizapp.Db_test.connctionClass;
 
 public class MainScreen_login_activity extends AppCompatActivity implements View.OnClickListener {
 
-    //TODO login and password should be(NO /n & limit input)
-
     Button login, anon, dbtest;
-    EditText username, password;
+    EditText email, password;
     CountDownTimer timer;
     UserSingleton userSingleton;
+    TextView opretBruger, loading, name;
+    UserDTO userDTO;
+    View r1, r2;
 
-    String usernameString;
+    String emailString;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
         setContentView(R.layout.login_activity_layout);
+
+        // sentry.io her sendes chrashes fra rigtige enheder (nedbrudsrapportering)
+        boolean EMULATOR = Build.PRODUCT.contains("sdk") || Build.MODEL.contains("Emulator");
+        if (!EMULATOR) {
+            Sentry.init("https://2c62be25f63c4776a1633e58f8d84f97@sentry.io/1890236", new AndroidSentryClientFactory(this));
+        }
 
         login = (Button) findViewById(R.id.log_in);
         login.setOnClickListener(this);
@@ -44,16 +55,55 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
         anon = (Button) findViewById(R.id.anon);
         anon.setOnClickListener(this);
 
-        dbtest = (Button) findViewById(R.id.dbtest);
-        dbtest.setOnClickListener(this);
-
-        username = findViewById(R.id.brugernavn);
+        email = findViewById(R.id.brugernavn);
 
         password = findViewById(R.id.password);
 
         userSingleton = new UserSingleton();
 
+        opretBruger = (TextView) findViewById(R.id.opret_bruger);
 
+        opretBruger.setOnClickListener(this);
+
+        r1 = (View) findViewById(R.id.rectangle);
+        r2 = (View) findViewById(R.id.rectangle_2);
+
+        name = (TextView) findViewById(R.id.name);
+
+        loading = (TextView) findViewById(R.id.loading);
+        loading.setVisibility(View.INVISIBLE);
+
+    }
+
+    private void startLoading(){
+        login.setVisibility(View.INVISIBLE);
+        r1.setVisibility(View.INVISIBLE);
+        r2.setVisibility(View.INVISIBLE);
+        name.setVisibility(View.INVISIBLE);
+        opretBruger.setVisibility(View.INVISIBLE);
+        password.setVisibility(View.INVISIBLE);
+        email.setVisibility(View.INVISIBLE);
+        anon.setVisibility(View.INVISIBLE);
+
+        loading.setVisibility(View.VISIBLE);
+    }
+
+    private void stopLoading(){
+        login.setVisibility(View.VISIBLE);
+        r1.setVisibility(View.VISIBLE);
+        r2.setVisibility(View.VISIBLE);
+        name.setVisibility(View.VISIBLE);
+        opretBruger.setVisibility(View.VISIBLE);
+        password.setVisibility(View.VISIBLE);
+        email.setVisibility(View.VISIBLE);
+        anon.setVisibility(View.VISIBLE);
+
+        loading.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onBackPressed(){
+        System.exit(0);
     }
 
     @Override
@@ -61,79 +111,89 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
 
         if(login.getId() == v.getId()){
 
-            usernameString = username.getText().toString();
+            startLoading();
+
+            if(email.getText().toString().equals("") && password.getText().toString().equals("")){
+                email.setText("Rasmus");
+                password.setText("123");
+            }
+
+            emailString = email.getText().toString();
 
 
-            if(username.getText().toString().equals("")){
-                userSingleton.setUser(null);
-                startActivity(new Intent(MainScreen_login_activity.this, Homepage_activity.class));
-            }else {
 
-                GetUserClass getUserClass = new GetUserClass();
+            GetUserClass getUserClass = new GetUserClass();
 
-                getUserClass.execute();
+            getUserClass.execute();
 
-                timer = new CountDownTimer(20000,500) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
+            timer = new CountDownTimer(20000,500) {
+                @Override
+                public void onTick(long millisUntilFinished) {
 
-                        if(userSingleton.getUser() != null){
+                    if(userSingleton.getUser() != null){
 
-                            if(userSingleton.getUser().getPassword().equals(password.getText().toString())){
-                                startActivity(new Intent(MainScreen_login_activity.this, Homepage_activity.class));
+                        if(userSingleton.getUser().getPassword().equals(password.getText().toString())){
 
-                            }else{
-                                Toast toast = Toast.makeText(getApplicationContext(),
-                                        "Wrong password. Try again.",
-                                        Toast.LENGTH_LONG);
-
-                                toast.show();
-                            }
-                            timer.cancel();
-                        }
-                    }
-
-                    @Override
-                    public void onFinish() {
-
-                        if(userSingleton.getUser() != null){
-                            if(userSingleton.getUser().getPassword().equals(password.getText().toString())){
-                                startActivity(new Intent(MainScreen_login_activity.this, Homepage_activity.class));
-
-                            }else{
-                                Toast toast = Toast.makeText(getApplicationContext(),
-                                        "Wrong password. Try again.",
-                                        Toast.LENGTH_LONG);
-
-                                toast.show();
-                            }
+                            startActivity(new Intent(MainScreen_login_activity.this, Homepage_activity.class));
 
                         }else{
+                            stopLoading();
                             Toast toast = Toast.makeText(getApplicationContext(),
-                                    "Could not find user.",
+                                    "Wrong password. Try again.",
+                                    Toast.LENGTH_LONG);
+
+                            toast.show();
+                        }
+                        timer.cancel();
+                    }
+                }
+
+                @Override
+                public void onFinish() {
+
+                    if(userSingleton.getUser() != null){
+
+                        if(userSingleton.getUser().getPassword().equals(password.getText().toString())){
+
+                            startActivity(new Intent(MainScreen_login_activity.this, Homepage_activity.class));
+
+
+                        }else{
+                            stopLoading();
+                            Toast toast = Toast.makeText(getApplicationContext(),
+                                    "Wrong password. Try again.",
                                     Toast.LENGTH_LONG);
 
                             toast.show();
                         }
 
-                    }
-                }.start();
+                    }else{
+                        stopLoading();
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                "Could not find user.",
+                                Toast.LENGTH_LONG);
 
-            }
+                        toast.show();
+                    }
+
+                }
+            }.start();
+
+
 
         } else if(anon.getId() == v.getId()){
 
             startActivity(new Intent(MainScreen_login_activity.this, Homepage_activity.class));
 
-        } else if(v.getId() == dbtest.getId()){
-            startActivity(new Intent(MainScreen_login_activity.this, Db_test.class));
+        }else if(opretBruger.getId() == v.getId()){
+            startActivity(new Intent(MainScreen_login_activity.this, Create_user_activity.class));
         }
 
     }
 
     private class GetUserClass extends AsyncTask<String, Void, Void> {
         Connection connection;
-        DBconnector connctionClass = new DBconnector();
+        DBconnector connectionClass = new DBconnector();
 
         @Override
         protected Void doInBackground(String... strings) {
@@ -146,15 +206,16 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
                     e.printStackTrace();
                 }
 
-                connection = connctionClass.CONN();
+                connection = connectionClass.CONN();
                 connection.setAutoCommit(false);
 
                 UserDAO userDAO = new UserDAO();
-                UserDTO userDTO = userDAO.getUserByUsername(usernameString, connection);
-
+                UserDTO userDTO = userDAO.getUserByEmail(emailString, connection);
 
                 userSingleton.setUser(userDTO);
+                UserSingleton.getUserSingleton().setUser(userDTO);
                 connection.close();
+
 
             } catch (Exception e) {
                 e.printStackTrace();
