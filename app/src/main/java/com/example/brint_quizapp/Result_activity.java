@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class Result_activity extends AppCompatActivity implements View.OnClickListener {
 
-    TextView right, wrong;
+    TextView right, wrong, quizname;
     Button back;
     SharedPreferences sharedPref;
 
@@ -79,6 +79,10 @@ public class Result_activity extends AppCompatActivity implements View.OnClickLi
 
         right.setText(Integer.toString(getIntent().getExtras().getInt("right")));
         wrong.setText(Integer.toString(getIntent().getExtras().getInt("wrong")));
+
+        quizname = findViewById(R.id.quiz_navn);
+        quizname.setText(getIntent().getExtras().getString("quizname"));
+
     }
 
     @Override

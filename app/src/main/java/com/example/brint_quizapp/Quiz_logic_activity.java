@@ -345,6 +345,7 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
                         Bundle data = new Bundle();
                         data.putInt("wrong", wrongAnswers);
                         data.putInt("right", correctAnswers);
+                        data.putString("quizname", quizDTO.getName());
 
                         dBconnector = new DBconnector();
                         connection = dBconnector.CONN();
