@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +41,8 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
     private ListView listView;
 
     private ImageView addQuiz;
+
+    private ListAdapter listAdapter;
 
     SharedPreferences sharedPref;
 
@@ -99,13 +102,15 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
 
         initMyQuiz();
 
-        ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(
+        final ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(
                 getBaseContext(),
                 android.R.layout.simple_list_item_1,
                 quizNames
         ){
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
+
+
 
                 View view = super.getView(position,convertView,parent);
 
@@ -118,6 +123,7 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
                 tv.setTextSize(30);
 
                 return view;
+
             }
 
         };
@@ -177,10 +183,9 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
 
     }
 
-    private void initMyQuiz(){
+    public void initMyQuiz(){
 
-        UserDTO user = UserSingleton.getUserSingleton().getUser();
-        ArrayList<QuizDTO> quizz = user.getQuizzes();
+        ArrayList<QuizDTO> quizz = UserSingleton.getUserSingleton().getUser().getQuizzes();
         for (QuizDTO quiz: quizz) {
             quizNames.add(quiz.getName());
         }
@@ -221,6 +226,8 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
                 updatedUser = updateUser.getUserById(UserSingleton.getUserSingleton().getUser().getId(), connection);
 
                 UserSingleton.getUserSingleton().setUser(updatedUser);
+
+
 
                 connection.close();
 

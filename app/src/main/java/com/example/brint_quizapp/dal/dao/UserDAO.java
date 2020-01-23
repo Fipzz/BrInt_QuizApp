@@ -1,6 +1,5 @@
 package com.example.brint_quizapp.dal.dao;
 
-import com.example.brint_quizapp.dal.DALException;
 import com.example.brint_quizapp.dal.dto.QuizDTO;
 import com.example.brint_quizapp.dal.dto.UserDTO;
 
@@ -70,7 +69,7 @@ public class UserDAO {
 
     }
 
-    public UserDTO getUserById(int id, Connection c) throws DALException {
+    public UserDTO getUserById(int id, Connection c) throws SQLException {
         try {
             UserDTO user = new UserDTO();
             ArrayList<QuizDTO> quizzes= new ArrayList<QuizDTO>();
@@ -96,8 +95,10 @@ public class UserDAO {
             return user;
 
         } catch (SQLException e){
-            throw new DALException(e.getMessage());
+            e.printStackTrace();
+            return null;
         }
+
     }
 
 }

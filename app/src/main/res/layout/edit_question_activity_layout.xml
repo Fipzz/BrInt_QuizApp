@@ -8,7 +8,7 @@
     android:background="?attr/background">
 
     <!-- Quiz navn -->
-    <TextView
+    <EditText
         android:id="@+id/quiz_navn"
         android:layout_width="267dp"
         android:layout_height="0dp"
