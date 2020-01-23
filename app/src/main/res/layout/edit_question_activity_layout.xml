@@ -160,8 +160,8 @@
 
     <ImageButton
         android:id="@+id/edit2"
-        android:layout_width="69dp"
-        android:layout_height="70dp"
+        android:layout_width="70sp"
+        android:layout_height="70sp"
         android:backgroundTint="?attr/background"
         android:scaleType="centerCrop"
         android:src="@drawable/edit"
@@ -171,8 +171,8 @@
 
     <ImageButton
         android:id="@+id/edit3"
-        android:layout_width="69dp"
-        android:layout_height="70dp"
+        android:layout_width="70sp"
+        android:layout_height="70sp"
         android:backgroundTint="?attr/background"
         android:scaleType="centerCrop"
         android:src="@drawable/edit"
@@ -182,7 +182,7 @@
 
     <ImageButton
         android:id="@+id/edit4"
-        android:layout_width="69dp"
+        android:layout_width="70sp"
         android:layout_height="70dp"
         android:backgroundTint="?attr/background"
         android:scaleType="centerCrop"
@@ -193,7 +193,7 @@
 
     <ImageButton
         android:id="@+id/edit5"
-        android:layout_width="69dp"
+        android:layout_width="70sp"
         android:layout_height="70dp"
         android:backgroundTint="?attr/background"
         android:scaleType="centerCrop"
