@@ -44,7 +44,7 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
 
     Toast toast1, toast2, toast3, toast4;
 
-    ImageButton edit1, edit2, edit3, edit4, save, delete;
+    ImageButton edit1, edit2, edit3, edit4, edit5, save, delete;
 
     int currentQuestion = 0;
 
@@ -145,10 +145,14 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
         edit4 = (ImageButton) findViewById(R.id.edit4);
         edit4.setOnClickListener(this);
 
+        edit5 = (ImageButton) findViewById(R.id.edit5);
+        edit5.setOnClickListener(this);
+
         edit1.setEnabled(false);
         edit2.setEnabled(false);
         edit3.setEnabled(false);
         edit4.setEnabled(false);
+        edit5.setEnabled(false);
 
         save = (ImageButton) findViewById(R.id.save);
         save.setOnClickListener(this);
@@ -158,6 +162,7 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
 
         ChosenQuiz = UserSingleton.getUserSingleton().getUser().getQuizzes().get(getIntent().getExtras().getInt("quizId"));
         QuizQuestions = ChosenQuiz.getQuestions();
+        quizName.setText(ChosenQuiz.getName());
 
         if(QuizQuestions.size() == 0){
 
