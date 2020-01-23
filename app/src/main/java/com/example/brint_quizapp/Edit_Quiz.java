@@ -58,6 +58,11 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
     String currentTheme, sharedPreference;
 
     @Override
+    public void onBackPressed(){
+        this.finish();
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);

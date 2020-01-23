@@ -91,12 +91,6 @@ public class Edit_quiz_home_activity extends AppCompatActivity implements View.O
 
         } else if (stats.getId() == v.getId()) {
 
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "Comming soon TM",
-                    Toast.LENGTH_SHORT);
-
-            toast.show();
-
             Intent quiz = new Intent(Edit_quiz_home_activity.this, Statistics_Activity.class);
 
             Bundle data = new Bundle();

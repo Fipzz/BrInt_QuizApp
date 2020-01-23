@@ -22,9 +22,39 @@ import java.sql.Connection;
 
 public class Create_user_activity extends AppCompatActivity implements View.OnClickListener {
 
-    TextView name, email, password, password2;
+    TextView name, email, password, password2, tv3, loading;
     Button create;
     CountDownTimer timer;
+    View r1, r2, r3, r4;
+
+    private void startLoading(){
+        create.setVisibility(View.INVISIBLE);
+        name.setVisibility(View.INVISIBLE);
+        email.setVisibility(View.INVISIBLE);
+        password.setVisibility(View.INVISIBLE);
+        password2.setVisibility(View.INVISIBLE);
+        r1.setVisibility(View.INVISIBLE);
+        r2.setVisibility(View.INVISIBLE);
+        r3.setVisibility(View.INVISIBLE);
+        r4.setVisibility(View.INVISIBLE);
+        tv3.setVisibility(View.INVISIBLE);
+        loading.setVisibility(View.VISIBLE);
+
+    }
+
+    private void stopLoading(){
+        create.setVisibility(View.VISIBLE);
+        name.setVisibility(View.VISIBLE);
+        email.setVisibility(View.VISIBLE);
+        password.setVisibility(View.VISIBLE);
+        password2.setVisibility(View.VISIBLE);
+        r1.setVisibility(View.VISIBLE);
+        r2.setVisibility(View.VISIBLE);
+        r3.setVisibility(View.VISIBLE);
+        r4.setVisibility(View.VISIBLE);
+        tv3.setVisibility(View.VISIBLE);
+        loading.setVisibility(View.INVISIBLE);
+    }
 
     @Override
     public void onBackPressed(){
@@ -40,6 +70,8 @@ public class Create_user_activity extends AppCompatActivity implements View.OnCl
 
         setContentView(R.layout.create_user);
 
+        loading = (TextView) findViewById(R.id.loading2);
+        loading.setVisibility(View.INVISIBLE);
         create = (Button) findViewById(R.id.user_done);
         name = (TextView) findViewById(R.id.user_name_text);
         email = (TextView) findViewById(R.id.user_email);
@@ -47,6 +79,13 @@ public class Create_user_activity extends AppCompatActivity implements View.OnCl
         password2 = (TextView) findViewById(R.id.user_repeat_password);
 
         create.setOnClickListener(this);
+
+        r1 = (View) findViewById(R.id.rectangle2);
+        r2 = (View) findViewById(R.id.rectangle3);
+        r3 = (View) findViewById(R.id.rectangle4);
+        r4 = (View) findViewById(R.id.rectangle5);
+
+        tv3 = (TextView) findViewById(R.id.textView3);
 
     }
 
@@ -81,8 +120,9 @@ public class Create_user_activity extends AppCompatActivity implements View.OnCl
                     Toast.LENGTH_LONG);
 
             toast.show();
-        }else if(nameString.equals("") && emailString.equals("") && passwordString.equals("") && passwordString.equals(password2String)){
+        }else if(!nameString.equals("") && !emailString.equals("") && !passwordString.equals("") && passwordString.equals(password2String)){
 
+            startLoading();
             UserDTO userDTO = new UserDTO();
             userDTO.setName(nameString);
             userDTO.setPassword(passwordString);
@@ -92,7 +132,7 @@ public class Create_user_activity extends AppCompatActivity implements View.OnCl
             createUserClass.setUser(userDTO);
             createUserClass.execute();
 
-            timer = new CountDownTimer(20000, 500) {
+            timer = new CountDownTimer(60000, 500) {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     if(createUserClass.isDone()){
@@ -112,6 +152,7 @@ public class Create_user_activity extends AppCompatActivity implements View.OnCl
 
                         startActivity(new Intent(Create_user_activity.this, MainScreen_login_activity.class));
                     }else{
+                        stopLoading();
                         Toast toast = Toast.makeText(getApplicationContext(),
                                 "User could not be created.\nTry another Email.",
                                 Toast.LENGTH_LONG);
