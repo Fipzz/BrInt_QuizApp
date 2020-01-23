@@ -18,20 +18,16 @@
         android:textAppearance="@style/name"
         android:textColor="?attr/questionTextColor"
         android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/quiz_listView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <ListView
         android:id="@+id/quiz_listView"
-        android:layout_width="411dp"
-        android:layout_height="468dp"
-        android:layout_marginTop="44dp"
+        android:layout_width="394dp"
+        android:layout_height="429dp"
         android:cacheColorHint="#00632424"
-        app:layout_constraintBottom_toTopOf="@+id/addQuiz"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4">
@@ -42,10 +38,8 @@
         android:id="@+id/addQuiz"
         android:layout_width="411dp"
         android:layout_height="95dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintTop_toBottomOf="@+id/quiz_listView"
         app:srcCompat="@android:drawable/ic_menu_add" />
 
     <Button

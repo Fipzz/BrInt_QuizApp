@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -43,6 +44,7 @@ public class Statistics_Activity extends AppCompatActivity {
     ListView statListView;
     SharedPreferences sharedPref;
     String currentTheme, sharedPreference;
+    ColorStateList oldcolor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,7 +169,8 @@ public class Statistics_Activity extends AppCompatActivity {
 
                                 TextView tv = (TextView) view.findViewById(android.R.id.text1);
 
-                                tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.buttonblue));
+                                ColorStateList oldcolor  = tv.getTextColors();
+                                tv.setTextColor(oldcolor);
                                 tv.setGravity(Gravity.CENTER);
                                 tv.setPadding(0, 25, 0,25 );
                                 tv.setTextSize(20);

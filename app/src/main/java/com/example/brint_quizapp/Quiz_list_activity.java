@@ -2,6 +2,7 @@ package com.example.brint_quizapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -51,6 +52,8 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
 
     Button makequiz;
     EditText quizname;
+
+    ColorStateList oldcolor;
 
     boolean making_quiz = false;
 
@@ -108,7 +111,8 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
 
                 TextView tv = (TextView) view.findViewById(android.R.id.text1);
 
-                tv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.blueButtonText));
+                ColorStateList oldcolor  = tv.getTextColors();
+                tv.setTextColor(oldcolor);
                 tv.setGravity(Gravity.CENTER);
                 tv.setPadding(0, 25, 0,25 );
                 tv.setTextSize(30);
