@@ -102,12 +102,6 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        Integer.toString(i),
-                        Toast.LENGTH_SHORT);
-
-                toast.show();
-
                 Intent result = new Intent(Quiz_list_activity.this,Edit_quiz_home_activity.class);
 
                 Bundle quizForEdit = new Bundle();
