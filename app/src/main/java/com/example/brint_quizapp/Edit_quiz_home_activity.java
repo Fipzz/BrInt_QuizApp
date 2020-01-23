@@ -2,6 +2,7 @@ package com.example.brint_quizapp;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -28,12 +29,32 @@ public class Edit_quiz_home_activity extends AppCompatActivity implements View.O
 
     QuizDTO theQuiz;
 
+    SharedPreferences sharedPref;
+
+    String currentTheme, sharedPreference;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        sharedPreference = getString(R.string.preferenceFile);
+
+        sharedPref = getSharedPreferences(sharedPreference, MODE_PRIVATE);
+        currentTheme = sharedPref.getString("current_theme", "blue_theme");
+
+        if (currentTheme.equals("blue_theme")){
+
+            setTheme(R.style.Theme_App_Blue);
+
+
+        } else if (currentTheme.equals("purple_theme")) {
+
+            setTheme(R.style.Theme_App_Purple);
+
+        }
 
         setContentView(R.layout.quiz_menu_activity_layout);
 

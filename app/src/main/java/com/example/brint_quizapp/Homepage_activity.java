@@ -44,21 +44,28 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.homepage_activity_layout);
+
         sharedPreference = getString(R.string.preferenceFile);
 
         sharedPref = getSharedPreferences(sharedPreference, MODE_PRIVATE);
         currentTheme = sharedPref.getString("current_theme", "blue_theme");
 
-        if (currentTheme == "blue_theme"){
+        if (currentTheme.equals("blue_theme")){
 
             setTheme(R.style.Theme_App_Blue);
 
-        } else if (currentTheme == "purple_theme") {
+
+        } else if (currentTheme.equals("purple_theme")) {
 
             setTheme(R.style.Theme_App_Purple);
+
         }
 
         setContentView(R.layout.homepage_activity_layout);
+
+
+
 
         quiz = (Button) findViewById(R.id.start_quiz_knap);
         quiz.setOnClickListener(this);
@@ -82,6 +89,11 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
             edit.setVisibility(View.INVISIBLE);
 
         }
+        Toast toast = Toast.makeText(getApplicationContext(),
+                currentTheme,
+                Toast.LENGTH_LONG);
+
+        toast.show();
 
     }
 

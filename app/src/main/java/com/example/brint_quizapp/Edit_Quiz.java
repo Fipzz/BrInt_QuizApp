@@ -69,13 +69,15 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
         sharedPref = getSharedPreferences(sharedPreference, MODE_PRIVATE);
         currentTheme = sharedPref.getString("current_theme", "blue_theme");
 
-        if (currentTheme == "blue_theme"){
+        if (currentTheme.equals("blue_theme")){
 
             setTheme(R.style.Theme_App_Blue);
 
-        } else if (currentTheme == "purple_theme") {
+
+        } else if (currentTheme.equals("purple_theme")) {
 
             setTheme(R.style.Theme_App_Purple);
+
         }
 
         setContentView(R.layout.edit_question_activity_layout);

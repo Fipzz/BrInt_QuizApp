@@ -1,10 +1,13 @@
 package com.example.brint_quizapp;
 
+import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -13,6 +16,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -48,7 +52,7 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
     ResultDTO resultDTO;
     AnswerDTO answerDTO;
 
-    int correctAnswers = 0, wrongAnswers = 0, currentQuestion = 0, isCorrect;
+    int correctAnswers = 0, wrongAnswers = 0, currentQuestion = 0, isCorrect, resetColor;
 
     String quizId;
 
@@ -60,6 +64,8 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
     SharedPreferences sharedPref;
 
     String currentTheme, sharedPreference;
+
+    ColorStateList oldcolor;
 
     @Override
     public void onBackPressed(){
@@ -78,13 +84,15 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
         sharedPref = getSharedPreferences(sharedPreference, MODE_PRIVATE);
         currentTheme = sharedPref.getString("current_theme", "blue_theme");
 
-        if (currentTheme == "blue_theme"){
+        if (currentTheme.equals("blue_theme")){
 
             setTheme(R.style.Theme_App_Blue);
 
-        } else if (currentTheme == "purple_theme") {
+
+        } else if (currentTheme.equals("purple_theme")) {
 
             setTheme(R.style.Theme_App_Purple);
+
         }
 
         setContentView(R.layout.quiz_activity_layout);
@@ -122,6 +130,13 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
         quizId = getIntent().getExtras().getString("quizcode");
 
         quizDTO = null;
+
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = getApplicationContext().getTheme();
+        theme.resolveAttribute(R.attr.buttonNormalColor, typedValue, true);
+        resetColor = typedValue.data;
+
+        oldcolor = a.getBackgroundTintList();
 
 
         getData getdat = new getData();
@@ -316,6 +331,8 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
                         resetButton(c);
                         resetButton(d);
 
+
+
                         currentQuestion++;
                         showNextQuestion(currentQuestion);
                     }
@@ -367,8 +384,8 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
     private void resetButton(Button a) {
 
         a.setEnabled(true);
-        a.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.blueButtonNormal));
-        //TODO skal ændres til at hente farve fra attr så det bliver ændret med temaet
+        a.setBackgroundTintList(oldcolor);
+        ColorStateList oldcolor  = a.getBackgroundTintList();
         a.setBackground(getDrawable(R.drawable.log_in));
 
     }

@@ -106,7 +106,7 @@
         android:background="@drawable/log_in"
         android:backgroundTint="@color/blueButtonNormal"
         android:text="Log ind"
-        android:textColor="@color/blueButtonText"
+        android:textColor="?attr/buttonTextColor"
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

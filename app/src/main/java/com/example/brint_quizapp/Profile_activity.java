@@ -20,7 +20,7 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
     Icon profilePicture;
     Button resultsButton;
     Switch themeToggle;
-    String themeSwitch,sharedPreference, currentTheme, theme;
+    String themeSwitch,sharedPreference, currentTheme;
     SharedPreferences sharedPref;
 
     @Override
@@ -41,13 +41,15 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
         sharedPref = getSharedPreferences(sharedPreference, MODE_PRIVATE);
         currentTheme = sharedPref.getString("current_theme", "blue_theme");
 
-        if (currentTheme == "blue_theme"){
+        if (currentTheme.equals("blue_theme")){
 
             setTheme(R.style.Theme_App_Blue);
 
-        } else if (currentTheme == "purple_theme") {
+
+        } else if (currentTheme.equals("purple_theme")) {
 
             setTheme(R.style.Theme_App_Purple);
+
         }
 
         setContentView(R.layout.profile_activity_layout);
@@ -55,13 +57,10 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
 
         username = findViewById(R.id.username);
 
-        backButton = findViewById(R.id.profil_knap);
-
 
         themeToggle = findViewById(R.id.theme_switch);
 
         themeToggle.setOnClickListener(this);
-        backButton.setOnClickListener(this);
 
         if (sharedPref.getBoolean(themeSwitch, false) == true){
             themeToggle.setChecked(true);
@@ -114,10 +113,7 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
 
         }
 
-        if (backButton.getId() == v.getId()) {
-            startActivity(new Intent(this, Homepage_activity.class));
-
-        }
+       
 
     }
 }

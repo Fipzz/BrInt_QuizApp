@@ -58,13 +58,15 @@ public class Result_activity extends AppCompatActivity implements View.OnClickLi
         sharedPref = getSharedPreferences(sharedPreference, MODE_PRIVATE);
         currentTheme = sharedPref.getString("current_theme", "blue_theme");
 
-        if (currentTheme == "blue_theme"){
+        if (currentTheme.equals("blue_theme")){
 
             setTheme(R.style.Theme_App_Blue);
 
-        } else if (currentTheme == "purple_theme") {
+
+        } else if (currentTheme.equals("purple_theme")) {
 
             setTheme(R.style.Theme_App_Purple);
+
         }
 
         setContentView(R.layout.result_activity_layout);
