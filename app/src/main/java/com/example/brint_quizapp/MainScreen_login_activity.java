@@ -23,7 +23,6 @@ import java.sql.SQLException;
 import io.sentry.Sentry;
 import io.sentry.android.AndroidSentryClientFactory;
 
-import static com.example.brint_quizapp.Db_test.connctionClass;
 
 public class MainScreen_login_activity extends AppCompatActivity implements View.OnClickListener {
 
