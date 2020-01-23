@@ -41,6 +41,11 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
     String unikKode;
 
     @Override
+    public void onBackPressed(){
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

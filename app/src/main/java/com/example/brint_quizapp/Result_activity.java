@@ -31,13 +31,13 @@ public class Result_activity extends AppCompatActivity implements View.OnClickLi
         builder.setTitle("End quiz");
         builder.setMessage("You are about to end the quiz.\nYour result will not be saved.\nAre you sure you want to quit?");
         builder.setCancelable(true);
-        builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 startActivity(new Intent(Result_activity.this, Homepage_activity.class));
             }
         });
-        builder.setNegativeButton("Nej", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
