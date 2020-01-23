@@ -106,7 +106,7 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
                 startLoading();
                 GetQuizDataClass getQuizDataClass = new GetQuizDataClass();
                 getQuizDataClass.execute();
-                timer = new CountDownTimer(20000,500) {
+                timer = new CountDownTimer(60000,500) {
                     @Override
                     public void onTick(long millisUntilFinished) {
                         if(quizDTO != null || complete){

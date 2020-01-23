@@ -104,7 +104,7 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
 
         getdat.execute();
 
-        wait = new CountDownTimer(10000, 500) {
+        wait = new CountDownTimer(60000, 500) {
             @Override
             public void onTick(long l) {
 

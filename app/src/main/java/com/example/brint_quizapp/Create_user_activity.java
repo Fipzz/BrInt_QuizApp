@@ -132,7 +132,7 @@ public class Create_user_activity extends AppCompatActivity implements View.OnCl
             createUserClass.setUser(userDTO);
             createUserClass.execute();
 
-            timer = new CountDownTimer(20000, 500) {
+            timer = new CountDownTimer(60000, 500) {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     if(createUserClass.isDone()){

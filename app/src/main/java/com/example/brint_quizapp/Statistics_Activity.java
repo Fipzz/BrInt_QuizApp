@@ -78,7 +78,7 @@ public class Statistics_Activity extends AppCompatActivity {
 
         averageCorrectPrQuestionArray = new String[2][];
 
-        timer = new CountDownTimer(20000,500) {
+        timer = new CountDownTimer(60000,500) {
             @Override
             public void onTick(long millisUntilFinished) {
 
@@ -161,9 +161,12 @@ public class Statistics_Activity extends AppCompatActivity {
                         stopLoading();
                     }
                 }else{
-                    averageCorrectTextView.setText("0");
+                    Intent quiz = new Intent(Statistics_Activity.this, Statistics_Activity.class);
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Could not load data",
+                            Toast.LENGTH_LONG);
 
-                    usersTakenTextView.setText("0");
+                    toast.show();
                 }
             }
         }.start();
@@ -221,6 +224,8 @@ public class Statistics_Activity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             boolean done = true;
+            timer.cancel();
+            timer.onFinish();
         }
     }
 
