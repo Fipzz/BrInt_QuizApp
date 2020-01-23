@@ -1,8 +1,10 @@
 package com.example.brint_quizapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -53,7 +55,24 @@ public class Quiz_logic_activity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onBackPressed(){
-        startActivity(new Intent(Quiz_logic_activity.this, Homepage_activity.class));
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("End quiz");
+        builder.setMessage("You are about to end the quiz.\nYour result will not be saved.\nAre you sure you want to quit?");
+        builder.setCancelable(true);
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(Quiz_logic_activity.this, Homepage_activity.class));
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.show();
+
     }
 
     @Override

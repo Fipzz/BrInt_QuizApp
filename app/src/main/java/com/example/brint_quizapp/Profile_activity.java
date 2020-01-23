@@ -18,7 +18,6 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
 
     TextView title, username;
     Icon profilePicture;
-    Button resultsButton;
     Switch themeToggle;
     String themeSwitch,sharedPreference, currentTheme, theme;
     SharedPreferences sharedPref;
@@ -72,9 +71,6 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
 
         username = findViewById(R.id.username);
 
-        resultsButton = findViewById(R.id.results_button);
-        resultsButton.setOnClickListener(this);
-
         UserDTO user = UserSingleton.getUserSingleton().getUser();
 
         if(UserSingleton.getUserSingleton().getUser() != null) {
@@ -85,19 +81,6 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-
-        /*
-        SharedPreferences.Editor edit = sharedPref.edit();
-
-        sharedPref
-                .edit()
-                .putString("current_theme","purple_theme")
-                .apply();
-        recreate();
-        */
-        if (resultsButton.getId() == v.getId()) {
-
-        }
 
     }
 }
