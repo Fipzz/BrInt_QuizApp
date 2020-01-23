@@ -180,7 +180,6 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
             }.start();
 
 
-
         } else if(anon.getId() == v.getId()){
 
             startActivity(new Intent(MainScreen_login_activity.this, Homepage_activity.class));

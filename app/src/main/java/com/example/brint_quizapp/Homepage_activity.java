@@ -85,10 +85,23 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
         loading.setVisibility(View.INVISIBLE);
     }
 
+    private void disableButtons(){
+        quiz.setEnabled(false);
+        profile.setEnabled(false);
+        edit.setEnabled(false);
+    }
+
+    private void enableButtons(){
+        quiz.setEnabled(true);
+        profile.setEnabled(true);
+        edit.setEnabled(true);
+    }
+
     @Override
     public void onClick(View v) {
 
         if(quiz.getId() == v.getId()){
+            disableButtons();
 
             unikKode = quiz_code.getText().toString();
 
@@ -99,6 +112,7 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
                         Toast.LENGTH_LONG);
 
                 toast.show();
+                enableButtons();
 
             } else {
 
@@ -126,12 +140,14 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
                             quiz.putExtras(data);
 
                             startActivity(quiz);
+                            enableButtons();
 
                         }else{
                             Toast toast = Toast.makeText(getApplicationContext(),
                                     "Could not find quiz",
                                     Toast.LENGTH_LONG);
 
+                            enableButtons();
                             toast.show();
                             stopLoading();
                             complete = false;
