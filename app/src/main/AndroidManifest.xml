@@ -13,7 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.App.Blue"
         android:screenOrientation="portrait">
-
         <activity android:name=".MainScreen_login_activity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
@@ -30,7 +29,7 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        android.screenOrientation="portrait"
+
         <activity android:name=".Quiz_logic_activity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
