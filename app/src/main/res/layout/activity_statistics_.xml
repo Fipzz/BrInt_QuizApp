@@ -17,6 +17,7 @@
         android:text="Average percent of correct answers:"
         android:textColor="?attr/questionTextColor"
         android:textSize="23dp"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"

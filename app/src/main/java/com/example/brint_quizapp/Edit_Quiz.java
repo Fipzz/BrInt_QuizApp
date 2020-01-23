@@ -50,12 +50,15 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
 
     QuizDTO ChosenQuiz;
 
+    Intent goBack;
+
     ArrayList<QuestionDTO> QuizQuestions;
     ArrayList<AnswerDTO> QuizAnswers;
 
     SharedPreferences sharedPref;
 
     String currentTheme, sharedPreference;
+
 
     @Override
     public void onBackPressed(){
@@ -100,6 +103,8 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
             setTheme(R.style.Theme_App_Purple);
 
         }
+
+        goBack = new Intent(this, Homepage_activity.class);
 
         setContentView(R.layout.edit_question_activity_layout);
 
@@ -277,9 +282,6 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
         //Handles when the user presses the save icon
         if (R.id.save == v.getId()) { //http://www.apnatutorials.com/android/android-alert-confirm-prompt-dialog.php?categoryId=2&subCategoryId=34&myPath=android/android-alert-confirm-prompt-dialog.php
 
-            //TODO In this if statement, if the user presses to save in the prompt menu, the current arraylist is to be uploaded to the database.
-
-            final Intent goBack = new Intent(this, Homepage_activity.class);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Afslutning af redigering");
             builder.setMessage("Du er ved afslutte redigeringen.\nØnsker du at gemme dine ændringer?   ");
@@ -294,11 +296,8 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
                     updateCheckBox ();
 
 
-
                     UpdateDatabase update = new UpdateDatabase();
                     update.execute();
-
-                    startActivity(goBack);
                 }
             });
             builder.setNegativeButton("Nej", new DialogInterface.OnClickListener() {
@@ -312,8 +311,6 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
 
         //Handles when the user presses the delete icon
         if (R.id.delete == v.getId()) {
-
-            //TODO In this if statement, if the user presses to delete in the prompt menu, the currentQuestion is to be dropped from the table in the database. Consider adding an animation.
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Slet spørgsmål");
@@ -500,5 +497,13 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
             return null;
 
         }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+
+            startActivity(goBack);
+
+        }
+
     }
 }

@@ -1,9 +1,12 @@
 package com.example.brint_quizapp;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -15,13 +18,17 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.brint_quizapp.dal.dao.QuizDAO;
+import com.example.brint_quizapp.dal.dao.UserDAO;
 import com.example.brint_quizapp.dal.dto.QuizDTO;
+import com.example.brint_quizapp.dal.dto.UserDTO;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 
 public class Edit_quiz_home_activity extends AppCompatActivity implements View.OnClickListener {
 
-    Button edit_quiz, stats;
+    Button edit_quiz, stats, delete;
 
     TextView quiz_navn;
 
@@ -32,6 +39,8 @@ public class Edit_quiz_home_activity extends AppCompatActivity implements View.O
     SharedPreferences sharedPref;
 
     String currentTheme, sharedPreference;
+
+    CountDownTimer wait;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +75,9 @@ public class Edit_quiz_home_activity extends AppCompatActivity implements View.O
 
         theQuiz = UserSingleton.getUserSingleton().getUser().getQuizzes().get(getIntent().getExtras().getInt("chosenQuiz"));
 
+        delete =  (Button) findViewById(R.id.delete);
+        delete.setOnClickListener(this);
+
         quiz_navn = (TextView) findViewById(R.id.quiz_navn);
         quiz_navn.setText(theQuiz.getName());
 
@@ -99,6 +111,102 @@ public class Edit_quiz_home_activity extends AppCompatActivity implements View.O
 
             startActivity(quiz);
 
+        } else if(delete.getId() == v.getId()){
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Are you sure you want to delete this quiz?");
+            builder.setMessage("You are about to delete this quiz.\nAre you sure you want to continue?");
+            builder.setCancelable(true);
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
+
+                    deleteQuiz dq = new deleteQuiz();
+
+                    dq.execute();
+
+                    edit_quiz.setEnabled(false);
+                    stats.setEnabled(false);
+                    delete.setEnabled(false);
+
+                    wait = new CountDownTimer(60000,60000) {
+                        @Override
+                        public void onTick(long l) {
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+
+                            startActivity(new Intent(Edit_quiz_home_activity.this, Quiz_list_activity.class));
+
+                        }
+                    }.start();
+
+
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            builder.show();
+
         }
     }
+
+    private class deleteQuiz extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... strings) {
+
+            Connection connection;
+            DBconnector databaseconn = new DBconnector();
+
+
+            try {
+
+                try {
+                    Class.forName("com.mysql.jdbc.Driver");
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                connection = databaseconn.CONN();
+                connection.setAutoCommit(false);
+
+                QuizDAO quizDAO = new QuizDAO();
+
+                quizDAO.deleteQuiz(UserSingleton.getUserSingleton().getUser().getQuizzes().get(getIntent().getExtras().getInt("chosenQuiz")).getId(),connection);
+
+                connection.commit();
+
+                UserDAO updateUser = new UserDAO();
+                UserDTO updatedUser = new UserDTO();
+                updatedUser = updateUser.getUserById(UserSingleton.getUserSingleton().getUser().getId(), connection);
+
+                UserSingleton.getUserSingleton().setUser(updatedUser);
+
+                connection.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+
+            wait.cancel();
+            wait.onFinish();
+
+        }
+
+    }
+
 }

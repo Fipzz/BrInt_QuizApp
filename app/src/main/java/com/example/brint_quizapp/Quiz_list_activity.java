@@ -51,7 +51,7 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
     private ArrayList<String> quizNames;
     private ArrayList<QuizDTO> myQuizDTO;
 
-    CountDownTimer timer;
+    CountDownTimer hold;
 
     Button makequiz;
     EditText quizname;
@@ -176,8 +176,26 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
 
         if (v.getId() == makequiz.getId()){
 
+            makequiz.setEnabled(false);
+            quizname.setEnabled(false);
+            makequiz.setText("Makeing quiz...");
+            addQuiz.setEnabled(false);
             CreateNewQuiz createNewQuiz = new CreateNewQuiz();
             createNewQuiz.execute();
+
+            hold = new CountDownTimer(60000, 500) {
+                @Override
+                public void onTick(long l) {
+
+                }
+
+                @Override
+                public void onFinish() {
+
+                    startActivity(new Intent(Quiz_list_activity.this, Quiz_list_activity.class));
+
+                }
+            }.start();
 
         }
 
@@ -241,7 +259,9 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
         @Override
         protected void onPostExecute(Void aVoid) {
 
-            startActivity(new Intent(Quiz_list_activity.this, Quiz_list_activity.class));
+            hold.cancel();
+            hold.onFinish();
+
 
         }
     }
