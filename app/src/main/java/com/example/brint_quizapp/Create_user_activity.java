@@ -19,6 +19,8 @@ import com.example.brint_quizapp.dal.dao.UserDAO;
 import com.example.brint_quizapp.dal.dto.UserDTO;
 
 import java.sql.Connection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Create_user_activity extends AppCompatActivity implements View.OnClickListener {
 
@@ -91,12 +93,21 @@ public class Create_user_activity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onClick(View v) {
+        create.setEnabled(false);
         String nameString = name.getText().toString();
         String emailString = email.getText().toString();
         String passwordString =  password.getText().toString();
         String password2String =  password2.getText().toString();
+        boolean validEmail = false;
 
-        if(nameString.equals("")){
+        Pattern pattern = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
+        Matcher mat = pattern.matcher(email.getText().toString());
+
+        if(mat.matches()){
+            validEmail = true;
+        }
+
+        if(nameString.equals("") || !validEmail){
             Toast toast = Toast.makeText(getApplicationContext(),
                     "Please enter a name",
                     Toast.LENGTH_LONG);
@@ -163,6 +174,7 @@ public class Create_user_activity extends AppCompatActivity implements View.OnCl
             }.start();
 
         }
+        create.setEnabled(true);
     }
 
     private static class CreateUserClass extends AsyncTask<String, Void, Void> {
