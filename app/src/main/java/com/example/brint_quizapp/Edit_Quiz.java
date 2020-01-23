@@ -30,10 +30,6 @@ import java.util.ArrayList;
 
 public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener{
 
-    //TODO add a button to remove a question
-
-    //TODO handle going back on first question
-
     Button next, prev;
 
     EditText a1, a2, a3, a4, quizName;
@@ -204,12 +200,12 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
 
                 ArrayList<AnswerDTO> tempAnswers = new ArrayList<AnswerDTO>();
 
-                tempAnswers.add(new AnswerDTO("Svar 1", false));
-                tempAnswers.add(new AnswerDTO("Svar 2", false));
-                tempAnswers.add(new AnswerDTO("Svar 3", false));
-                tempAnswers.add(new AnswerDTO("Svar 4", false));
+                tempAnswers.add(new AnswerDTO("Answer 1", false));
+                tempAnswers.add(new AnswerDTO("Answer 2", false));
+                tempAnswers.add(new AnswerDTO("Answer 3", false));
+                tempAnswers.add(new AnswerDTO("Answer 4", false));
 
-                QuestionDTO blank = new QuestionDTO("Indsæt spørgsmål her", tempAnswers);
+                QuestionDTO blank = new QuestionDTO("Insert question here", tempAnswers);
                 blank.setQuiz_id(UserSingleton.getUserSingleton().getUser().getQuizzes().get(getIntent().getExtras().getInt("quizId")).getId());
                 blank.setNumber(currentQuestion+1);
                 QuizQuestions.add(blank);
@@ -264,7 +260,7 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
                 prev.setEnabled(true);
 
                 if (currentQuestion+1 == QuizQuestions.size()) {
-                    next.setText("Tilføj");
+                    next.setText("Add");
                     currentQuestion++;
                     showNextQuestion();
                     updateCheckBox();
@@ -283,27 +279,26 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
         if (R.id.save == v.getId()) { //http://www.apnatutorials.com/android/android-alert-confirm-prompt-dialog.php?categoryId=2&subCategoryId=34&myPath=android/android-alert-confirm-prompt-dialog.php
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Afslutning af redigering");
-            builder.setMessage("Du er ved afslutte redigeringen.\nØnsker du at gemme dine ændringer?   ");
+            builder.setTitle("Ending editing");
+            builder.setMessage("You are about to stop the editing.\nDo you wish to save the changes?");
             builder.setCancelable(true);
-            builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(getApplicationContext(), "Ændringer gemt", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Changes saved", Toast.LENGTH_SHORT).show();
 
                     QuizQuestions.get(currentQuestion).setText(questionOnScreen.getText().toString());
                     saveQuestions();
                     updateCheckBox ();
 
-
                     UpdateDatabase update = new UpdateDatabase();
                     update.execute();
                 }
             });
-            builder.setNegativeButton("Nej", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(getApplicationContext(), "Ændringer ikke gemt", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Changes are not saved", Toast.LENGTH_SHORT).show();
                 }
             });
             builder.show();
@@ -313,13 +308,13 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
         if (R.id.delete == v.getId()) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Slet spørgsmål");
-            builder.setMessage("Er du sikker på at du ønsker at slette spørgsmålet?");
+            builder.setTitle("Delete question");
+            builder.setMessage("Are you sure you want to delete the question?");
             builder.setCancelable(true);
-            builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(getApplicationContext(), "Spørgsmål Slettet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Question deleted", Toast.LENGTH_SHORT).show();
                     if(QuizQuestions.size() == 1){
 
                     } else if (currentQuestion+1 == QuizQuestions.size()) {
@@ -337,12 +332,12 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
                     questionCounter.setText(currentQuestion + 1 + " / " + QuizQuestions.size());
 
                     if (currentQuestion+1 == QuizQuestions.size()) {
-                        next.setText("Tilføj");
+                        next.setText("Add");
                     }
                 }
             });
 
-            builder.setNegativeButton("Nej", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                 }
@@ -356,28 +351,28 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
     public void onCheckBox (View v) { //Consider changing the color of the text box
 
         if (v.getId() == c1.getId() && c1.isChecked() == true) {
-            toast1 = Toast.makeText(getApplicationContext(), "Svar 1 sat til rigtigt", Toast.LENGTH_SHORT); toast1.show();
+            toast1 = Toast.makeText(getApplicationContext(), "Answer 1 is set to correct", Toast.LENGTH_SHORT); toast1.show();
             QuizAnswers.get(0).setCorrect(true);
         } else if (v.getId() == c1.getId() && c1.isChecked() == false) {
             QuizAnswers.get(0).setCorrect(false);
         }
 
         if (v.getId() == c2.getId() && c2.isChecked() == true){
-            toast2 = Toast.makeText(getApplicationContext(), "Svar 2 sat til rigtigt", Toast.LENGTH_SHORT); toast2.show();
+            toast2 = Toast.makeText(getApplicationContext(), "Answer 2 is set to correct", Toast.LENGTH_SHORT); toast2.show();
             QuizAnswers.get(1).setCorrect(true);
         } else if (v.getId() == c2.getId() && c2.isChecked() == false) {
             QuizAnswers.get(1).setCorrect(false);
         }
 
         if (v.getId() == c3.getId() && c3.isChecked() == true) {
-            toast3 = Toast.makeText(getApplicationContext(), "Svar 3 sat til rigtigt", Toast.LENGTH_SHORT); toast3.show();
+            toast3 = Toast.makeText(getApplicationContext(), "Answer 3 is set to correct", Toast.LENGTH_SHORT); toast3.show();
             QuizAnswers.get(2).setCorrect(true);
         } else if (v.getId() == c3.getId() && c3.isChecked() == false) {
             QuizAnswers.get(2).setCorrect(false);
         }
 
         if (v.getId() == c4.getId() && c4.isChecked() == true) {
-            toast4 = Toast.makeText(getApplicationContext(), "Svar 4 sat til rigtigt", Toast.LENGTH_SHORT); toast4.show();
+            toast4 = Toast.makeText(getApplicationContext(), "Answer 4 is set to correct", Toast.LENGTH_SHORT); toast4.show();
             QuizAnswers.get(3).setCorrect(true);
         } else if (v.getId() == c4.getId() && c4.isChecked() == false) {
             QuizAnswers.get(3).setCorrect(false);
@@ -421,9 +416,9 @@ public class Edit_Quiz extends AppCompatActivity implements View.OnClickListener
         a4.setText(QuizAnswers.get(3).getText());
 
         if (currentQuestion+1 == QuizQuestions.size()) {
-            next.setText("Tilføj");
+            next.setText("Add");
         } else {
-            next.setText("Næste");
+            next.setText("Next");
         }
 
     }

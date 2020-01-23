@@ -113,8 +113,8 @@ public class MainScreen_login_activity extends AppCompatActivity implements View
             startLoading();
 
             if(email.getText().toString().equals("") && password.getText().toString().equals("")){
-                email.setText("Rasmus");
-                password.setText("123");
+                email.setText("test@user.dk");
+                password.setText("test");
             }
 
             emailString = email.getText().toString();
