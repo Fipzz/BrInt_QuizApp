@@ -89,11 +89,7 @@ public class Homepage_activity extends AppCompatActivity implements View.OnClick
             edit.setVisibility(View.INVISIBLE);
 
         }
-        Toast toast = Toast.makeText(getApplicationContext(),
-                currentTheme,
-                Toast.LENGTH_LONG);
 
-        toast.show();
 
     }
 
