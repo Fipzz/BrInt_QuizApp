@@ -21,6 +21,7 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
     Switch themeToggle;
     String themeSwitch,sharedPreference, currentTheme;
     SharedPreferences sharedPref;
+    Button login;
 
     @Override
     public void onBackPressed(){
@@ -58,8 +59,10 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
 
 
         themeToggle = findViewById(R.id.theme_switch);
-
         themeToggle.setOnClickListener(this);
+
+        login = (Button) findViewById(R.id.Back_to_login);
+        login.setOnClickListener(this);
 
         if (sharedPref.getBoolean(themeSwitch, false) == true){
             themeToggle.setChecked(true);
@@ -68,8 +71,16 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
 
         UserDTO user = UserSingleton.getUserSingleton().getUser();
 
-        if(UserSingleton.getUserSingleton().getUser() != null) {
+
+
+        if(UserSingleton.getUserSingleton().getUser() == null){
+
+            username.setText("Anonymous");
+            login.setText("Login?");
+
+        } else {
             username.setText(UserSingleton.getUserSingleton().getUser().getName());
+            login.setText("Logout");
         }
 
     }
@@ -107,9 +118,14 @@ public class Profile_activity extends AppCompatActivity implements View.OnClickL
                 edit.apply();
 
             }
-
         }
 
+        if(v.getId()== login.getId()){
+
+            UserSingleton.getUserSingleton().setUser(null);
+            startActivity(new Intent(Profile_activity.this,MainScreen_login_activity.class));
+
+        }
 
 
     }
