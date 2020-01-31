@@ -123,6 +123,7 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
 
                 ColorStateList oldcolor  = tv.getTextColors();
                 tv.setTextColor(oldcolor);
+                tv.setTextColor(Color.WHITE); // Jacob: Teksten var ulæselig
                 tv.setGravity(Gravity.CENTER);
                 tv.setPadding(0, 25, 0,25 );
                 tv.setTextSize(30);
@@ -207,7 +208,7 @@ public class Quiz_list_activity extends AppCompatActivity implements View.OnClic
     }
 
     public void initMyQuiz(){
-
+        // Logger man ind som anonym og tager en quiz kan man komme herind - og her kommer en NullPointerException: java.util.ArrayList com.example.brint_quizapp.dal.dto.UserDTO.getQuizzes()' on a null object reference
         ArrayList<QuizDTO> quizz = UserSingleton.getUserSingleton().getUser().getQuizzes();
         for (QuizDTO quiz: quizz) {
             quizNames.add(quiz.getName());

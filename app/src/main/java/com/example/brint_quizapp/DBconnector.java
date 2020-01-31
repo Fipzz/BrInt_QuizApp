@@ -13,13 +13,15 @@ public class DBconnector {
 
     String url = "jdbc:mysql://remotemysql.com:3306/PG17gBGeZc";
     String un = "PG17gBGeZc";
+    // Det er første gang nogensinde jeg ser nogen bruge en database direkte fra en app.
+    // Det er generelt en meget dårlig idé fordi DB adgangskoden så ligger i app'en. Dog OK til en prototype
     String password = "Yqeou76dpr";
 
     @SuppressLint("NewApi")
     public Connection CONN() {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+        StrictMode.setThreadPolicy(policy); // Burde være unødvendigt da I kun kalder CONN fra en baggrundstråd
         Connection conn = null;
         String ConnURL = null;
         try {
